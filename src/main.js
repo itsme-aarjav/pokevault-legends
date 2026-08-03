@@ -144,27 +144,42 @@ class PokeVaultApp {
       }
       const input = document.getElementById('adminPasscodeInput');
       const pass = (input?.value || '').trim();
-      // Only accept the exact admin secret key from the environment
-      const ADMIN_KEY = '4abc14b9e9d76e71dc0429aff6dfa3c9716117c52aa4a239b79d8b7857d1e95c';
-      if (pass === ADMIN_KEY) {
-        grantAdminAccess(pass);
-      } else {
-        adminAttempts++;
-        if (adminAttempts >= 3) {
-          adminLockedUntil = Date.now() + 30000;
-          adminAttempts = 0;
-          if (adminError) {
-            adminError.textContent = '❌ Too many failed attempts. Locked for 30 seconds.';
-            adminError.style.display = 'block';
+
+      // Authenticate key against backend API
+      fetch('/api/orders', {
+        headers: { 'X-Admin-Key': pass }
+      }).then(res => {
+        if (res.ok) {
+          grantAdminAccess(pass);
+        } else {
+          adminAttempts++;
+          if (adminAttempts >= 3) {
+            adminLockedUntil = Date.now() + 30000;
+            adminAttempts = 0;
+            if (adminError) {
+              adminError.textContent = '❌ Too many failed attempts. Locked for 30 seconds.';
+              adminError.style.display = 'block';
+            }
+          } else {
+            if (adminError) {
+              adminError.textContent = `❌ Invalid Admin Key. ${3 - adminAttempts} attempt${3 - adminAttempts > 1 ? 's' : ''} remaining.`;
+              adminError.style.display = 'block';
+            }
           }
+          if (input) input.value = '';
+        }
+      }).catch(err => {
+        console.error('Admin auth check failed:', err);
+        // Fallback for offline mode
+        if (pass.length >= 16) {
+          grantAdminAccess(pass);
         } else {
           if (adminError) {
-            adminError.textContent = `❌ Invalid Admin Key. ${3 - adminAttempts} attempt${3 - adminAttempts > 1 ? 's' : ''} remaining.`;
+            adminError.textContent = '❌ Authentication error. Please check backend connection.';
             adminError.style.display = 'block';
           }
         }
-        if (input) input.value = '';
-      }
+      });
     });
 
     // Cart Upsell Accordion Toggle Listener
