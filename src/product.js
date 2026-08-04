@@ -23,6 +23,25 @@ class ProductPage {
 
     this.renderPage(card);
     this.initCartDrawer();
+    this.initMobileNav();
+  }
+
+  initMobileNav() {
+    const mobileNavToggleBtn = document.getElementById('mobileNavToggleBtn');
+    const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+    const closeMobileNavBtn = document.getElementById('closeMobileNavBtn');
+
+    mobileNavToggleBtn?.addEventListener('click', () => {
+      mobileNavOverlay?.classList.add('open');
+    });
+
+    closeMobileNavBtn?.addEventListener('click', () => {
+      mobileNavOverlay?.classList.remove('open');
+    });
+
+    mobileNavOverlay?.addEventListener('click', (e) => {
+      if (e.target === mobileNavOverlay) mobileNavOverlay.classList.remove('open');
+    });
   }
 
   // ─── RENDER FULL PAGE ───────────────────────────────────────────────────────
