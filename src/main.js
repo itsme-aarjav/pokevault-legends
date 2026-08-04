@@ -85,6 +85,34 @@ class PokeVaultApp {
       if (e.target === this.modal3DOverlay) this.close3DModal();
     });
 
+    // Mobile Navigation Drawer Event Handlers
+    const mobileNavToggleBtn = document.getElementById('mobileNavToggleBtn');
+    const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+    const closeMobileNavBtn = document.getElementById('closeMobileNavBtn');
+
+    mobileNavToggleBtn?.addEventListener('click', () => {
+      mobileNavOverlay?.classList.add('open');
+    });
+
+    closeMobileNavBtn?.addEventListener('click', () => {
+      mobileNavOverlay?.classList.remove('open');
+    });
+
+    mobileNavOverlay?.addEventListener('click', (e) => {
+      if (e.target === mobileNavOverlay) mobileNavOverlay.classList.remove('open');
+    });
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        mobileNavOverlay?.classList.remove('open');
+        if (href === 'admin.html') {
+          e.preventDefault();
+          openAdminModal();
+        }
+      });
+    });
+
     // Product Detail Back Button
     this.pdBackBtn?.addEventListener('click', () => {
       this.closeProductPage();
