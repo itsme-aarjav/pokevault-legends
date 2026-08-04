@@ -20,9 +20,45 @@ class AdminPanel {
     this.orders = [];
     this.searchQuery = '';
 
-    this.initDOM();
-    this.initTabs();
-    this.loadAllData();
+    this.checkAuth().then(authorized => {
+      if (authorized) {
+        this.initDOM();
+        this.initTabs();
+        this.loadAllData();
+      }
+    });
+  }
+
+  async checkAuth() {
+    const key = getAdminKey();
+    if (!key) {
+      this.denyAccess('No admin session found. Please authenticate via Admin Vault Login.');
+      return false;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/orders`, { headers: adminHeaders() });
+      if (res.status === 401 || res.status === 403) {
+        this.denyAccess('Invalid or expired admin key.');
+        return false;
+      }
+      return true;
+    } catch (err) {
+      console.warn('Auth verify warning (offline mode):', err);
+      return true;
+    }
+  }
+
+  denyAccess(message) {
+    sessionStorage.removeItem('pvAdminKey');
+    document.body.innerHTML = `
+      <div style="min-height: 100vh; background: #FFF056; display: flex; align-items: center; justify-content: center; font-family: monospace; padding: 2rem;">
+        <div style="background: #FFF; border: 4px solid #000; box-shadow: 10px 10px 0px #000; padding: 3rem; max-width: 480px; text-align: center; border-radius: 12px;">
+          <h1 style="color: #D32F10; font-size: 2.2rem; margin-top: 0; font-family: var(--font-title, sans-serif);">🔒 ACCESS DENIED</h1>
+          <p style="font-size: 1rem; color: #333; margin-bottom: 2rem; font-weight: bold;">${message}</p>
+          <a href="index.html" style="display: inline-block; background: #000; color: #FFF056; padding: 14px 28px; font-weight: 900; text-decoration: none; border-radius: 8px; font-size: 1rem;">← Return to Store &amp; Login</a>
+        </div>
+      </div>
+    `;
   }
 
   initDOM() {
@@ -40,6 +76,12 @@ class AdminPanel {
     this.searchInput?.addEventListener('input', (e) => {
       this.searchQuery = e.target.value.trim().toLowerCase();
       this.renderInventoryTable();
+    });
+
+    // Logout button listener
+    document.getElementById('adminLogoutBtn')?.addEventListener('click', () => {
+      sessionStorage.removeItem('pvAdminKey');
+      window.location.href = 'index.html';
     });
 
     // Add card form submission listener
