@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { supabase, isSupabaseConfigured } from '../supabase.js';
-import { CARDS_DATA } from '../../src/data/cards.js';
+import { ALL_PRODUCTS } from '../../src/data/products.js';
 import { requireAdmin } from '../index.js';
 
 const router = Router();
@@ -10,14 +10,14 @@ const memoryOrders = [];
 
 // ─── Server-side price lookup ─────────────────────────────────────────────
 // SECURITY: Never trust client-sent prices. Always look up the real price
-// from the authoritative source (Supabase or local CARDS_DATA).
+// from the authoritative source (Supabase or master ALL_PRODUCTS catalog).
 const getVerifiedPrice = async (cardId) => {
   if (isSupabaseConfigured()) {
     const { data } = await supabase.from('cards').select('price').eq('id', cardId).single();
-    return data ? Number(data.price) : null;
+    if (data) return Number(data.price);
   }
-  const card = CARDS_DATA.find(c => c.id === cardId);
-  return card ? Number(card.price) : null;
+  const item = ALL_PRODUCTS.find(c => c.id === cardId);
+  return item ? Number(item.price) : null;
 };
 
 // POST /api/orders — Create a new customer order with verified pricing
