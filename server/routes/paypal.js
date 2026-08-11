@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import https from 'https';
 import { supabase, isSupabaseConfigured } from '../supabase.js';
-import { CARDS_DATA } from '../../src/data/cards.js';
+import { ALL_PRODUCTS } from '../../src/data/products.js';
 
 const router = Router();
 
@@ -93,8 +93,8 @@ const getVerifiedPrice = async (cardId) => {
     const { data } = await supabase.from('cards').select('price').eq('id', cardId).single();
     return data ? Number(data.price) : null;
   }
-  const card = CARDS_DATA.find(c => c.id === cardId);
-  return card ? Number(card.price) : null;
+  const item = ALL_PRODUCTS.find(c => c.id === cardId);
+  return item ? Number(item.price) : null;
 };
 
 // POST /api/paypal/create-order — Verify prices server-side, create real PayPal order
