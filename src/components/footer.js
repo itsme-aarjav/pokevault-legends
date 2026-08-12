@@ -67,22 +67,22 @@ export function renderFooter() {
 
         <div class="footer-col newsletter-col">
           <h4 class="footer-heading">VIP VAULT DISPATCH</h4>
-          <p class="footer-sub-text">Subscribe to get instant alerts on limited plush drops, PSA slab restocks & 20% off promo codes.</p>
+          <p class="footer-sub-text">Subscribe to get instant alerts on limited plush drops, PSA slab restocks &amp; 20% off promo codes.</p>
           <form class="footer-news-form" id="footerNewsForm" onsubmit="event.preventDefault(); alert('★ Thank you for joining PokéVault VIP Dispatch!');">
             <input type="email" placeholder="Enter trainer email..." class="footer-news-input" required />
-            <button type="submit" class="btn-pill" style="padding: 10px 16px;">JOIN VIP</button>
+            <button type="submit" class="btn-pill footer-news-btn">JOIN VIP</button>
           </form>
         </div>
       </div>
 
       <div class="footer-bottom-bar">
-        <div>© 2026 POKÉVAULT LEGENDS INC. ALL RIGHTS RESERVED. POKÉMON IS A TRADEMARK OF NINTENDO / CREATURES INC. / GAME FREAK.</div>
-        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-          <a href="about.html" style="color:#FFF;">Privacy Policy</a>
-          <span>•</span>
-          <a href="about.html" style="color:#FFF;">Terms of Vault Dispatch</a>
-          <span>•</span>
-          <a href="contact.html" style="color:#FFF;">Authenticity Guarantee</a>
+        <div class="footer-copy-text">© 2026 POKÉVAULT LEGENDS INC. ALL RIGHTS RESERVED. POKÉMON IS A TRADEMARK OF NINTENDO / CREATURES INC. / GAME FREAK.</div>
+        <div class="footer-legal-links">
+          <a href="about.html">Privacy Policy</a>
+          <span class="footer-dot-sep">•</span>
+          <a href="about.html">Terms of Vault Dispatch</a>
+          <span class="footer-dot-sep">•</span>
+          <a href="contact.html">Authenticity Guarantee</a>
         </div>
       </div>
     </footer>
