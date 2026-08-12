@@ -14,7 +14,7 @@ export function renderCartDrawer() {
     <div class="cart-drawer" id="cartDrawer">
       <!-- HEADER -->
       <div class="cart-header">
-        <div class="cart-title">YOUR VAULT CART</div>
+        <div class="cart-title"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji" /> YOUR VAULT CART</div>
         <button class="cart-close-btn" id="closeCartBtn">&times;</button>
       </div>
 
@@ -36,7 +36,7 @@ export function renderCartDrawer() {
       <!-- INTELLIGENT IN-CART UPSELLS -->
       <div id="cartUpsellsBox" style="background:#F8FAFC; border-top:2px solid #000; border-bottom:2px solid #000; padding:12px 16px;">
         <div style="font-family:var(--font-mono); font-size:0.75rem; font-weight:900; letter-spacing:0.5px; color:#000; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
-          <span>⚡ RECOMMENDED VAULT ADD-ONS</span>
+          <span><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> RECOMMENDED VAULT ADD-ONS</span>
         </div>
         <div id="cartUpsellsList" style="display:flex; gap:10px; overflow-x:auto; padding-bottom:4px;">
           <!-- Injected dynamically -->
@@ -65,14 +65,14 @@ export function renderCartDrawer() {
         </div>
 
         <a href="checkout.html" class="btn-pill" id="drawerCheckoutBtn" style="width: 100%; text-align:center; display:block; text-decoration:none; box-sizing:border-box; font-size:1.05rem; padding:14px;">
-          Proceed to Secure Checkout &amp; Dispatch →
+          <img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji" /> Proceed to Secure Checkout &amp; Dispatch →
         </a>
 
         <!-- MICRO-COPY TRUST SIGNALS -->
         <div style="margin-top:10px; text-align:center; font-family:var(--font-mono); font-size:0.72rem; color:#475569; display:flex; flex-direction:column; gap:4px; align-items:center;">
           <div style="font-weight:700; color:#1E293B;">🔒 256-Bit SSL Encrypted Vault Checkout</div>
           <div style="color:#64748B;">💳 Visa • Mastercard • PayPal • Apple Pay • Google Pay</div>
-          <div style="color:#059669; font-weight:800;">🪙 Earn PokéCoins Rewards on this order</div>
+          <div style="color:#059669; font-weight:800;"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> Earn PokéCoins Rewards on this order</div>
         </div>
       </div>
     </div>

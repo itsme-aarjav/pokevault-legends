@@ -27,7 +27,7 @@ export function renderFooter() {
       <div class="footer-main-grid">
         <div class="footer-col brand-col">
           <div class="logo-stamp" style="margin-bottom: 1rem;">
-            <div class="logo-badge">POKÉVAULT</div>
+            <div class="logo-badge"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" style="margin-right: 3px;" /> POKÉVAULT</div>
             <div style="font-family: var(--font-display); font-size: 1.6rem; color: var(--accent-red); margin-top: 2px;">LEGENDS</div>
           </div>
           <p class="footer-bio">

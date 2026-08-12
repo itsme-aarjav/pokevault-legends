@@ -44,7 +44,7 @@ export function renderProductCard(product) {
 
         <div class="card-actions-row">
           <button class="btn-pill btn-add-cart-fast" data-cart-id="${product.id}">
-            🛒 Add to Cart
+            <img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> Add to Cart
           </button>
           <a href="product.html?id=${product.id}" class="btn-inspect">
             Details →

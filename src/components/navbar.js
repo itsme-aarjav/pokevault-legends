@@ -16,11 +16,11 @@ export function renderNavbar(activePage = 'home') {
     <!-- TOP TICKER MARQUEE -->
     <div class="ticker-wrap">
       <div class="ticker-move">
-        <span class="ticker-item">⚡ NATIONWIDE FLAT-RATE VAULT SHIPPING ON ALL MERCHANDISE &amp; SLABS</span>
-        <span class="ticker-item">★ 100% OFFICIAL POKÉMON CENTER &amp; PSA / BGS AUTHENTICATED</span>
-        <span class="ticker-item">⚡ USE CODE "POKEVAULT10" FOR 10% OFF YOUR ENTIRE ORDER</span>
-        <span class="ticker-item">★ OVER 60+ EXCLUSIVE POKÉMON COLLECTIBLES IN STOCK</span>
-        <span class="ticker-item">⚡ NATIONWIDE FLAT-RATE VAULT SHIPPING ON ALL MERCHANDISE &amp; SLABS</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> NATIONWIDE FLAT-RATE VAULT SHIPPING ON ALL MERCHANDISE &amp; SLABS</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 100% OFFICIAL POKÉMON CENTER &amp; PSA / BGS AUTHENTICATED</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> USE CODE "POKEVAULT10" FOR 10% OFF YOUR ENTIRE ORDER</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> OVER 60+ EXCLUSIVE POKÉMON COLLECTIBLES IN STOCK</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> NATIONWIDE FLAT-RATE VAULT SHIPPING ON ALL MERCHANDISE &amp; SLABS</span>
       </div>
     </div>
 
@@ -45,7 +45,7 @@ export function renderNavbar(activePage = 'home') {
       </div>
 
       <a href="index.html" class="logo-stamp">
-        <div class="logo-badge">POKÉVAULT</div>
+        <div class="logo-badge"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" style="margin-right: 3px;" /> POKÉVAULT</div>
         <div style="font-family: var(--font-display); font-size: 1.5rem; color: var(--accent-red); margin-top: 2px;">LEGENDS</div>
       </a>
 
