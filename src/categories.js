@@ -28,32 +28,32 @@ class CategoriesPage {
     if (!grid) return;
 
     grid.innerHTML = CATEGORIES_DATA.map(cat => `
-      <div class="category-directory-card" style="background: #FFFFFF; border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.15s ease; position: relative; z-index: 2;">
-        <div class="category-card-img-wrap" style="height: 180px; background: #FFFFFF; position: relative; z-index: 2; overflow: hidden; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid #000;">
-          ${cat.image ? `<img src="${cat.image}" alt="${cat.name}" style="height: 140px; object-fit: contain; position: relative; z-index: 1; filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.15));" />` : `<span style="font-size: 5rem; position: relative; z-index: 1; filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.2));">${cat.icon}</span>`}
-          <span style="position: absolute; top: 12px; right: 12px; background: #000; color: #FFF056; font-family: var(--font-mono); font-weight: 700; font-size: 0.8rem; padding: 4px 10px; border-radius: 4px; z-index: 3;">
+      <div class="category-directory-card">
+        <div class="category-card-img-wrap">
+          ${cat.image ? `<img src="${cat.image}" alt="${cat.name}" class="category-card-img" />` : `<span class="category-card-emoji-large">${cat.icon}</span>`}
+          <span class="category-count-badge">
             ${cat.count} Items
           </span>
-          <span style="position: absolute; bottom: 12px; left: 12px; font-size: 2rem; z-index: 3;">
+          <span class="category-card-icon-badge">
             ${cat.icon}
           </span>
         </div>
 
-        <div style="padding: 1.5rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="category-card-body">
           <div>
-            <h3 style="font-family: var(--font-title); font-size: 1.25rem; font-weight: 900; margin-bottom: 6px; color: #000;">
+            <h3 class="category-card-title">
               ${cat.name}
             </h3>
-            <p style="font-family: var(--font-mono); font-size: 0.85rem; color: #555; margin-bottom: 1.5rem; line-height: 1.4;">
+            <p class="category-card-desc">
               ${cat.description}
             </p>
           </div>
 
-          <div style="display: flex; gap: 8px;">
-            <a href="category.html?id=${cat.slug}" class="btn-pill" style="flex: 1; text-align: center; text-decoration: none; padding: 10px;">
-              Explore Category →
+          <div class="category-card-actions">
+            <a href="category.html?id=${cat.slug}" class="btn-pill btn-explore-cat">
+              Explore →
             </a>
-            <a href="shop.html?category=${cat.slug}" class="btn-inspect" style="text-decoration: none; padding: 10px 14px;">
+            <a href="shop.html?category=${cat.slug}" class="btn-inspect btn-filter-cat">
               Filter Shop
             </a>
           </div>
