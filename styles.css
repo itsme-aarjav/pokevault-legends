@@ -31,27 +31,27 @@
 
 /* Pokéball Custom Emoji Helper Classes */
 .pokeball-emoji {
-  width: 1.25em;
-  height: 1.25em;
-  vertical-align: -0.2em;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: -0.25em;
   display: inline-block;
   object-fit: contain;
   filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.4));
 }
 
 .pokeball-emoji-lg {
-  width: 1.7em;
-  height: 1.7em;
-  vertical-align: -0.3em;
+  width: 2.1em;
+  height: 2.1em;
+  vertical-align: -0.35em;
   display: inline-block;
   object-fit: contain;
   filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.4));
 }
 
 .pokeball-emoji-sm {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.12em;
+  width: 1.25em;
+  height: 1.25em;
+  vertical-align: -0.18em;
   display: inline-block;
   object-fit: contain;
 }
