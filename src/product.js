@@ -12,14 +12,8 @@ import { getReviewsForProduct } from './data/reviews.js';
 import { addToCart, toggleWishlist, isInWishlist } from './utils/store.js';
 import { injectProductSeo } from './utils/seo.js';
 
-// Use confetti safely
-let confetti;
-try {
-  const mod = await import('canvas-confetti');
-  confetti = mod.default || mod;
-} catch (_) {
-  confetti = (typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {};
-}
+import confettiModule from 'canvas-confetti';
+const confetti = confettiModule?.default || confettiModule || ((typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {});
 
 class ProductPage {
   constructor() {

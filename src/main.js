@@ -12,14 +12,8 @@ import { Hero3DStage } from './hero-3d-stage.js';
 import { ThreeCardViewer } from './three-card-viewer.js';
 import { addToCart } from './utils/store.js';
 
-// Use confetti safely — loaded via importmap, accessed from module
-let confetti;
-try {
-  const mod = await import('canvas-confetti');
-  confetti = mod.default || mod;
-} catch (_) {
-  confetti = (typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {};
-}
+import confettiModule from 'canvas-confetti';
+const confetti = confettiModule?.default || confettiModule || ((typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {});
 
 class MainStore {
   constructor() {
