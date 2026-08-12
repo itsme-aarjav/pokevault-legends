@@ -3,10 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>POKÉVAULT LEGENDS — Official Pokémon Merchandise &amp; Graded Slabs Marketplace</title>
-  <meta name="description" content="Explore over 60+ official Pokémon merchandise products: plush toys, scale figures, apparel, graded PSA/BGS slabs, home decor, and gifts." />
-  
+  <!-- Primary Meta Tags -->
+  <title>POKÉVAULT LEGENDS — Buy Official Pokémon Merchandise &amp; PSA Graded Slabs</title>
+  <meta name="description" content="Shop 64+ official Pokémon merchandise items: PSA/BGS 1st Edition graded card slabs, lifesize plushies, resin scale figures, Japanese streetwear, and home decor." />
+  <meta name="keywords" content="pokemon merchandise, buy pokemon cards, psa 10 charizard, pokemon plush toys, pokemon figures, pokemon apparel, pokevault legends, authentic pokemon store" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href="https://pokevault-legends.com/" />
+
+  <!-- OpenGraph / Facebook Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pokevault-legends.com/" />
+  <meta property="og:site_name" content="POKÉVAULT LEGENDS" />
+  <meta property="og:title" content="POKÉVAULT LEGENDS — Official Pokémon Merchandise Marketplace" />
+  <meta property="og:description" content="Explore 64+ authentic Pokémon merchandise products: graded slabs, giant plushies, resin statues, and vintage streetwear." />
+  <meta property="og:image" content="https://pokevault-legends.com/assets/charizard.png" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://pokevault-legends.com/" />
+  <meta name="twitter:title" content="POKÉVAULT LEGENDS — Official Pokémon Merchandise Marketplace" />
+  <meta name="twitter:description" content="Explore 64+ authentic Pokémon merchandise products: graded slabs, giant plushies, resin statues, and vintage streetwear." />
+  <meta name="twitter:image" content="https://pokevault-legends.com/assets/charizard.png" />
+
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Schema.org Organization, WebSite & OnlineStore Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://pokevault-legends.com/#organization",
+        "name": "POKÉVAULT LEGENDS",
+        "url": "https://pokevault-legends.com/",
+        "logo": "https://pokevault-legends.com/assets/charizard.png",
+        "description": "Premier marketplace for official Pokémon merchandise, graded PSA/BGS slabs, lifesize plushies, and scale figures.",
+        "sameAs": [
+          "https://twitter.com/pokevault_legends",
+          "https://instagram.com/pokevault_official"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://pokevault-legends.com/#website",
+        "url": "https://pokevault-legends.com/",
+        "name": "POKÉVAULT LEGENDS",
+        "description": "Official Pokémon Merchandise & Graded Slabs Marketplace",
+        "publisher": {
+          "@id": "https://pokevault-legends.com/#organization"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://pokevault-legends.com/search.html?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "OnlineStore",
+        "@id": "https://pokevault-legends.com/#store",
+        "name": "POKÉVAULT LEGENDS Marketplace",
+        "url": "https://pokevault-legends.com/",
+        "description": "Buy verified authentic Pokémon collectibles with archival vault guarantee.",
+        "currenciesAccepted": "USD",
+        "paymentAccepted": "Credit Card, PayPal",
+        "priceRange": "$$$"
+      }
+    ]
+  }
+  </script>
   
   <!-- ES Module Import Map for Three.js and dependencies -->
   <script type="importmap">
@@ -153,31 +222,7 @@
     </div>
   </div>
 
-  <!-- ADMIN LOGIN MODAL OVERLAY -->
-  <div class="admin-login-overlay" id="adminLoginOverlay">
-    <div class="admin-login-modal">
-      <button class="admin-login-close" id="closeAdminLoginBtn">&times;</button>
-      
-      <div class="admin-modal-header">
-        <div style="font-size:2.5rem; margin-bottom:4px;">🔒</div>
-        <h2>ADMIN VAULT LOGIN</h2>
-        <p>Restricted Curator Access — Enter Secret Master Key</p>
-      </div>
 
-      <form id="adminLoginForm">
-        <div class="admin-form-group">
-          <label for="adminPasscodeInput">ENTER MASTER SECRET KEY</label>
-          <input type="password" id="adminPasscodeInput" class="admin-passcode-input" placeholder="••••••••••••••••••••••••" required />
-        </div>
-
-        <div class="admin-login-error" id="adminLoginError" style="display:none;"></div>
-
-        <button type="submit" class="btn-admin-submit">
-          🔓 Authenticate &amp; Enter Admin Panel
-        </button>
-      </form>
-    </div>
-  </div>
 
   <!-- Shared Cart Drawer Root -->
   <div id="cartDrawerRoot"></div>
