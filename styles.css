@@ -3246,7 +3246,8 @@ main {
     text-align: center !important;
   }
 
-  .logo-stamp {
+  .footer-col.brand-col .logo-stamp {
+    order: 1 !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -3255,13 +3256,15 @@ main {
     text-align: center !important;
   }
 
-  .footer-bio {
+  .footer-col.brand-col .footer-bio {
+    order: 2 !important;
     text-align: center !important;
     margin: 0 auto 1rem !important;
     max-width: 480px !important;
   }
 
-  .footer-socials {
+  .footer-col.brand-col .footer-socials {
+    order: 3 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
