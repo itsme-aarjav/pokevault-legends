@@ -3121,12 +3121,594 @@ main {
 }
 
 /* Cart & Checkout Page Layouts */
-.cart-page-layout, .checkout-page-layout {
+/* ==========================================================================
+   TRAINER'S VAULT CHECKOUT PAGE STYLES — MOCKUP PIXEL PERFECT DESIGN
+   ========================================================================== */
+
+/* Body Yellow Background on Checkout Page */
+.checkout-body {
+  background-color: #FFE852 !important;
+  background-image: radial-gradient(#000000 12%, transparent 12%) !important;
+  background-size: 16px 16px !important;
+  background-position: 0 0, 8px 8px !important;
+}
+
+.co-main-wrap {
+  padding: 3rem 1.5rem 6rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Page Header & Stepper */
+.co-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.co-page-title {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #000;
+  margin: 0 0 1.25rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.co-stepper-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.co-step-item {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0px #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.co-step-line {
+  flex: 1;
+  height: 3px;
+  background: #000;
+  margin: 0 -2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Master Grid */
+.co-grid {
   display: grid;
   grid-template-columns: 1fr 340px;
   gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  align-items: start;
+}
+
+.co-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* Form Sections */
+.co-section-card {
+  margin-bottom: 0.5rem;
+}
+
+.co-section-title {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #000;
+  margin: 0 0 1rem;
+  letter-spacing: 0.5px;
+}
+
+/* Input Groups & Exp Badges */
+.co-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.co-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.co-label-row label,
+.co-simple-label {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #000;
+  letter-spacing: 0.3px;
+}
+
+.co-exp-badge {
+  font-family: var(--font-mono);
+  font-weight: 900;
+  font-size: 0.72rem;
+  color: #D32F2F;
+  letter-spacing: 0.5px;
+}
+
+.co-input {
+  background: #FFFFFF;
+  border: 2px solid #000;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: #000;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 0px #000;
+  outline: none;
+}
+
+.co-input:focus {
+  border-color: var(--accent-red);
+  box-shadow: 3px 3px 0px #000;
+}
+
+/* Form Layout Rows */
+.co-form-row {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.co-form-row.col-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.co-form-row.col-3 {
+  grid-template-columns: 2.2fr 1fr 1fr;
+}
+
+.co-form-row.col-1 {
+  grid-template-columns: 1fr;
+}
+
+.co-form-row.gap-sm {
+  gap: 0.75rem;
+}
+
+/* Checkbox Row */
+.co-checkbox-row {
+  margin-top: 0.5rem;
+}
+
+.co-checkbox-label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.co-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #000;
+  cursor: pointer;
+}
+
+/* Bottom Sections Side-by-Side Grid */
+.co-bottom-sections-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* 2. Dispatch Speed Cards */
+.co-dispatch-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+.co-radio-hidden {
+  display: none !important;
+}
+
+.co-dispatch-card {
+  position: relative;
+  background: #E8ECEF;
+  border: 2px solid #000;
+  border-radius: 8px;
+  padding: 1.25rem 0.6rem;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.15s ease;
+  box-shadow: 2px 2px 0px #000;
+  min-height: 210px;
+  box-sizing: border-box;
+}
+
+.co-dispatch-card.active {
+  background: linear-gradient(135deg, #FFE082 0%, #FFB300 100%);
+  border: 2px solid #000;
+  box-shadow: 0 0 0 2px #FFF, 0 0 0 4px #000, 3px 3px 0px #000;
+}
+
+.co-dispatch-check-icon {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 24px;
+  height: 24px;
+  background: #311B92;
+  color: #FFF;
+  border: 2px solid #FFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.8rem;
+  box-shadow: 2px 2px 0px #000;
+  z-index: 5;
+}
+
+.co-dispatch-icon {
+  font-size: 2.4rem;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.co-dispatch-name {
+  font-family: var(--font-title);
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1.2;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.co-dispatch-divider {
+  width: 80%;
+  height: 1px;
+  background: #000;
+  margin: 6px auto;
+  opacity: 0.4;
+}
+
+.co-dispatch-days {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #222;
+  font-weight: 700;
+}
+
+.co-dispatch-price {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #000;
+  margin-top: 4px;
+}
+
+/* 3. Payment Method Section */
+.payment-method-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.co-payment-badges-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.pay-badge {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 900;
+  padding: 2px 6px;
+  border: 1px solid #000;
+  border-radius: 3px;
+  background: #FFF;
+  color: #000;
+}
+
+.pay-badge.visa { background: #1A1F71; color: #FFF; border-color: #1A1F71; }
+.pay-badge.mc { background: #EB001B; color: #FFF; border-color: #EB001B; }
+.pay-badge.amex { background: #006FCF; color: #FFF; border-color: #006FCF; }
+.pay-badge.disc { background: #F9A01B; color: #FFF; border-color: #F9A01B; }
+.pay-badge.gpay { background: #4285F4; color: #FFF; border-color: #4285F4; }
+
+.co-encryption-text {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-align: center;
+  margin-top: 8px;
+  color: #000;
+  font-weight: 700;
+}
+
+.co-or-divider {
+  text-align: center;
+  margin: 10px 0;
+  position: relative;
+}
+
+.co-or-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 1px dashed #000;
+  z-index: 1;
+}
+
+.co-or-divider span {
+  position: relative;
+  z-index: 2;
+  background: #FFE852;
+  padding: 0 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #000;
+}
+
+.co-paypal-express-btn {
+  background: #FFC439;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0px #000;
+  border-radius: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.co-paypal-express-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px #000;
+}
+
+.pp-logo {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.pp-logo i:nth-child(1) { color: #003087; font-style: normal; }
+.pp-logo i:nth-child(2) { color: #0079C1; font-style: normal; }
+
+.pp-subtext {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #000;
+  font-weight: 700;
+}
+
+/* Right Sidebar: Order Summary Card */
+.co-order-summary-card {
+  background: #FFFFFF;
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0px #000;
+  border-radius: 10px;
+  padding: 1.5rem;
+  position: sticky;
+  top: 90px;
+}
+
+.co-summary-header-title {
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  font-weight: 900;
+  border-bottom: 2px solid #000;
+  padding-bottom: 8px;
+  margin: 0 0 1rem;
+  color: #000;
+  letter-spacing: 0.5px;
+}
+
+.co-items-list {
+  margin-bottom: 1.25rem;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.co-item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #DDD;
+}
+
+.co-item-thumb-box {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border: 2px solid #000;
+  border-radius: 6px;
+  background: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.co-item-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.co-item-details {
+  flex: 1;
+}
+
+.co-item-name {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  font-weight: 900;
+  line-height: 1.2;
+  color: #000;
+}
+
+.co-item-price {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #555;
+  margin-top: 2px;
+}
+
+.co-summary-line {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  margin-bottom: 8px;
+  color: #000;
+}
+
+.co-summary-divider {
+  border-bottom: 2px dashed #000;
+  margin: 12px 0;
+}
+
+.co-summary-total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #000;
+  margin-bottom: 1.25rem;
+}
+
+.co-trust-pill-box {
+  background: #F4F6F8;
+  border: 1px solid #CCC;
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-title);
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: #000;
+}
+
+.trust-item.points {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #000;
+}
+
+/* Master Bottom Complete Order Button */
+.co-master-submit-row {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.co-master-submit-btn {
+  background: #E94057;
+  color: #FFFFFF;
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  font-weight: 900;
+  padding: 16px 44px;
+  border: 3px solid #000;
+  box-shadow: 5px 5px 0px #000;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.co-master-submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 8px 8px 0px #000;
+  background: #FF2A4B;
+}
+
+/* Responsive Overrides for Mobile / Tablet */
+@media (max-width: 992px) {
+  .co-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .co-order-summary-card {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .co-main-wrap {
+    padding: 1.5rem 1rem 4rem;
+  }
+
+  .co-page-title {
+    font-size: 1.6rem;
+  }
+
+  .co-bottom-sections-row {
+    grid-template-columns: 1fr;
+  }
+
+  .co-form-row.col-2,
+  .co-form-row.col-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .co-master-submit-btn {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 0.95rem;
+  }
 }
 .cart-summary-box {
   background: #FFF;
