@@ -83,7 +83,7 @@ export default function CartPage() {
                       return (
                         <tr key={p.id}>
                           <td style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <img src={p.image} style={{ width: '50px', height: '50px', objectFit: 'contain', background: '#111', borderRadius: '6px', border: '1px solid #000' }} alt={p.name} />
+                            <img src={p.image} style={{ width: '50px', height: '50px', objectFit: 'contain', background: '#FFFFFF', borderRadius: '6px', border: '1px solid #000', position: 'relative', zIndex: 2 }} alt={p.name} />
                             <div>
                               <Link href={`/product/${p.id}`} style={{ fontFamily: 'var(--font-title)', fontWeight: 900, fontSize: '0.95rem', color: '#000', textDecoration: 'none' }}>
                                 {p.name}
