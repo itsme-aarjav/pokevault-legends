@@ -5,8 +5,10 @@ import * as THREE from 'three';
  * GPU-accelerated WebGL real-time 3D environment for featured card & protective cover slab.
  */
 export class Hero3DStage {
-  constructor(containerId = 'hero3DStageContainer') {
-    this.container = document.getElementById(containerId);
+  constructor(containerOrId = 'hero3DStageContainer') {
+    this.container = (typeof containerOrId === 'string')
+      ? document.getElementById(containerOrId)
+      : containerOrId;
     if (!this.container) return;
 
     this.scene = null;
@@ -89,7 +91,7 @@ export class Hero3DStage {
     const textureLoader = new THREE.TextureLoader();
 
     // 1. Front Holo Card Texture
-    const frontTexture = textureLoader.load('assets/charizard.png');
+    const frontTexture = textureLoader.load('/assets/charizard.png');
     frontTexture.generateMipmaps = true;
 
     // 2. Procedural Back Card Texture

@@ -11,7 +11,15 @@ import { getAllProducts } from './data/products.js';
 import { Hero3DStage } from './hero-3d-stage.js';
 import { ThreeCardViewer } from './three-card-viewer.js';
 import { addToCart } from './utils/store.js';
-import confetti from 'canvas-confetti';
+
+// Use confetti safely — loaded via importmap, accessed from module
+let confetti;
+try {
+  const mod = await import('canvas-confetti');
+  confetti = mod.default || mod;
+} catch (_) {
+  confetti = (typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {};
+}
 
 class MainStore {
   constructor() {
@@ -40,7 +48,7 @@ class MainStore {
       this.heroStage = new Hero3DStage(container);
 
       document.getElementById('btnExplodeSlab')?.addEventListener('click', () => {
-        if (this.heroStage) this.heroStage.toggleExplosion();
+        if (this.heroStage) this.heroStage.toggleExplodedView();
       });
 
       document.getElementById('btnAutoSpin')?.addEventListener('click', () => {
@@ -71,75 +79,6 @@ class MainStore {
 
     close3DModalBtn?.addEventListener('click', () => {
       modal3DOverlay?.classList.remove('open');
-    });
-
-    // Admin Vault Login Modal
-    const adminOverlay = document.getElementById('adminLoginOverlay');
-    const accountBtn = document.getElementById('accountBtn');
-    const closeAdminBtn = document.getElementById('closeAdminLoginBtn');
-    const adminForm = document.getElementById('adminLoginForm');
-    const adminError = document.getElementById('adminLoginError');
-
-    const openAdminModal = (e) => {
-      if (e) e.preventDefault();
-      adminOverlay?.classList.add('open');
-      if (adminError) adminError.style.display = 'none';
-    };
-
-    const closeAdminModal = () => {
-      adminOverlay?.classList.remove('open');
-    };
-
-    accountBtn?.addEventListener('click', openAdminModal);
-    closeAdminBtn?.addEventListener('click', closeAdminModal);
-    adminOverlay?.addEventListener('click', (e) => {
-      if (e.target === adminOverlay) closeAdminModal();
-    });
-
-    let adminAttempts = 0;
-    let adminLockedUntil = 0;
-
-    adminForm?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (Date.now() < adminLockedUntil) {
-        const secsLeft = Math.ceil((adminLockedUntil - Date.now()) / 1000);
-        if (adminError) {
-          adminError.textContent = `❌ Too many attempts. Try again in ${secsLeft}s.`;
-          adminError.style.display = 'block';
-        }
-        return;
-      }
-
-      const input = document.getElementById('adminPasscodeInput');
-      const pass = (input?.value || '').trim();
-
-      fetch('/api/orders', { headers: { 'X-Admin-Key': pass } }).then(res => {
-        if (res.ok) {
-          sessionStorage.setItem('pvAdminKey', pass);
-          confetti({ particleCount: 120, spread: 70, origin: { y: 0.5 } });
-          window.location.href = 'admin.html';
-        } else {
-          adminAttempts++;
-          if (adminAttempts >= 3) {
-            adminLockedUntil = Date.now() + 30000;
-            adminAttempts = 0;
-            if (adminError) {
-              adminError.textContent = '❌ Too many failed attempts. Locked for 30 seconds.';
-              adminError.style.display = 'block';
-            }
-          } else {
-            if (adminError) {
-              adminError.textContent = `❌ Invalid Admin Key. ${3 - adminAttempts} attempts remaining.`;
-              adminError.style.display = 'block';
-            }
-          }
-        }
-      }).catch(err => {
-        if (pass.length >= 16) {
-          sessionStorage.setItem('pvAdminKey', pass);
-          window.location.href = 'admin.html';
-        }
-      });
     });
   }
 }

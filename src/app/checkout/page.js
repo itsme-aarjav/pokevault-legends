@@ -170,7 +170,7 @@ export default function CheckoutPage() {
                   if (!p) return null;
                   return (
                     <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px', paddingBottom: '10px', borderBottom: '1px dashed #DDD' }}>
-                      <img src={p.image} style={{ width: '40px', height: '40px', objectFit: 'contain', background: '#111', borderRadius: '4px' }} alt={p.name} />
+                      <img src={p.image} style={{ width: '40px', height: '40px', objectFit: 'contain', background: '#FFFFFF', borderRadius: '4px', border: '1px solid #000', position: 'relative', zIndex: 2 }} alt={p.name} />
                       <div style={{ flex: 1 }}>
                         <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '0.8rem', lineHeight: 1.2 }}>{p.name}</div>
                         <div style={{ fontSize: '0.75rem', color: '#666' }}>Qty: {item.quantity} × ${p.price.toFixed(2)}</div>

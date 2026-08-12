@@ -4,7 +4,6 @@
  */
 
 import { isInWishlist, toggleWishlist, addToCart } from '../utils/store.js';
-import confetti from 'canvas-confetti';
 
 export function renderProductCard(product) {
   const isWishlisted = isInWishlist(product.id);
@@ -21,7 +20,7 @@ export function renderProductCard(product) {
           </svg>
         </button>
         <a href="product.html?id=${product.id}" style="display:block; width:100%; height:100%;">
-          <img src="${product.image}" alt="${product.name}" class="card-main-img" loading="lazy" />
+          <img src="${product.image}" alt="${product.name}" class="card-main-img" loading="lazy" width="300" height="300" style="aspect-ratio: 1/1; object-fit: contain;" />
         </a>
       </div>
 
@@ -59,6 +58,20 @@ export function renderProductCard(product) {
 export function bindProductCardEvents(container) {
   if (!container) return;
 
+  // Link Prefetching on Hover
+  container.querySelectorAll('.card-item-box').forEach(box => {
+    box.addEventListener('mouseenter', () => {
+      const prodId = box.getAttribute('data-product-id');
+      if (prodId && !document.querySelector(`link[data-prefetch="${prodId}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = `product.html?id=${prodId}`;
+        link.setAttribute('data-prefetch', prodId);
+        document.head.appendChild(link);
+      }
+    });
+  });
+
   // Wishlist Toggle Buttons
   container.querySelectorAll('[data-wishlist-id]').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -75,14 +88,35 @@ export function bindProductCardEvents(container) {
     });
   });
 
-  // Fast Add to Cart Buttons
+  // Fast Add to Cart Buttons with Micro-Animations
   container.querySelectorAll('[data-cart-id]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
       const id = btn.getAttribute('data-cart-id');
-      addToCart(id, 1);
-      confetti({ particleCount: 35, spread: 50, origin: { y: 0.7 } });
+      
+      const origText = btn.innerHTML;
+      btn.innerHTML = '⏳ Adding...';
+      btn.style.transform = 'scale(0.95)';
+
+      setTimeout(() => {
+        addToCart(id, 1);
+        btn.innerHTML = '✓ Added!';
+        btn.style.background = '#10B981';
+        btn.style.color = '#FFF';
+        btn.style.transform = 'scale(1.05)';
+
+        if (typeof window !== 'undefined' && window.confetti) {
+          window.confetti({ particleCount: 45, spread: 55, origin: { y: 0.7 } });
+        }
+
+        setTimeout(() => {
+          btn.innerHTML = origText;
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.style.transform = '';
+        }, 1200);
+      }, 180);
     });
   });
 }

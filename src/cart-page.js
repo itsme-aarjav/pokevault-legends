@@ -84,7 +84,7 @@ class CartPage {
             return `
               <tr>
                 <td style="display:flex; align-items:center; gap:12px;">
-                  <img src="${p.image}" style="width:50px; height:50px; object-fit:contain; background:#111; border-radius:6px; border:1px solid #000;" alt="${p.name}" />
+                  <img src="${p.image}" style="width:50px; height:50px; object-fit:contain; background:#FFFFFF; border-radius:6px; border:1px solid #000; position:relative; z-index:2;" alt="${p.name}" />
                   <div>
                     <a href="product.html?id=${p.id}" style="font-family:var(--font-title); font-weight:900; font-size:0.95rem; color:#000; text-decoration:none;">${p.name}</a>
                     <div style="font-size:0.75rem; color:#666;">SKU: ${p.sku || p.id}</div>

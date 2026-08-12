@@ -66,7 +66,6 @@ export function renderNavbar(activePage = 'home') {
           <li><a href="wishlist.html" class="nav-link ${activePage === 'wishlist' ? 'active' : ''}">Wishlist</a></li>
           <li><a href="about.html" class="nav-link ${activePage === 'about' ? 'active' : ''}">About</a></li>
           <li><a href="contact.html" class="nav-link ${activePage === 'contact' ? 'active' : ''}">Contact</a></li>
-          <li><a href="admin.html" class="nav-link" style="color:var(--accent-red); font-weight:700;">Admin Vault</a></li>
         </ul>
 
         <button class="mobile-nav-toggle" id="mobileNavToggleBtn" aria-label="Open Mobile Menu">
@@ -74,13 +73,6 @@ export function renderNavbar(activePage = 'home') {
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-
-        <button class="icon-btn" id="accountBtn" aria-label="Account / Admin Login">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
           </svg>
         </button>
       </nav>
@@ -103,7 +95,6 @@ export function renderNavbar(activePage = 'home') {
           <li><a href="cart.html" class="mobile-nav-link ${activePage === 'cart' ? 'active' : ''}">📦 Shopping Cart</a></li>
           <li><a href="about.html" class="mobile-nav-link ${activePage === 'about' ? 'active' : ''}">📜 About PokéVault</a></li>
           <li><a href="contact.html" class="mobile-nav-link ${activePage === 'contact' ? 'active' : ''}">📞 Contact Support</a></li>
-          <li><a href="admin.html" class="mobile-nav-link" style="color:var(--accent-red);">🔒 Admin Vault</a></li>
         </ul>
       </div>
     </div>

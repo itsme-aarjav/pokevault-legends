@@ -65,7 +65,7 @@ class CheckoutPage {
       if (!p) return '';
       return `
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; padding-bottom:10px; border-bottom:1px dashed #DDD;">
-          <img src="${p.image}" style="width:40px; height:40px; object-fit:contain; background:#111; border-radius:4px;" alt="${p.name}" />
+          <img src="${p.image}" style="width:40px; height:40px; object-fit:contain; background:#FFFFFF; border-radius:4px; border:1px solid #000; position:relative; z-index:2;" alt="${p.name}" />
           <div style="flex:1;">
             <div style="font-family:var(--font-mono); font-weight:700; font-size:0.8rem; line-height:1.2;">${p.name}</div>
             <div style="font-size:0.75rem; color:#666;">Qty: ${item.quantity} × $${p.price.toFixed(2)}</div>
