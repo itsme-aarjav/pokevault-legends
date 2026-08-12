@@ -1,6 +1,7 @@
 /**
  * POKÉVAULT LEGENDS — Standalone Checkout Controller
- * Manages order summary, shipping form, PayPal SDK integration, and Order creation API.
+ * Manages Trainer's Vault Checkout, order summary, shipping form, dispatch speed selection,
+ * PayPal SDK integration, and Order creation API.
  */
 
 import { renderNavbar, initNavbarEvents } from './components/navbar.js';
@@ -36,7 +37,6 @@ class CheckoutPage {
   getCalculatedTotals() {
     const subtotal = getCartSubtotal();
     const promo = getPromoState();
-    const insuranceIncluded = getInsuranceState();
     const dispatchSpeedEl = document.querySelector('input[name="dispatchSpeed"]:checked');
     const isExpress = dispatchSpeedEl ? dispatchSpeedEl.value === 'express' : true;
     const shipping = isExpress ? 9.99 : 0;
@@ -47,7 +47,9 @@ class CheckoutPage {
     }
 
     const total = Math.max(0.01, subtotal - discount + shipping);
-    return { subtotal, discount, shipping, total, promoCode: promo.code };
+    const vaultPoints = Math.floor(total);
+
+    return { subtotal, discount, shipping, total, vaultPoints, promoCode: promo.code };
   }
 
   renderSummary() {
@@ -57,6 +59,7 @@ class CheckoutPage {
     const discountEl = document.getElementById('coDiscount');
     const shippingEl = document.getElementById('coShipping');
     const totalEl = document.getElementById('coTotal');
+    const pointsText = document.getElementById('coPointsText');
 
     if (!itemsList) return;
 
@@ -64,13 +67,14 @@ class CheckoutPage {
       const p = item.product;
       if (!p) return '';
       return `
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; padding-bottom:10px; border-bottom:1px dashed #DDD;">
-          <img src="${p.image}" style="width:40px; height:40px; object-fit:contain; background:#FFFFFF; border-radius:4px; border:1px solid #000; position:relative; z-index:2;" alt="${p.name}" />
-          <div style="flex:1;">
-            <div style="font-family:var(--font-mono); font-weight:700; font-size:0.8rem; line-height:1.2;">${p.name}</div>
-            <div style="font-size:0.75rem; color:#666;">Qty: ${item.quantity} × $${p.price.toFixed(2)}</div>
+        <div class="co-item-row">
+          <div class="co-item-thumb-box">
+            <img src="${p.image}" alt="${p.name}" class="co-item-img" />
           </div>
-          <div style="font-family:var(--font-mono); font-weight:900; font-size:0.85rem; color:var(--accent-red);">$${(p.price * item.quantity).toFixed(2)}</div>
+          <div class="co-item-details">
+            <div class="co-item-name">${item.quantity} x ${p.name}</div>
+            <div class="co-item-price">$${p.price.toFixed(2)}</div>
+          </div>
         </div>
       `;
     }).join('');
@@ -90,17 +94,60 @@ class CheckoutPage {
     }
 
     if (totalEl) totalEl.textContent = `$${totals.total.toFixed(2)}`;
+    if (pointsText) pointsText.textContent = `Earn ${totals.vaultPoints} Vault Points!`;
   }
 
   bindFormEvents() {
     const form = document.getElementById('checkoutMasterForm');
+    const cardExpress = document.getElementById('cardArmoredExpress');
+    const cardStandard = document.getElementById('cardStandardGround');
+
+    // Toggle Dispatch Speed Card Highlights
+    const updateDispatchCards = (selected) => {
+      if (selected === 'express') {
+        cardExpress?.classList.add('active');
+        cardStandard?.classList.remove('active');
+        const checkE = cardExpress?.querySelector('.co-dispatch-check-icon');
+        const checkS = cardStandard?.querySelector('.co-dispatch-check-icon');
+        if (checkE) checkE.style.display = 'flex';
+        if (checkS) checkS.style.display = 'none';
+      } else {
+        cardStandard?.classList.add('active');
+        cardExpress?.classList.remove('active');
+        const checkE = cardExpress?.querySelector('.co-dispatch-check-icon');
+        const checkS = cardStandard?.querySelector('.co-dispatch-check-icon');
+        if (checkE) checkE.style.display = 'none';
+        if (checkS) checkS.style.display = 'flex';
+      }
+      this.renderSummary();
+    };
+
     document.querySelectorAll('input[name="dispatchSpeed"]').forEach(radio => {
-      radio.addEventListener('change', () => this.renderSummary());
+      radio.addEventListener('change', (e) => {
+        updateDispatchCards(e.target.value);
+      });
     });
 
+    cardExpress?.addEventListener('click', () => {
+      const radio = cardExpress.querySelector('input[type="radio"]');
+      if (radio) { radio.checked = true; updateDispatchCards('express'); }
+    });
+
+    cardStandard?.addEventListener('click', () => {
+      const radio = cardStandard.querySelector('input[type="radio"]');
+      if (radio) { radio.checked = true; updateDispatchCards('standard'); }
+    });
+
+    // Handle Form Submit
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
       await this.processOrderPlacement('Credit Card / Vault Pay');
+    });
+
+    // PayPal Fallback Button Click
+    const paypalFallback = document.getElementById('paypalExpressBtnFallback');
+    paypalFallback?.addEventListener('click', async () => {
+      await this.processOrderPlacement('PayPal Express');
     });
   }
 
