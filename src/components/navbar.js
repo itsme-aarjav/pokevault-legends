@@ -113,6 +113,11 @@ export function initNavbarEvents() {
     if (e.target === mobileNavOverlay) mobileNavOverlay.classList.remove('open');
   });
 
+  // Auto-close mobile nav when any link inside is tapped
+  mobileNavOverlay?.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', () => mobileNavOverlay.classList.remove('open'));
+  });
+
   // Live Instant Search Dropdown
   const searchInput = document.getElementById('navSearchInput');
   const searchDropdown = document.getElementById('searchDropdown');
