@@ -1434,6 +1434,8 @@ h1, h2, h3, .font-display {
   flex-direction: column;
   padding: 1rem;
   justify-content: space-between;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 #pdMainStageCanvas {
@@ -1451,6 +1453,8 @@ h1, h2, h3, .font-display {
   align-items: center;
   justify-content: center;
   flex: 1;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 #pdMainStageCanvas::before,
@@ -1462,9 +1466,11 @@ h1, h2, h3, .font-display {
 #mainGalleryImg {
   position: relative;
   z-index: 1;
-  max-width: 100%;
-  max-height: 380px;
-  object-fit: contain;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
   background-color: #FFFFFF;
 }
 
@@ -2186,10 +2192,31 @@ main {
     gap: 1.25rem;
   }
 
+  .pd-stage-box {
+    min-height: auto;
+    box-shadow: 4px 4px 0px #000;
+    padding: 0.5rem;
+  }
+
+  .pd-details-box {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
   #pdMainStageCanvas {
-    min-height: 240px;
-    max-height: 300px;
-    padding: 0.75rem;
+    height: 340px !important;
+    min-height: 280px !important;
+    max-height: 400px !important;
+    padding: 0.75rem !important;
+    box-shadow: 3px 3px 0px #000 !important;
+  }
+
+  #mainGalleryImg {
+    max-height: 100% !important;
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
   }
 
   .product-page-wrap,
@@ -2220,7 +2247,8 @@ main {
   }
 
   .admin-table {
-    min-width: 580px;
+    min-width: 0;
+    width: 100%;
   }
 
   .vault-modal-card {
@@ -3014,7 +3042,7 @@ main {
   border: 3px solid #000;
   box-shadow: 6px 6px 0px #000;
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
   min-height: 380px;
   display: flex;
@@ -3023,12 +3051,15 @@ main {
   position: relative;
   z-index: 2;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .pd-main-img {
-  max-width: 100%;
-  max-height: 380px;
-  object-fit: contain;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
   position: relative;
   z-index: 1;
   background: #FFFFFF;
@@ -3128,13 +3159,19 @@ main {
   }
 
   .pd-main-stage {
-    min-height: 240px;
-    padding: 0.75rem;
-    box-shadow: 4px 4px 0px #000;
+    height: 340px !important;
+    min-height: 280px !important;
+    max-height: 400px !important;
+    padding: 0.75rem !important;
+    box-shadow: 4px 4px 0px #000 !important;
   }
 
   .pd-main-img {
-    max-height: 280px;
+    max-height: 100% !important;
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
   }
 
   .pd-product-title {
@@ -3193,6 +3230,100 @@ main {
 
   .pd-add-cart-btn {
     width: 100%;
+  }
+}
+
+/* PDP Reviews Summary Grid */
+.pd-reviews-summary {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  background: #FFF;
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0px #000;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.pd-rating-score-box {
+  text-align: center;
+  border-right: 2px solid #EEE;
+  padding-right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* PDP Review Form Container */
+.pd-review-form-container {
+  background: #FFFDE7;
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0px #000;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.pd-review-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* PDP Review Card */
+.review-card {
+  background: #FFF;
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0px #000;
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Breadcrumb mobile overflow fix */
+.breadcrumb-nav {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .pd-reviews-summary {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1rem;
+    box-shadow: 3px 3px 0px #000;
+  }
+
+  .pd-rating-score-box {
+    border-right: none;
+    border-bottom: 2px solid #EEE;
+    padding-right: 0;
+    padding-bottom: 1rem;
+  }
+
+  .pd-review-form-container {
+    padding: 1rem;
+    box-shadow: 3px 3px 0px #000;
+  }
+
+  .pd-review-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .review-card {
+    padding: 1rem;
+    box-shadow: 3px 3px 0px #000;
+  }
+
+  .breadcrumb-nav {
+    font-size: 0.75rem;
   }
 }
 
