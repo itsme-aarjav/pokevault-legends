@@ -1967,6 +1967,120 @@ main {
   display: none;
 }
 
+/* ==========================================================================
+   FEATURED CATEGORIES — 2x2 MOBILE / 4x1 DESKTOP GRID PATTERN
+   ========================================================================== */
+.featured-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featured-cat-card {
+  text-decoration: none;
+  color: #000;
+  display: block;
+}
+
+.featured-cat-inner {
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0px #000;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.featured-cat-card:hover .featured-cat-inner {
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0px #000;
+}
+
+.cat-card-cards .featured-cat-inner { background: #FFF056; }
+.cat-card-plush .featured-cat-inner { background: #FFDE59; }
+.cat-card-figures .featured-cat-inner { background: #00C9FF; }
+.cat-card-clothing .featured-cat-inner { background: #E94057; color: #FFF; }
+
+.featured-cat-icon {
+  font-size: 3rem;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.featured-cat-title {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.cat-card-clothing .featured-cat-title { color: #FFF; }
+
+.featured-cat-sub {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #444;
+  margin-top: 4px;
+}
+
+.cat-card-clothing .featured-cat-sub { color: #FFF; }
+
+/* 2x2 MOBILE GRID PATTERN FOR CATEGORIES (<= 768px) */
+@media (max-width: 768px) {
+  .featured-categories-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .featured-cat-inner {
+    padding: 1rem 0.5rem !important;
+    box-shadow: 3px 3px 0px #000 !important;
+    border-width: 2px !important;
+  }
+
+  .featured-cat-icon {
+    font-size: 1.8rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .featured-cat-title {
+    font-size: 0.85rem !important;
+  }
+
+  .featured-cat-sub {
+    font-size: 0.68rem !important;
+    margin-top: 2px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .featured-categories-grid {
+    gap: 0.5rem !important;
+  }
+
+  .featured-cat-inner {
+    padding: 0.75rem 0.35rem !important;
+    box-shadow: 2px 2px 0px #000 !important;
+  }
+
+  .featured-cat-title {
+    font-size: 0.75rem !important;
+  }
+
+  .featured-cat-sub {
+    font-size: 0.62rem !important;
+  }
+}
+
 /* TABLET RESPONSIVE RULES (769px to 992px) */
 @media (max-width: 992px) {
   .hero-section {
