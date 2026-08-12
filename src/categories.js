@@ -28,13 +28,13 @@ class CategoriesPage {
     if (!grid) return;
 
     grid.innerHTML = CATEGORIES_DATA.map(cat => `
-      <div class="category-directory-card" style="background: #FFF; border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.15s ease;">
-        <div style="height: 180px; background: ${cat.bannerColor}; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-          <img src="${cat.image}" alt="${cat.name}" style="height: 140px; object-fit: contain; filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.3));" />
-          <span style="position: absolute; top: 12px; right: 12px; background: #000; color: #FFF056; font-family: var(--font-mono); font-weight: 700; font-size: 0.8rem; padding: 4px 10px; border-radius: 4px;">
+      <div class="category-directory-card" style="background: #FFFFFF; border: 3px solid #000; box-shadow: 6px 6px 0px #000; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.15s ease; position: relative; z-index: 2;">
+        <div class="category-card-img-wrap" style="height: 180px; background: #FFFFFF; position: relative; z-index: 2; overflow: hidden; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid #000;">
+          ${cat.image ? `<img src="${cat.image}" alt="${cat.name}" style="height: 140px; object-fit: contain; position: relative; z-index: 1; filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.15));" />` : `<span style="font-size: 5rem; position: relative; z-index: 1; filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.2));">${cat.icon}</span>`}
+          <span style="position: absolute; top: 12px; right: 12px; background: #000; color: #FFF056; font-family: var(--font-mono); font-weight: 700; font-size: 0.8rem; padding: 4px 10px; border-radius: 4px; z-index: 3;">
             ${cat.count} Items
           </span>
-          <span style="position: absolute; bottom: 12px; left: 12px; font-size: 2rem;">
+          <span style="position: absolute; bottom: 12px; left: 12px; font-size: 2rem; z-index: 3;">
             ${cat.icon}
           </span>
         </div>
