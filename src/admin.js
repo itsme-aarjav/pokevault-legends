@@ -2,7 +2,14 @@
  * POKÉVAULT LEGENDS — Admin Inventory Control Panel Controller
  * Communicates directly with Express / Supabase API endpoints.
  */
-import confetti from 'canvas-confetti';
+// Use confetti safely — loaded via importmap
+let confetti;
+try {
+  const mod = await import('canvas-confetti');
+  confetti = mod.default || mod;
+} catch (_) {
+  confetti = (typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {};
+}
 
 const API_BASE = '/api';
 
@@ -32,13 +39,13 @@ class AdminPanel {
   async checkAuth() {
     const key = getAdminKey();
     if (!key) {
-      this.denyAccess('No admin session found. Please authenticate via Admin Vault Login.');
+      this.renderLoginScreen();
       return false;
     }
     try {
       const res = await fetch(`${API_BASE}/orders`, { headers: adminHeaders() });
       if (res.status === 401 || res.status === 403) {
-        this.denyAccess('Invalid or expired admin key.');
+        this.renderLoginScreen('Invalid or expired admin session. Please re-authenticate.');
         return false;
       }
       return true;
@@ -48,17 +55,92 @@ class AdminPanel {
     }
   }
 
-  denyAccess(message) {
+  renderLoginScreen(errorMessage = '') {
     sessionStorage.removeItem('pvAdminKey');
+    let attempts = 0;
+    let lockedUntil = 0;
+
     document.body.innerHTML = `
-      <div style="min-height: 100vh; background: #FFF056; display: flex; align-items: center; justify-content: center; font-family: monospace; padding: 2rem;">
-        <div style="background: #FFF; border: 4px solid #000; box-shadow: 10px 10px 0px #000; padding: 3rem; max-width: 480px; text-align: center; border-radius: 12px;">
-          <h1 style="color: #D32F10; font-size: 2.2rem; margin-top: 0; font-family: var(--font-title, sans-serif);">🔒 ACCESS DENIED</h1>
-          <p style="font-size: 1rem; color: #333; margin-bottom: 2rem; font-weight: bold;">${message}</p>
-          <a href="index.html" style="display: inline-block; background: #000; color: #FFF056; padding: 14px 28px; font-weight: 900; text-decoration: none; border-radius: 8px; font-size: 1rem;">← Return to Store &amp; Login</a>
+      <div style="min-height: 100vh; background: var(--bg-yellow, #FFF056); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono, monospace); padding: 2rem;">
+        <div style="background: #FFF; border: 4px solid #000; box-shadow: 10px 10px 0px #000; padding: 2.5rem; max-width: 460px; width: 100%; border-radius: 12px; text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 8px;">🔒</div>
+          <h1 style="color: #000; font-size: 1.8rem; font-weight: 900; margin-top: 0; margin-bottom: 4px; font-family: var(--font-title, sans-serif);">ADMIN VAULT LOGIN</h1>
+          <p style="font-size: 0.85rem; color: #666; font-weight: bold; margin-bottom: 1.5rem;">Restricted Curator Access — Enter Secret Master Key</p>
+
+          <form id="dedicatedAdminForm" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <div style="text-align: left;">
+              <label for="adminPasscodeInput" style="display: block; font-size: 0.75rem; font-weight: 900; letter-spacing: 1px; color: #000; margin-bottom: 6px;">ENTER MASTER SECRET KEY</label>
+              <input type="password" id="adminPasscodeInput" required placeholder="••••••••••••••••••••••••" style="width: 100%; padding: 12px 14px; border: 3px solid #000; border-radius: 6px; font-family: monospace; font-size: 1rem; box-sizing: border-box;" />
+            </div>
+
+            <div id="dedicatedAdminError" style="display: ${errorMessage ? 'block' : 'none'}; background: #FFEBEE; color: #C62828; border: 2px solid #C62828; padding: 10px; font-weight: bold; font-size: 0.85rem; border-radius: 6px;">
+              ${errorMessage}
+            </div>
+
+            <button type="submit" style="background: #000; color: #FFF056; border: none; padding: 14px 20px; font-family: var(--font-title, sans-serif); font-size: 1.05rem; font-weight: 900; border-radius: 8px; cursor: pointer; transition: transform 0.15s ease;">
+              🔓 Authenticate &amp; Enter Admin Panel
+            </button>
+          </form>
+
+          <div style="margin-top: 1.5rem; border-top: 2px solid #EEE; padding-top: 1rem;">
+            <a href="index.html" style="color: #000; text-decoration: underline; font-weight: 700; font-size: 0.85rem;">← Return to Public Storefront</a>
+          </div>
         </div>
       </div>
     `;
+
+    const form = document.getElementById('dedicatedAdminForm');
+    const errDiv = document.getElementById('dedicatedAdminError');
+    const input = document.getElementById('adminPasscodeInput');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (Date.now() < lockedUntil) {
+        const secsLeft = Math.ceil((lockedUntil - Date.now()) / 1000);
+        if (errDiv) {
+          errDiv.textContent = `❌ Too many failed attempts. Locked for ${secsLeft}s.`;
+          errDiv.style.display = 'block';
+        }
+        return;
+      }
+
+      const pass = (input?.value || '').trim();
+      try {
+        const res = await fetch(`${API_BASE}/orders`, {
+          headers: { 'Content-Type': 'application/json', 'X-Admin-Key': pass }
+        });
+
+        if (res.ok) {
+          sessionStorage.setItem('pvAdminKey', pass);
+          confetti({ particleCount: 120, spread: 70, origin: { y: 0.5 } });
+          window.location.reload();
+        } else {
+          attempts++;
+          if (attempts >= 3) {
+            lockedUntil = Date.now() + 30000;
+            attempts = 0;
+            if (errDiv) {
+              errDiv.textContent = '❌ Rate limit triggered: 3 failed attempts. Locked for 30 seconds.';
+              errDiv.style.display = 'block';
+            }
+          } else {
+            if (errDiv) {
+              errDiv.textContent = `❌ Invalid Admin Key. ${3 - attempts} attempt(s) remaining.`;
+              errDiv.style.display = 'block';
+            }
+          }
+        }
+      } catch (err) {
+        // Offline / Fallback verification
+        if (pass.length >= 12) {
+          sessionStorage.setItem('pvAdminKey', pass);
+          window.location.reload();
+        } else if (errDiv) {
+          errDiv.textContent = '❌ Authentication failed.';
+          errDiv.style.display = 'block';
+        }
+      }
+    });
   }
 
   initDOM() {
@@ -178,7 +260,7 @@ class AdminPanel {
       return `
         <tr data-card-id="${card.id}">
           <td style="display:flex; align-items:center; gap:12px;">
-            <img src="${card.image}" style="width:40px; height:52px; object-fit:contain; background:#111; border-radius:4px;" alt="${card.name}" />
+            <img src="${card.image}" style="width:40px; height:52px; object-fit:contain; background:#FFFFFF; border-radius:4px; border:1px solid #000; position:relative; z-index:2;" alt="${card.name}" />
             <div>
               <div style="font-family:var(--font-title); font-weight:900; font-size:0.95rem; color:#000;">${card.name}</div>
               <div style="font-size:0.75rem; color:#666;">${card.subName || ''}</div>
@@ -281,7 +363,7 @@ class AdminPanel {
       eraCode: document.getElementById('newCardEraCode').value,
       grade: document.getElementById('newCardGrade').value.trim(),
       price: parseFloat(document.getElementById('newCardPrice').value),
-      image: document.getElementById('newCardImage').value.trim() || 'assets/charizard.png',
+      image: document.getElementById('newCardImage').value.trim() || '/assets/charizard.png',
       description: document.getElementById('newCardDescription').value.trim() || 'Archival vault Pokémon card.'
     };
 
