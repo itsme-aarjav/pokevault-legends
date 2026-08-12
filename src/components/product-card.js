@@ -19,8 +19,8 @@ export function renderProductCard(product) {
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
         </button>
-        <a href="product.html?id=${product.id}" style="display:block; width:100%; height:100%;">
-          <img src="${product.image}" alt="${product.name}" class="card-main-img" loading="lazy" width="300" height="300" style="aspect-ratio: 1/1; object-fit: contain;" />
+        <a href="product.html?id=${product.id}" class="card-img-anchor">
+          <img src="${product.image}" alt="${product.name}" class="card-main-img" loading="lazy" width="300" height="300" />
         </a>
       </div>
 

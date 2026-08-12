@@ -2243,21 +2243,65 @@ main {
   }
 
   .card-item-box {
-    padding: 8px;
+    padding: 0;
     box-shadow: 3px 3px 0px #000;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   .card-image-wrap {
-    height: 140px;
-    padding: 6px;
+    height: 160px;
+    padding: 8px;
+    position: relative !important;
+  }
+
+  .card-main-img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  .card-badge {
+    top: 6px;
+    left: 6px;
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    max-width: calc(100% - 48px);
+  }
+
+  .card-discount-tag {
+    top: 6px;
+    left: 6px;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+
+  .card-discount-tag + .card-badge {
+    top: 28px;
+  }
+
+  .card-wishlist-btn {
+    top: 6px;
+    right: 6px;
+    width: 28px;
+    height: 28px;
   }
 
   .card-info-box {
-    padding: 8px 4px 4px;
+    padding: 8px 8px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
   }
 
   .card-category-label {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
+    margin-bottom: 2px;
   }
 
   .card-title-text {
@@ -2265,7 +2309,7 @@ main {
     line-height: 1.25;
     height: 2.5em;
     overflow: hidden;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
   }
 
   .card-sub-text {
@@ -2273,9 +2317,13 @@ main {
   }
 
   .card-rating-row {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     gap: 3px;
     margin-bottom: 4px;
+  }
+
+  .card-price-row {
+    margin-bottom: 6px;
   }
 
   .card-price-current {
@@ -2288,16 +2336,19 @@ main {
   }
 
   .card-actions-row {
-    flex-direction: column;
-    gap: 4px;
-    margin-top: 6px;
+    margin-top: 4px;
   }
 
-  .btn-add-cart-fast, .btn-inspect {
-    font-size: 0.75rem;
-    padding: 6px 6px;
+  .btn-add-cart-fast {
+    font-size: 0.78rem !important;
+    padding: 7px 4px !important;
     text-align: center;
-    width: 100%;
+    width: 100% !important;
+    border-radius: 6px !important;
+  }
+
+  .card-actions-row .btn-inspect {
+    display: none !important;
   }
 
   /* Mobile PDP Stage & Controls */
@@ -2433,25 +2484,25 @@ main {
   }
 
   .card-item-box {
-    padding: 5px;
+    padding: 0;
   }
 
   .card-image-wrap {
-    height: 120px;
-    padding: 4px;
+    height: 140px;
+    padding: 6px;
   }
 
   .card-title-text {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
   }
 
   .card-price-current {
     font-size: 0.88rem;
   }
 
-  .btn-add-cart-fast, .btn-inspect {
-    font-size: 0.7rem;
-    padding: 5px 4px;
+  .btn-add-cart-fast {
+    font-size: 0.72rem !important;
+    padding: 6px 4px !important;
   }
 
   .categories-directory-grid {
@@ -2819,6 +2870,36 @@ main {
   border-radius: 4px;
   border: 1px solid #000;
   z-index: 2;
+}
+.card-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #000;
+  color: #FFF056;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.68rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid #000;
+  z-index: 2;
+  pointer-events: none;
+  max-width: calc(100% - 60px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 2px 2px 0px #000;
+}
+.card-discount-tag + .card-badge {
+  top: 36px;
+}
+.card-img-anchor {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 .card-wishlist-btn {
   position: absolute;
