@@ -84,11 +84,11 @@ class ProductPage {
       </div>
 
       <!-- MAIN PRODUCT GRID -->
-      <div class="pd-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 4rem;">
+      <div class="pd-grid">
         <!-- LEFT: GALLERY & IMAGES -->
         <div class="pd-stage-box">
-          <div id="pdMainStageCanvas" style="background:#FFFFFF; background-image:none; border:3px solid #000; box-shadow:6px 6px 0px #000; border-radius:8px; padding:1.5rem; text-align:center; min-height:380px; display:flex; align-items:center; justify-content:center; position:relative; z-index:2; overflow:hidden;">
-            <img id="mainGalleryImg" src="${p.image}" alt="${p.name}" style="max-width:100%; max-height:380px; object-fit:contain; position:relative; z-index:1; background:#FFFFFF;" />
+          <div id="pdMainStageCanvas" class="pd-main-stage">
+            <img id="mainGalleryImg" src="${p.image}" alt="${p.name}" class="pd-main-img" />
           </div>
 
           <!-- THUMBNAIL STRIP -->
@@ -106,7 +106,7 @@ class ProductPage {
         <!-- RIGHT: DETAILS & BUYING -->
         <div class="pd-details-box">
           <!-- LIVE FOMO & SOCIAL PROOF BADGE -->
-          <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px; flex-wrap:wrap;">
+          <div class="pd-badges-row">
             <span class="stock-badge in-stock">${p.availability}</span>
             <span style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700; background:#000; color:#FFF056; padding:2px 8px; border-radius:4px;">${p.categoryName}</span>
             <span style="background:#FEF2F2; color:#DC2626; border:1px solid #FCA5A5; font-family:var(--font-mono); font-weight:800; font-size:0.78rem; padding:3px 10px; border-radius:12px; display:inline-flex; align-items:center; gap:4px;">
@@ -114,9 +114,7 @@ class ProductPage {
             </span>
           </div>
 
-          <h1 style="font-family:var(--font-title); font-size:clamp(1.8rem, 4vw, 2.5rem); font-weight:900; margin:0 0 8px; color:#000;">
-            ${p.name}
-          </h1>
+          <h1 class="pd-product-title">${p.name}</h1>
 
           <div style="font-family:var(--font-mono); font-size:0.9rem; color:#666; margin-bottom:1rem;">
             ${p.subName || p.shortDescription} • SKU: ${p.sku || p.id}
@@ -130,11 +128,11 @@ class ProductPage {
           </div>
 
           <!-- PRICE & BNPL INSTALLMENTS BOX -->
-          <div style="background:#FFFDE7; border:3px solid #000; box-shadow:4px 4px 0px #000; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem;">
-            <div style="display:flex; align-items:baseline; gap:12px;">
-              <div style="font-family:var(--font-title); font-size:2.4rem; font-weight:900; color:var(--accent-red);">$${p.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
-              ${p.originalPrice ? `<div style="font-family:var(--font-mono); text-decoration:line-through; color:#888; font-size:1.15rem;">$${p.originalPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>` : ''}
-              ${p.discountPercent ? `<span style="background:var(--accent-red); color:#FFF; font-family:var(--font-mono); font-weight:900; font-size:0.8rem; padding:4px 8px; border-radius:4px;">SAVE ${p.discountPercent}%</span>` : ''}
+          <div class="pd-price-box">
+            <div class="pd-price-row">
+              <div class="pd-price-main">$${p.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+              ${p.originalPrice ? `<div class="pd-price-original">$${p.originalPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>` : ''}
+              ${p.discountPercent ? `<span class="pd-discount-badge">SAVE ${p.discountPercent}%</span>` : ''}
             </div>
 
             <!-- BUY NOW PAY LATER (BNPL) WIDGET -->
@@ -179,18 +177,18 @@ class ProductPage {
           </p>
 
           <!-- QUANTITY & ACTIONS -->
-          <div style="display:flex; gap:12px; align-items:center; margin-bottom:2rem; flex-wrap:wrap;">
+          <div class="pd-actions-row">
             <div class="qty-control-box" style="background:#FFF; padding:4px; border-radius:6px;">
               <button class="btn-qty" id="pdQtyDec">-</button>
               <span id="pdQtyVal" style="font-family:var(--font-mono); font-weight:900; font-size:1.1rem; padding:0 12px;">1</span>
               <button class="btn-qty" id="pdQtyInc">+</button>
             </div>
 
-            <button class="btn-pill" id="pdAddToCartBtn" style="flex:1; min-width:200px; padding:14px; font-size:1.1rem;">
+            <button class="btn-pill pd-add-cart-btn" id="pdAddToCartBtn">
               🛒 Add to Cart
             </button>
 
-            <button class="btn-inspect ${isWishlisted ? 'active' : ''}" id="pdWishlistBtn" style="padding:14px; font-size:1.1rem;" title="Save to Wishlist">
+            <button class="btn-inspect pd-wishlist-btn ${isWishlisted ? 'active' : ''}" id="pdWishlistBtn" title="Save to Wishlist">
               ${isWishlisted ? '❤️ Saved' : '🤍 Wishlist'}
             </button>
           </div>

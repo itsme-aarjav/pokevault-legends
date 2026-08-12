@@ -2972,8 +2972,217 @@ html, body {
 
 
 /* ==========================================================================
+   PDP (PRODUCT DETAIL PAGE) — LAYOUT CSS CLASSES
+   ========================================================================== */
+
+/* Product Page Wrapper */
+.product-page-wrap {
+  padding: 2.5rem 2rem 5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* PDP Two-Column Grid */
+.pd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+/* PDP Main Image Stage */
+.pd-main-stage {
+  background: #FFFFFF;
+  background-image: none;
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0px #000;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.pd-main-img {
+  max-width: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+}
+
+/* PDP Badges Row */
+.pd-badges-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+/* PDP Title */
+.pd-product-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 900;
+  margin: 0 0 8px;
+  color: #000;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* PDP Price Box */
+.pd-price-box {
+  background: #FFFDE7;
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0px #000;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.pd-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pd-price-main {
+  font-family: var(--font-title);
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--accent-red);
+}
+
+.pd-price-original {
+  font-family: var(--font-mono);
+  text-decoration: line-through;
+  color: #888;
+  font-size: 1.15rem;
+}
+
+.pd-discount-badge {
+  background: var(--accent-red);
+  color: #FFF;
+  font-family: var(--font-mono);
+  font-weight: 900;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* PDP Actions Row (Qty + Add to Cart + Wishlist) */
+.pd-actions-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.pd-add-cart-btn {
+  flex: 1;
+  min-width: 160px;
+  padding: 14px;
+  font-size: 1.1rem;
+}
+
+.pd-wishlist-btn {
+  padding: 14px;
+  font-size: 1.1rem;
+}
+
+/* PDP Mobile Responsive Overrides */
+@media (max-width: 768px) {
+  .product-page-wrap {
+    padding: 1rem 0.75rem 4rem;
+  }
+
+  .pd-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .pd-main-stage {
+    min-height: 240px;
+    padding: 0.75rem;
+    box-shadow: 4px 4px 0px #000;
+  }
+
+  .pd-main-img {
+    max-height: 280px;
+  }
+
+  .pd-product-title {
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+  }
+
+  .pd-price-main {
+    font-size: 1.8rem;
+  }
+
+  .pd-price-original {
+    font-size: 1rem;
+  }
+
+  .pd-price-box {
+    padding: 1rem;
+    box-shadow: 3px 3px 0px #000;
+  }
+
+  .pd-actions-row {
+    gap: 8px;
+  }
+
+  .pd-add-cart-btn {
+    min-width: 0;
+    flex: 1;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .pd-wishlist-btn {
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .pd-price-main {
+    font-size: 1.5rem;
+  }
+
+  .pd-add-cart-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .pd-wishlist-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+
+  .pd-actions-row {
+    flex-direction: column;
+  }
+
+  .pd-add-cart-btn {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
    PDP CRO ENHANCEMENTS — FEATURE TAGS, TRUST MODAL & STICKY BUY BAR
    ========================================================================== */
+
 
 /* PDP Highlighted Feature Tags */
 .pd-features-box {
