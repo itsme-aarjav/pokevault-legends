@@ -2503,8 +2503,73 @@ main {
     padding: 6px 4px !important;
   }
 
+  /* 9x2 MOBILE PARALLEL GRID PATTERN FOR ALL 18 CATEGORIES */
   .categories-directory-grid {
-    grid-template-columns: 1fr;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .category-directory-card {
+    box-shadow: 3px 3px 0px #000 !important;
+    border-radius: 8px !important;
+    border-width: 2px !important;
+  }
+
+  .category-card-img-wrap {
+    height: 130px !important;
+    padding: 6px !important;
+  }
+
+  .category-card-img {
+    max-height: 95px !important;
+  }
+
+  .category-card-emoji-large {
+    font-size: 3rem !important;
+  }
+
+  .category-count-badge {
+    top: 6px !important;
+    right: 6px !important;
+    font-size: 0.65rem !important;
+    padding: 2px 6px !important;
+  }
+
+  .category-card-icon-badge {
+    bottom: 6px !important;
+    left: 6px !important;
+    font-size: 1.4rem !important;
+  }
+
+  .category-card-body {
+    padding: 8px !important;
+  }
+
+  .category-card-title {
+    font-size: 0.85rem !important;
+    margin-bottom: 2px !important;
+    line-height: 1.2 !important;
+  }
+
+  .category-card-desc {
+    display: none !important;
+  }
+
+  .category-card-actions {
+    margin-top: 4px !important;
+  }
+
+  .btn-explore-cat {
+    width: 100% !important;
+    padding: 7px 4px !important;
+    font-size: 0.78rem !important;
+    text-align: center !important;
+    border-radius: 6px !important;
+  }
+
+  .btn-filter-cat {
+    display: none !important;
   }
 
   .kpi-grid {
@@ -3003,13 +3068,123 @@ main {
   padding: 8px 12px;
 }
 
-/* Category Directory Grid */
+/* Category Directory Grid & Cards */
 .categories-directory-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.category-directory-card {
+  background: #FFFFFF;
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0px #000;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.category-directory-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 9px 9px 0px #000;
+}
+
+.category-card-img-wrap {
+  height: 180px;
+  background: #FFFFFF;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid #000;
+}
+
+.category-card-img {
+  max-height: 140px;
+  max-width: 90%;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.15));
+}
+
+.category-card-emoji-large {
+  font-size: 5rem;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.2));
+}
+
+.category-count-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #000;
+  color: #FFF056;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  z-index: 3;
+}
+
+.category-card-icon-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  font-size: 2rem;
+  z-index: 3;
+}
+
+.category-card-body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.category-card-title {
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin-top: 0;
+  margin-bottom: 6px;
+  color: #000;
+}
+
+.category-card-desc {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.category-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-explore-cat {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.btn-filter-cat {
+  text-decoration: none;
+  padding: 10px 14px;
 }
 
 /* Cart & Checkout Page Layouts */
