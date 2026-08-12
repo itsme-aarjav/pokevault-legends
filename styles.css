@@ -2503,74 +2503,7 @@ main {
     padding: 6px 4px !important;
   }
 
-  /* 9x2 MOBILE PARALLEL GRID PATTERN FOR ALL 18 CATEGORIES */
-  .categories-directory-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
-  }
 
-  .category-directory-card {
-    box-shadow: 3px 3px 0px #000 !important;
-    border-radius: 8px !important;
-    border-width: 2px !important;
-  }
-
-  .category-card-img-wrap {
-    height: 130px !important;
-    padding: 6px !important;
-  }
-
-  .category-card-img {
-    max-height: 95px !important;
-  }
-
-  .category-card-emoji-large {
-    font-size: 3rem !important;
-  }
-
-  .category-count-badge {
-    top: 6px !important;
-    right: 6px !important;
-    font-size: 0.65rem !important;
-    padding: 2px 6px !important;
-  }
-
-  .category-card-icon-badge {
-    bottom: 6px !important;
-    left: 6px !important;
-    font-size: 1.4rem !important;
-  }
-
-  .category-card-body {
-    padding: 8px !important;
-  }
-
-  .category-card-title {
-    font-size: 0.85rem !important;
-    margin-bottom: 2px !important;
-    line-height: 1.2 !important;
-  }
-
-  .category-card-desc {
-    display: none !important;
-  }
-
-  .category-card-actions {
-    margin-top: 4px !important;
-  }
-
-  .btn-explore-cat {
-    width: 100% !important;
-    padding: 7px 4px !important;
-    font-size: 0.78rem !important;
-    text-align: center !important;
-    border-radius: 6px !important;
-  }
-
-  .btn-filter-cat {
-    display: none !important;
-  }
 
   .kpi-grid {
     grid-template-columns: 1fr;
@@ -3380,8 +3313,78 @@ main {
   }
 }
 
-/* MOBILE FOOTER OVERRIDES (<= 768px) */
+/* MOBILE FOOTER & PAGE OVERRIDES (<= 768px) */
 @media (max-width: 768px) {
+  /* 9x2 MOBILE PARALLEL GRID PATTERN FOR ALL 18 CATEGORIES */
+  .categories-directory-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .category-directory-card {
+    box-shadow: 3px 3px 0px #000 !important;
+    border-radius: 8px !important;
+    border-width: 2px !important;
+  }
+
+  .category-card-img-wrap {
+    height: 130px !important;
+    padding: 6px !important;
+  }
+
+  .category-card-img {
+    max-height: 95px !important;
+  }
+
+  .category-card-emoji-large {
+    font-size: 3rem !important;
+  }
+
+  .category-count-badge {
+    top: 6px !important;
+    right: 6px !important;
+    font-size: 0.65rem !important;
+    padding: 2px 6px !important;
+  }
+
+  .category-card-icon-badge {
+    bottom: 6px !important;
+    left: 6px !important;
+    font-size: 1.4rem !important;
+  }
+
+  .category-card-body {
+    padding: 8px !important;
+  }
+
+  .category-card-title {
+    font-size: 0.85rem !important;
+    margin-bottom: 2px !important;
+    line-height: 1.2 !important;
+  }
+
+  .category-card-desc {
+    display: none !important;
+  }
+
+  .category-card-actions {
+    margin-top: 4px !important;
+  }
+
+  .btn-explore-cat {
+    width: 100% !important;
+    padding: 7px 4px !important;
+    font-size: 0.78rem !important;
+    text-align: center !important;
+    border-radius: 6px !important;
+  }
+
+  .btn-filter-cat {
+    display: none !important;
+  }
   .footer-wrap {
     padding: 2.5rem 1.25rem 1.5rem !important;
     text-align: center !important;
