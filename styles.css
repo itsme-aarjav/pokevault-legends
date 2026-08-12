@@ -1934,9 +1934,9 @@ h1, h2, h3, .font-display {
    ========================================================================== */
 
 html, body {
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100vw;
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100vw !important;
 }
 
 /* Mobile Filter Toggle Button & Mobile Sidebar Drawer */
@@ -1944,7 +1944,7 @@ html, body {
   display: none;
 }
 
-/* TABLET RESPONSIVE RULES (<= 992px) */
+/* TABLET RESPONSIVE RULES (769px to 992px) */
 @media (max-width: 992px) {
   .hero-section {
     padding: 2.5rem 1.25rem;
@@ -1973,13 +1973,14 @@ html, body {
   }
 }
 
-/* MOBILE RESPONSIVE RULES (<= 768px) */
+/* ALL MOBILE PHONE & PHABLET SCREENS (<= 768px) */
 @media (max-width: 768px) {
   /* Prevent iOS Safari input auto-zoom */
   input, select, textarea {
     font-size: 16px !important;
   }
 
+  /* Mobile Filter Toggle Button & Sidebar Accordion */
   .mobile-filter-toggle-btn {
     display: flex;
     align-items: center;
@@ -2013,35 +2014,62 @@ html, body {
     padding: 1.25rem;
   }
 
+  /* Mobile Header Navbar Layout */
   .navbar {
-    padding: 0.65rem 0.85rem;
+    padding: 0.6rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
   }
+
   .nav-left {
-    gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    order: 1;
   }
+
+  .logo-stamp {
+    order: 2;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.15rem;
+  }
+
+  .logo-badge {
+    font-size: 0.72rem;
+    padding: 2px 6px;
+  }
+
+  .nav-right {
+    order: 3;
+    display: flex;
+    align-items: center;
+  }
+
   .nav-links {
     display: none !important;
   }
+
   .mobile-nav-toggle {
     display: flex !important;
-  }
-  .logo-badge {
-    font-size: 0.75rem;
-    padding: 2px 8px;
-  }
-  .logo-stamp {
-    font-size: 1.25rem;
+    padding: 6px;
   }
 
-  /* Full Width Mobile Search Bar & Dropdown */
+  /* Full-Width Mobile Search Bar & Auto-Complete */
   .nav-search-wrap {
-    order: 3;
+    order: 4;
     width: 100%;
     max-width: 100%;
     margin-top: 4px;
     position: relative;
+  }
+
+  .nav-search-input {
+    padding: 8px 12px;
+    font-size: 16px !important;
   }
   
   .search-results-dropdown {
@@ -2059,34 +2087,92 @@ html, body {
   }
   
   .ticker-wrap {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
+    padding: 3px 0;
   }
 
-  /* Cart Drawer Full Width on Mobile */
+  /* Full Width Mobile Cart Drawer */
   .cart-drawer {
     width: 100vw;
     max-width: 100vw;
     right: -100vw;
-    padding: 1.25rem;
-  }
-  
-  .hero-3d-controls {
-    flex-direction: column;
-    width: 100%;
-    gap: 8px;
-  }
-  .btn-3d-ctrl {
-    width: 100%;
-    text-align: center;
+    padding: 1rem;
   }
 
+  /* Mobile Product Card Grid (2 Cards per row on all mobile devices) */
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .card-item-box {
+    padding: 8px;
+    box-shadow: 3px 3px 0px #000;
+  }
+
+  .card-image-wrap {
+    height: 140px;
+    padding: 6px;
+  }
+
+  .card-info-box {
+    padding: 8px 4px 4px;
+  }
+
+  .card-category-label {
+    font-size: 0.7rem;
+  }
+
+  .card-title-text {
+    font-size: 0.82rem;
+    line-height: 1.25;
+    height: 2.5em;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+
+  .card-sub-text {
+    display: none;
+  }
+
+  .card-rating-row {
+    font-size: 0.75rem;
+    gap: 3px;
+    margin-bottom: 4px;
+  }
+
+  .card-price-current {
+    font-size: 0.95rem;
+    font-weight: 900;
+  }
+
+  .card-price-original {
+    font-size: 0.75rem;
+  }
+
+  .card-actions-row {
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .btn-add-cart-fast, .btn-inspect {
+    font-size: 0.75rem;
+    padding: 6px 6px;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Mobile PDP Stage & Controls */
   .pd-grid {
     grid-template-columns: 1fr !important;
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
+
   #pdMainStageCanvas {
-    min-height: 250px;
-    max-height: 320px;
+    min-height: 240px;
+    max-height: 300px;
+    padding: 0.75rem;
   }
 
   .product-page-wrap,
@@ -2094,13 +2180,14 @@ html, body {
   .shop-page-wrap,
   .cart-page-wrap,
   .checkout-page-wrap {
-    padding: 1.25rem 0.85rem 4rem;
+    padding: 1rem 0.75rem 4rem;
   }
 
   .admin-tabs {
     flex-wrap: wrap;
     gap: 0.5rem;
   }
+
   .admin-tab-btn {
     font-size: 0.85rem;
     padding: 8px 12px;
@@ -2108,138 +2195,120 @@ html, body {
     text-align: center;
   }
 
-  /* Table Horizontal Scroll Container */
+  /* Scrollable Containers for Mobile Tables */
   .table-card,
   .cart-items-section {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+
   .admin-table {
     min-width: 580px;
   }
 
   .vault-modal-card {
-    padding: 1.25rem;
+    padding: 1.1rem;
     max-width: 94vw;
+    max-height: 85vh;
   }
+
   .inspection-step-item {
-    padding: 0.85rem;
-    gap: 0.75rem;
+    padding: 0.75rem;
+    gap: 0.65rem;
+  }
+
+  .inspection-step-num {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    font-size: 0.9rem;
+  }
+
+  .inspection-step-title {
+    font-size: 0.95rem;
+  }
+
+  .inspection-step-desc {
+    font-size: 0.8rem;
+  }
+
+  .sticky-buy-bar {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .sticky-product-thumb {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+  }
+
+  .sticky-product-title {
+    max-width: 110px;
+    font-size: 0.8rem;
+  }
+
+  .sticky-product-price {
+    font-size: 0.88rem;
+  }
+
+  .sticky-buy-actions #stickyAddToCartBtn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
   }
 }
 
-/* SMALL MOBILE SCREENS (<= 480px) */
-@media (max-width: 480px) {
+/* ULTRA-SMALL MOBILE PHONE SCREENS (<= 380px) */
+@media (max-width: 380px) {
   .hero-title {
-    font-size: 1.65rem;
+    font-size: 1.5rem;
   }
+
   .hero-subtitle {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
   
-  /* Responsive 2-column Product Grid on Mobile Phones */
   .cards-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 6px;
   }
+
   .card-item-box {
-    padding: 6px;
-    box-shadow: 3px 3px 0px #000;
+    padding: 5px;
   }
+
   .card-image-wrap {
-    height: 135px;
+    height: 120px;
     padding: 4px;
   }
-  .card-info-box {
-    padding: 6px 2px 2px;
-  }
-  .card-category-label {
-    font-size: 0.68rem;
-  }
+
   .card-title-text {
-    font-size: 0.8rem;
-    line-height: 1.2;
-    height: 2.4em;
-    overflow: hidden;
+    font-size: 0.75rem;
   }
-  .card-sub-text {
-    display: none;
-  }
-  .card-rating-row {
-    font-size: 0.72rem;
-    gap: 3px;
-  }
+
   .card-price-current {
-    font-size: 0.9rem;
-    font-weight: 900;
+    font-size: 0.88rem;
   }
-  .card-price-original {
-    font-size: 0.72rem;
-  }
-  .card-actions-row {
-    flex-direction: column;
-    gap: 4px;
-    margin-top: 6px;
-  }
+
   .btn-add-cart-fast, .btn-inspect {
-    font-size: 0.72rem;
-    padding: 6px 4px;
-    text-align: center;
-    width: 100%;
+    font-size: 0.7rem;
+    padding: 5px 4px;
   }
 
   .categories-directory-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
   }
 
   .kpi-grid {
     grid-template-columns: 1fr;
-  }
-  .modal-3d-content {
-    padding: 0.85rem;
   }
 
   .footer-main-grid {
     grid-template-columns: 1fr;
   }
 
-  .sticky-buy-bar {
-    padding: 6px 10px;
-    gap: 6px;
-  }
-  .sticky-product-thumb {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-  }
-  .sticky-product-title {
-    max-width: 100px;
-    font-size: 0.78rem;
-  }
-  .sticky-product-price {
-    font-size: 0.85rem;
-  }
-  .sticky-buy-actions #stickyAddToCartBtn {
-    padding: 6px 10px;
-    font-size: 0.8rem;
-  }
-
-  .inspection-step-item {
-    padding: 0.65rem;
-    gap: 0.5rem;
-  }
-  .inspection-step-num {
-    width: 26px;
-    height: 26px;
-    min-width: 26px;
-    font-size: 0.85rem;
-  }
-  .inspection-step-title {
-    font-size: 0.9rem;
-  }
-  .inspection-step-desc {
-    font-size: 0.78rem;
+  .sticky-buy-actions .qty-control-box {
+    display: none !important;
   }
 }
 
