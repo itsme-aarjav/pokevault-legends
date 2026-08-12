@@ -2,14 +2,8 @@
  * POKÉVAULT LEGENDS — Admin Inventory Control Panel Controller
  * Communicates directly with Express / Supabase API endpoints.
  */
-// Use confetti safely — loaded via importmap
-let confetti;
-try {
-  const mod = await import('canvas-confetti');
-  confetti = mod.default || mod;
-} catch (_) {
-  confetti = (typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {};
-}
+import confettiModule from 'canvas-confetti';
+const confetti = confettiModule?.default || confettiModule || ((typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {});
 
 const API_BASE = '/api';
 
