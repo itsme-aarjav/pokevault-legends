@@ -93,6 +93,19 @@ class ShopPage {
     const sortBySelect = document.getElementById('sortBySelect');
     const clearFiltersBtn = document.getElementById('clearFiltersBtn');
     const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const mobileFilterToggleBtn = document.getElementById('mobileFilterToggleBtn');
+    const shopSidebar = document.getElementById('shopSidebar');
+
+    // Mobile Filter Toggle Drawer
+    mobileFilterToggleBtn?.addEventListener('click', () => {
+      shopSidebar?.classList.toggle('open');
+      const isOpen = shopSidebar?.classList.contains('open');
+      if (mobileFilterToggleBtn) {
+        mobileFilterToggleBtn.innerHTML = isOpen
+          ? '<span>⚡ Hide Filters</span> <span style="font-size:1.1rem;">▲</span>'
+          : '<span>⚡ Filter &amp; Sort Products</span> <span style="font-size:1.1rem;">▼</span>';
+      }
+    });
 
     // Pre-populate filters if set from URL
     if (pokemonSelect && this.currentFilters.pokemon !== 'all') {
