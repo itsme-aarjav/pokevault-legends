@@ -13,8 +13,8 @@ export const CARDS_DATA = [
     certNumber: "47318042",
     price: 4850.00,
     originalPrice: 5500.00,
-    image: "assets/charizard.png",
-    gallery: ["assets/charizard.png", "assets/card_back.png", "assets/card_detail.png"],
+    image: "/assets/charizard.png",
+    gallery: ["/assets/charizard.png", "/assets/card_back.png", "/assets/card_detail.png"],
     rarity: "Secret Holo Rare",
     badge: "Vault Holy Grail",
     hp: "120 HP",
@@ -27,7 +27,7 @@ export const CARDS_DATA = [
     holoType: "fire-rainbow",
     comicLore: {
       issueTitle: "ISSUE #4 — MOUNT MOLTEN RAGES!",
-      comicImage: "assets/charizard_comic.png",
+      comicImage: "/assets/charizard_comic.png",
       storyHeadline: "THE UNSTOPPABLE FIERY DESCENDANT",
       originStory: "Deep within the volcanic chambers of Cinnabar Island, Charizard's tail flame burns with the fury of molten magma. Legends tell that when Charizard flies through the night skies, its fire blast illuminates entire mountain ranges for miles.",
       moves: [
@@ -51,8 +51,8 @@ export const CARDS_DATA = [
     certNumber: "28741359",
     price: 12500.00,
     originalPrice: 14000.00,
-    image: "assets/pikachu.png",
-    gallery: ["assets/pikachu.png", "assets/card_back.png", "assets/card_detail.png"],
+    image: "/assets/pikachu.png",
+    gallery: ["/assets/pikachu.png", "/assets/card_back.png", "/assets/card_detail.png"],
     rarity: "Unique Trophy Promo",
     badge: "1 of 39 Worldwide",
     hp: "60 HP",
@@ -65,7 +65,7 @@ export const CARDS_DATA = [
     holoType: "gold-foil",
     comicLore: {
       issueTitle: "ISSUE #1 — THE ART OF ELECTRIC POWER!",
-      comicImage: "assets/pikachu_comic.png",
+      comicImage: "/assets/pikachu_comic.png",
       storyHeadline: "100,000 VOLTS OF CREATIVE ADVENTURE",
       originStory: "Commissioned as the supreme trophy for the 1998 CoroCoro Comic contest, Illustrator Pikachu channels 100,000 Volts of electric creativity directly onto artist easels. Only 39 verified physical copies exist across the globe.",
       moves: [
@@ -89,8 +89,8 @@ export const CARDS_DATA = [
     certNumber: "81234567",
     price: 3200.00,
     originalPrice: 3600.00,
-    image: "assets/rayquaza.png",
-    gallery: ["assets/rayquaza.png", "assets/card_back.png", "assets/card_detail.png"],
+    image: "/assets/rayquaza.png",
+    gallery: ["/assets/rayquaza.png", "/assets/card_back.png", "/assets/card_detail.png"],
     rarity: "Gold Star Shiny",
     badge: "Pulp Sci-Fi Exclusive",
     hp: "90 HP",
@@ -103,7 +103,7 @@ export const CARDS_DATA = [
     holoType: "cosmic-galaxy",
     comicLore: {
       issueTitle: "SPACE ADVENTURES — THE OZONE GUARDIAN",
-      comicImage: "assets/rayquaza_comic.png",
+      comicImage: "/assets/rayquaza_comic.png",
       storyHeadline: "ASTRONOMICAL THREAT OBLITERATED",
       originStory: "Soaring endlessly through the high atmospheric ozone layer, the shiny black dragon Rayquaza feeds on atmospheric water vapor and meteors. When cosmic threats descend upon Earth, Rayquaza obliterates them with stardust laser bursts.",
       moves: [
@@ -127,8 +127,8 @@ export const CARDS_DATA = [
     certNumber: "91028374",
     price: 1850.00,
     originalPrice: 2100.00,
-    image: "assets/gengar.png",
-    gallery: ["assets/gengar.png", "assets/card_back.png", "assets/card_detail.png"],
+    image: "/assets/gengar.png",
+    gallery: ["/assets/gengar.png", "/assets/card_back.png", "/assets/card_detail.png"],
     rarity: "Holo Secret Rare",
     badge: "Vault Fan Favorite",
     hp: "90 HP",
@@ -141,7 +141,7 @@ export const CARDS_DATA = [
     holoType: "shadow-purple",
     comicLore: {
       issueTitle: "THE MYSTERY OF THE SHADOW CURSE",
-      comicImage: "assets/gengar_comic.png",
+      comicImage: "/assets/gengar_comic.png",
       storyHeadline: "SINISTER ARCHIVAL ILLUSIONS",
       originStory: "Lurking in forgotten ancient archives and shadowed libraries, Dark Gengar manipulates dark shadow matter. It absorbs heat from its surroundings, dropping the room temperature by 10 degrees whenever it prepares to strike.",
       moves: [
@@ -165,8 +165,8 @@ export const CARDS_DATA = [
     certNumber: "55419820",
     price: 3950.00,
     originalPrice: 4300.00,
-    image: "assets/lugia.png",
-    gallery: ["assets/lugia.png", "assets/card_back.png", "assets/card_detail.png"],
+    image: "/assets/lugia.png",
+    gallery: ["/assets/lugia.png", "/assets/card_back.png", "/assets/card_detail.png"],
     rarity: "Crystal Type Secret Rare",
     badge: "E-Reader Classic",
     hp: "100 HP",
@@ -179,7 +179,7 @@ export const CARDS_DATA = [
     holoType: "prism-crystal",
     comicLore: {
       issueTitle: "ISSUE #7 — OCEAN ADVENTURES OF LUGIA",
-      comicImage: "assets/charizard_comic.png",
+      comicImage: "/assets/charizard_comic.png",
       storyHeadline: "THE DIVINE PROTECTOR OF SEAS",
       originStory: "Lugia slumbers in deep ocean trenches. It is said that a flutter of its wings causes a 40-day tempest storm over oceanic islands.",
       moves: [
@@ -198,8 +198,8 @@ export const CARDS_DATA = [
     cardNo: "#151",
     releaseYear: "2001",
     grade: "PSA 10 GEM MT",
-    image: "assets/mew.png",
-    gallery: ["assets/mew.png", "assets/card_back.png", "assets/card_detail.png"],
+    image: "/assets/mew.png",
+    gallery: ["/assets/mew.png", "/assets/card_back.png", "/assets/card_detail.png"],
     gradeScore: "10",
     gradingBody: "PSA",
     certNumber: "77291045",
@@ -217,7 +217,7 @@ export const CARDS_DATA = [
     holoType: "glitter-pink",
     comicLore: {
       issueTitle: "ISSUE #9 — SHINING MEW COSMIC ORIGIN",
-      comicImage: "assets/pikachu_comic.png",
+      comicImage: "/assets/pikachu_comic.png",
       storyHeadline: "ANCESTRAL POKÉMON OF ALL SPECIES",
       originStory: "Mew contains the genetic code of all Pokémon. It is capable of learning any move and rendering itself invisible at will.",
       moves: [
@@ -276,7 +276,7 @@ export const UPSELL_PRODUCTS = [
     price: 14.99,
     originalPrice: 24.99,
     badge: "SAVE 40%",
-    image: "assets/charizard.png",
+    image: "/assets/charizard.png",
     icon: "🛡️",
     description: "99% UV-filtering heavy acrylic desktop display stand for graded card slabs."
   },
@@ -286,7 +286,7 @@ export const UPSELL_PRODUCTS = [
     price: 7.99,
     originalPrice: 12.99,
     badge: "POPULAR",
-    image: "assets/pikachu.png",
+    image: "/assets/pikachu.png",
     icon: "✨",
     description: "Ultra-soft anti-static cloth to remove fingerprints and dust from acrylic slabs."
   },
@@ -296,7 +296,7 @@ export const UPSELL_PRODUCTS = [
     price: 49.00,
     originalPrice: 75.00,
     badge: "1 VINTAGE HOLO GUARANTEED",
-    image: "assets/gengar.png",
+    image: "/assets/gengar.png",
     icon: "🎁",
     description: "Sealed mystery envelope containing 1 guaranteed vintage holo card + 2 1st Edition commons."
   },
@@ -306,7 +306,7 @@ export const UPSELL_PRODUCTS = [
     price: 19.99,
     originalPrice: 39.99,
     badge: "50% OFF",
-    image: "assets/rayquaza.png",
+    image: "/assets/rayquaza.png",
     icon: "⚡",
     description: "Silicone corner guards engineered to absorb drop impacts for PSA/BGS slabs."
   },
@@ -316,7 +316,7 @@ export const UPSELL_PRODUCTS = [
     price: 89.00,
     originalPrice: 135.00,
     badge: "VIP EXCLUSIVE",
-    image: "assets/lugia.png",
+    image: "/assets/lugia.png",
     icon: "💼",
     description: "Heavy-duty aluminum briefcase lined with high-density EVA foam for 50 graded slabs."
   },
@@ -326,7 +326,7 @@ export const UPSELL_PRODUCTS = [
     price: 11.99,
     originalPrice: 18.99,
     badge: "HOT ITEM",
-    image: "assets/mew.png",
+    image: "/assets/mew.png",
     icon: "🔥",
     description: "Archival acid-free clear penny sleeves with reflective Japanese holo foil backings."
   }
