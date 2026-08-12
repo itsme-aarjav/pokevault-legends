@@ -3219,17 +3219,29 @@ main {
   }
 
   .footer-main-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    grid-template-columns: 1fr !important;
-    gap: 2rem !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.75rem 1rem !important;
     margin-bottom: 2rem !important;
     width: 100% !important;
   }
 
-  .footer-col {
+  .footer-col.brand-col {
+    grid-column: 1 / -1 !important;
     width: 100% !important;
-    max-width: 100% !important;
+  }
+
+  .footer-col.nav-col-marketplace {
+    grid-column: 1 !important;
+  }
+
+  .footer-col.nav-col-customer {
+    grid-column: 2 !important;
+  }
+
+  .footer-col.newsletter-col {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
   }
 
   .footer-sub-text {
