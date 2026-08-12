@@ -7,14 +7,8 @@ import { renderNavbar, initNavbarEvents } from './components/navbar.js';
 import { renderFooter } from './components/footer.js';
 import { renderCartDrawer, initCartDrawerEvents } from './components/cart-drawer.js';
 
-// Use confetti safely — loaded via importmap
-let confetti;
-try {
-  const mod = await import('canvas-confetti');
-  confetti = mod.default || mod;
-} catch (_) {
-  confetti = (typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {};
-}
+import confettiModule from 'canvas-confetti';
+const confetti = confettiModule?.default || confettiModule || ((typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {});
 
 class OrderConfirmationPage {
   constructor() {
