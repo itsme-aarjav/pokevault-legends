@@ -306,9 +306,9 @@ class ProductPage {
         </div>
 
         <!-- REVIEWS SUMMARY & RATING BREAKDOWN GRID -->
-        <div style="display:grid; grid-template-columns:1fr 2fr; gap:2rem; background:#FFF; border:3px solid #000; box-shadow:6px 6px 0px #000; border-radius:8px; padding:2rem; margin-bottom:2.5rem;">
+        <div class="pd-reviews-summary">
           <!-- Overall Rating Score Box -->
-          <div style="text-align:center; border-right:2px solid #EEE; padding-right:1.5rem; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+          <div class="pd-rating-score-box">
             <div style="font-family:var(--font-title); font-size:4rem; font-weight:900; line-height:1; color:#000;">${p.rating.toFixed(1)}</div>
             <div style="color:var(--accent-orange); font-size:1.4rem; margin:8px 0;">★★★★★</div>
             <div style="font-family:var(--font-mono); font-size:0.85rem; color:#666;">Based on ${totalCount} verified ratings</div>
@@ -362,10 +362,10 @@ class ProductPage {
         </div>
 
         <!-- WRITE A REVIEW FORM (HIDDEN BY DEFAULT, TOGGLED BY BUTTON) -->
-        <div id="writeReviewFormContainer" style="display:none; background:#FFFDE7; border:3px solid #000; box-shadow:6px 6px 0px #000; border-radius:8px; padding:2rem; margin-bottom:2.5rem;">
+        <div id="writeReviewFormContainer" class="pd-review-form-container" style="display:none;">
           <h3 style="font-family:var(--font-title); font-weight:900; font-size:1.3rem; margin-top:0; margin-bottom:1.25rem;">WRITE A CUSTOMER REVIEW</h3>
           <form id="newReviewForm" style="display:flex; flex-direction:column; gap:1rem;">
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div class="pd-review-form-row">
               <div>
                 <label style="display:block; font-family:var(--font-mono); font-weight:700; font-size:0.85rem; margin-bottom:4px;">Your Name / Handle</label>
                 <input type="text" id="reviewAuthorInput" required placeholder="e.g. KantoCollector99" style="width:100%; padding:10px; border:2px solid #000; border-radius:6px; font-family:var(--font-mono);" />
@@ -400,7 +400,7 @@ class ProductPage {
         <!-- REVIEWS LIST -->
         <div id="reviewsList" style="display:flex; flex-direction:column; gap:1.25rem;">
           ${this.reviews.map(rev => `
-            <div class="review-card" style="background:#FFF; border:3px solid #000; box-shadow:4px 4px 0px #000; border-radius:8px; padding:1.5rem;">
+            <div class="review-card">
               <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
                 <div style="display:flex; align-items:center; gap:10px;">
                   <div style="width:40px; height:40px; background:#FFF056; border:2px solid #000; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.3rem;">
