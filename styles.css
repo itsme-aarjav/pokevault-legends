@@ -3209,6 +3209,7 @@ main {
 @media (max-width: 768px) {
   .footer-wrap {
     padding: 2.5rem 1.25rem 1.5rem !important;
+    text-align: center !important;
   }
 
   .footer-top-strip {
@@ -3216,6 +3217,11 @@ main {
     gap: 1.5rem !important;
     margin-bottom: 2rem !important;
     padding-bottom: 1.5rem !important;
+    text-align: center !important;
+  }
+
+  .footer-feature-item {
+    text-align: center !important;
   }
 
   .footer-main-grid {
@@ -3224,36 +3230,107 @@ main {
     gap: 1.75rem 1rem !important;
     margin-bottom: 2rem !important;
     width: 100% !important;
+    text-align: center !important;
+  }
+
+  .footer-col {
+    text-align: center !important;
   }
 
   .footer-col.brand-col {
     grid-column: 1 / -1 !important;
     width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .logo-stamp {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto 1rem !important;
+    text-align: center !important;
+  }
+
+  .footer-bio {
+    text-align: center !important;
+    margin: 0 auto 1rem !important;
+    max-width: 480px !important;
+  }
+
+  .footer-socials {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+    gap: 12px !important;
   }
 
   .footer-col.nav-col-marketplace {
     grid-column: 1 !important;
+    text-align: center !important;
   }
 
   .footer-col.nav-col-customer {
     grid-column: 2 !important;
+    text-align: center !important;
   }
 
   .footer-col.newsletter-col {
     grid-column: 1 / -1 !important;
     width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .footer-heading {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .footer-links {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 6px !important;
+    padding: 0 !important;
+  }
+
+  .footer-links li {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .footer-links a {
+    font-size: 0.78rem !important;
+    line-height: 1.35 !important;
+    text-align: center !important;
+    display: inline-block !important;
   }
 
   .footer-sub-text {
     font-size: 0.8rem !important;
     margin-bottom: 0.75rem !important;
+    text-align: center !important;
+    max-width: 480px !important;
   }
 
   .footer-news-form {
     display: flex !important;
     flex-direction: column !important;
+    align-items: center !important;
     gap: 8px !important;
     width: 100% !important;
+    max-width: 400px !important;
   }
 
   .footer-news-input {
@@ -3261,18 +3338,21 @@ main {
     box-sizing: border-box !important;
     padding: 12px 14px !important;
     font-size: 0.9rem !important;
+    text-align: center !important;
   }
 
   .footer-news-btn {
     width: 100% !important;
     padding: 12px !important;
     font-size: 0.9rem !important;
+    text-align: center !important;
   }
 
   .footer-bottom-bar {
     display: flex !important;
     flex-direction: column !important;
     text-align: center !important;
+    align-items: center !important;
     gap: 0.85rem !important;
     padding-top: 1.25rem !important;
   }
@@ -3280,6 +3360,7 @@ main {
   .footer-copy-text {
     font-size: 0.72rem !important;
     line-height: 1.5 !important;
+    text-align: center !important;
   }
 
   .footer-legal-links {
@@ -3289,11 +3370,13 @@ main {
     gap: 0.5rem !important;
     flex-wrap: wrap !important;
     font-size: 0.78rem !important;
+    text-align: center !important;
   }
 
   .footer-legal-links a {
     color: #FFF !important;
     text-decoration: underline !important;
+    text-align: center !important;
   }
 
   .footer-dot-sep {
