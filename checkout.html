@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Checkout &amp; Vault Dispatch — POKÉVAULT LEGENDS</title>
-  <meta name="description" content="Complete your Pokémon merchandise order with secure vault shipping and PayPal payment." />
+  <title>Trainer's Vault Checkout — POKÉVAULT LEGENDS</title>
+  <meta name="description" content="Complete your Pokémon merchandise order with secure vault shipping and payment." />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,144 +26,229 @@
     }
   }
   </script>
-
 </head>
-<body>
+<body class="checkout-body">
   <div class="halftone-overlay"></div>
 
   <!-- Shared Navbar Root -->
   <div id="navbarRoot"></div>
 
-  <!-- CHECKOUT HERO BANNER -->
-  <header class="page-hero-banner" style="background: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%);">
-    <div class="page-hero-container">
-      <div class="breadcrumb-nav">
-        <a href="index.html">Home</a> <span>/</span> <a href="cart.html">Cart</a> <span>/</span> <span class="current">Vault Checkout</span>
+  <main class="co-main-wrap">
+    <!-- PAGE TITLE HEADER & STEPPER -->
+    <header class="co-header">
+      <h1 class="co-page-title">TRAINER'S VAULT CHECKOUT</h1>
+      <div class="co-stepper-row">
+        <div class="co-step-item active">
+          <span class="co-step-icon">🧢</span>
+        </div>
+        <div class="co-step-line"></div>
+        <div class="co-step-item active">
+          <span class="co-step-icon">🔑</span>
+        </div>
+        <div class="co-step-line"></div>
+        <div class="co-step-item">
+          <span class="co-step-icon">👑</span>
+        </div>
       </div>
-      <h1 class="page-title" style="color:#000;">VAULT DISPATCH CHECKOUT</h1>
-      <p class="page-subtitle" style="color:#111;">Enter shipping destination details and select payment method to finalize your order.</p>
-    </div>
-  </header>
+    </header>
 
-  <!-- CHECKOUT MAIN LAYOUT -->
-  <main class="page-container" style="padding: 3rem 2rem 6rem;">
-    <div class="checkout-page-layout">
-      <!-- LEFT: CHECKOUT FORM -->
-      <div class="checkout-form-section">
-        <form id="checkoutMasterForm">
-          <!-- STEP 1: SHIPPING ADDRESS -->
-          <div class="table-card" style="padding: 1.5rem; margin-bottom: 2rem;">
-            <h3 class="summary-title" style="margin-top:0;">1. SHIPPING DESTINATION</h3>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
-              <div class="admin-form-group">
-                <label>FULL NAME *</label>
-                <input type="text" id="custName" class="admin-form-input" placeholder="e.g. Red Ketchum" required />
-              </div>
-              <div class="admin-form-group">
-                <label>EMAIL ADDRESS *</label>
-                <input type="email" id="custEmail" class="admin-form-input" placeholder="trainer@pokevault.com" required />
-              </div>
-            </div>
-
-            <div class="admin-form-group">
-              <label>STREET ADDRESS *</label>
-              <input type="text" id="custStreet" class="admin-form-input" placeholder="102 Pallet Town Way, Suite 4B" required />
-            </div>
-
-            <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;">
-              <div class="admin-form-group">
-                <label>CITY *</label>
-                <input type="text" id="custCity" class="admin-form-input" placeholder="Celadon City" required />
-              </div>
-              <div class="admin-form-group">
-                <label>STATE / REGION *</label>
-                <input type="text" id="custState" class="admin-form-input" placeholder="Kanto" required />
-              </div>
-              <div class="admin-form-group">
-                <label>ZIP / POSTAL *</label>
-                <input type="text" id="custZip" class="admin-form-input" placeholder="90210" required />
-              </div>
-            </div>
-          </div>
-
-          <!-- STEP 2: DISPATCH METHOD -->
-          <div class="table-card" style="padding: 1.5rem; margin-bottom: 2rem;">
-            <h3 class="summary-title" style="margin-top:0;">2. VAULT DISPATCH SPEED</h3>
-            <div style="display:flex; flex-direction:column; gap:12px;">
-              <label class="filter-radio-label" style="border:2px solid #000; padding:12px; border-radius:6px; background:#FFF056; font-weight:700;">
-                <input type="radio" name="dispatchSpeed" value="express" checked />
-                ⚡ Vault Insured Armored Express (2-3 Business Days) — $9.99
-              </label>
-              <label class="filter-radio-label" style="border:2px solid #000; padding:12px; border-radius:6px; background:#FFF; font-weight:700;">
-                <input type="radio" name="dispatchSpeed" value="standard" />
-                📦 Standard Postal Ground (5-7 Business Days) — FREE
-              </label>
-            </div>
-          </div>
-
-          <!-- STEP 3: PAYMENT METHOD -->
-          <div class="table-card" style="padding: 1.5rem;">
-            <h3 class="summary-title" style="margin-top:0;">3. PAYMENT METHOD</h3>
+    <!-- CHECKOUT MASTER FORM & GRID -->
+    <form id="checkoutMasterForm">
+      <div class="co-grid">
+        <!-- LEFT COLUMN: SHIPPING & PAYMENT -->
+        <div class="co-left-col">
+          <!-- 1. SHIPPING DESTINATION -->
+          <section class="co-section-card">
+            <h2 class="co-section-title">1. SHIPPING DESTINATION</h2>
             
-            <!-- PAYPAL SMART BUTTON CONTAINER -->
-            <div id="paypalCheckoutContainer" style="margin-bottom: 1.5rem;"></div>
-
-            <div style="text-align:center; font-family:var(--font-mono); font-size:0.8rem; color:#666; margin: 1rem 0;">— OR PAY WITH VAULT CREDIT CARD —</div>
-
-            <div class="admin-form-group">
-              <label>CARD NUMBER</label>
-              <input type="text" id="ccNumber" class="admin-form-input" placeholder="4532 •••• •••• 8921" />
-            </div>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-              <div class="admin-form-group">
-                <label>EXPIRY (MM/YY)</label>
-                <input type="text" id="ccExpiry" class="admin-form-input" placeholder="12/28" />
+            <div class="co-form-row col-2">
+              <div class="co-input-group">
+                <div class="co-label-row">
+                  <label for="custName">FULL NAME ★</label>
+                  <span class="co-exp-badge">EXP★</span>
+                </div>
+                <input type="text" id="custName" class="co-input" placeholder="e.g. Red Ketchum" required />
               </div>
-              <div class="admin-form-group">
-                <label>CVC / CVV</label>
-                <input type="text" id="ccCvc" class="admin-form-input" placeholder="382" />
+              <div class="co-input-group">
+                <div class="co-label-row">
+                  <label for="custEmail">EMAIL ADDRESS ★</label>
+                  <span class="co-exp-badge">EXP★</span>
+                </div>
+                <input type="email" id="custEmail" class="co-input" placeholder="trainer@pokevault.com" required />
               </div>
             </div>
 
-            <button type="submit" class="btn-pill" id="directPayBtn" style="width:100%; margin-top:1rem; font-size:1.1rem; padding:14px;">
-              ⚡ Complete Vault Dispatch Order →
-            </button>
-          </div>
-        </form>
-      </div>
+            <div class="co-form-row col-3">
+              <div class="co-input-group span-street">
+                <div class="co-label-row">
+                  <label for="custStreet">STREET ADDRESS ★</label>
+                  <span class="co-exp-badge">EXP★</span>
+                </div>
+                <input type="text" id="custStreet" class="co-input" placeholder="102 Pallet Town Way, S" required />
+              </div>
+              <div class="co-input-group">
+                <div class="co-label-row">
+                  <label for="custState">STATE/REGION ★</label>
+                </div>
+                <input type="text" id="custState" class="co-input" placeholder="Kanto" required />
+              </div>
+              <div class="co-input-group">
+                <div class="co-label-row">
+                  <label for="custZip">ZIP/POSTAL CODE ★</label>
+                </div>
+                <input type="text" id="custZip" class="co-input" placeholder="90210" required />
+              </div>
+            </div>
 
-      <!-- RIGHT: ORDER ITEMS SUMMARY -->
-      <aside class="checkout-summary-sidebar">
-        <div class="cart-summary-box">
-          <h3 class="summary-title">FINAL ORDER SUMMARY</h3>
-          
-          <div id="checkoutItemsList" style="margin-bottom: 1.5rem; max-height: 300px; overflow-y: auto;">
-            <!-- Injected dynamically -->
-          </div>
+            <div class="co-form-row col-1">
+              <div class="co-input-group">
+                <div class="co-label-row">
+                  <label for="custCity">CITY ★</label>
+                  <span class="co-exp-badge">EXP★</span>
+                </div>
+                <input type="text" id="custCity" class="co-input" placeholder="Celadon City" required />
+              </div>
+            </div>
 
-          <div class="summary-row">
-            <span>Subtotal:</span>
-            <span id="coSubtotal">$0.00</span>
-          </div>
+            <div class="co-checkbox-row">
+              <label class="co-checkbox-label">
+                <input type="checkbox" id="saveAddress" checked />
+                <span class="co-custom-checkbox"></span>
+                Save this address ⚽
+              </label>
+            </div>
+          </section>
 
-          <div class="summary-row" id="coDiscountRow" style="display:none; color:var(--accent-red); font-weight:700;">
-            <span>Discount:</span>
-            <span id="coDiscount">-$0.00</span>
-          </div>
+          <!-- 2. VAULT DISPATCH SPEED & 3. PAYMENT METHOD GRID -->
+          <div class="co-bottom-sections-row">
+            <!-- 2. VAULT DISPATCH SPEED -->
+            <section class="co-section-subcard dispatch-speed-section">
+              <h2 class="co-section-title">2. VAULT DISPATCH SPEED</h2>
+              
+              <div class="co-dispatch-options">
+                <!-- ARMORED EXPRESS (SELECTED DEFAULT) -->
+                <label class="co-dispatch-card active" id="cardArmoredExpress">
+                  <input type="radio" name="dispatchSpeed" value="express" checked class="co-radio-hidden" />
+                  <div class="co-dispatch-check-icon">✓</div>
+                  <div class="co-dispatch-icon">⚡</div>
+                  <div class="co-dispatch-name">ARMORED EXPRESS</div>
+                  <div class="co-dispatch-divider"></div>
+                  <div class="co-dispatch-days">2-3 Business Days</div>
+                  <div class="co-dispatch-price">$9.99</div>
+                </label>
 
-          <div class="summary-row">
-            <span>Shipping:</span>
-            <span id="coShipping">$9.99</span>
-          </div>
+                <!-- STANDARD POSTAL GROUND -->
+                <label class="co-dispatch-card" id="cardStandardGround">
+                  <input type="radio" name="dispatchSpeed" value="standard" class="co-radio-hidden" />
+                  <div class="co-dispatch-check-icon" style="display:none;">✓</div>
+                  <div class="co-dispatch-icon">📦</div>
+                  <div class="co-dispatch-name">STANDARD POSTAL GROUND</div>
+                  <div class="co-dispatch-divider"></div>
+                  <div class="co-dispatch-days">5-7 Business Days</div>
+                  <div class="co-dispatch-price">FREE</div>
+                </label>
+              </div>
+            </section>
 
-          <div class="summary-total-row">
-            <span>TOTAL TO PAY:</span>
-            <span id="coTotal">$0.00</span>
+            <!-- 3. PAYMENT METHOD -->
+            <section class="co-section-subcard payment-method-section">
+              <h2 class="co-section-title">3. PAYMENT METHOD</h2>
+
+              <div class="co-input-group">
+                <label for="ccNumber" class="co-simple-label">Card Number</label>
+                <input type="text" id="ccNumber" class="co-input" placeholder="4532 •••••• 8921" />
+              </div>
+
+              <div class="co-form-row col-2 gap-sm" style="margin-top:8px;">
+                <div class="co-input-group">
+                  <label for="ccExpiry" class="co-simple-label">Expiry (MM/YY)</label>
+                  <input type="text" id="ccExpiry" class="co-input" placeholder="12/28" />
+                </div>
+                <div class="co-input-group">
+                  <label for="ccCvc" class="co-simple-label">CVC/CVV</label>
+                  <input type="text" id="ccCvc" class="co-input" placeholder="382" />
+                </div>
+              </div>
+
+              <div class="co-payment-badges-row">
+                <span class="pay-badge visa">VISA</span>
+                <span class="pay-badge mc">mastercard</span>
+                <span class="pay-badge amex">AMEX</span>
+                <span class="pay-badge disc">DISCOVER</span>
+                <span class="pay-badge gpay">G Pay</span>
+              </div>
+
+              <div class="co-encryption-text">
+                🔒 Secure &amp; Encrypted
+              </div>
+
+              <div class="co-or-divider">
+                <span>OR</span>
+              </div>
+
+              <!-- PAYPAL BUTTON CONTAINER / FALLBACK -->
+              <div id="paypalCheckoutContainer" class="co-paypal-wrap"></div>
+
+              <button type="button" id="paypalExpressBtnFallback" class="co-paypal-express-btn">
+                <span class="pp-logo"><i>Pay</i><i>Pal</i></span>
+                <span class="pp-subtext">Express Checkout</span>
+              </button>
+            </section>
           </div>
         </div>
-      </aside>
-    </div>
+
+        <!-- RIGHT COLUMN: ORDER SUMMARY SIDEBAR -->
+        <aside class="co-right-col">
+          <div class="co-order-summary-card">
+            <h2 class="co-summary-header-title">ORDER SUMMARY</h2>
+            
+            <div id="checkoutItemsList" class="co-items-list">
+              <!-- Dynamically injected items -->
+            </div>
+
+            <div class="co-summary-line">
+              <span>Subtotal:</span>
+              <span id="coSubtotal">$0.00</span>
+            </div>
+
+            <div class="co-summary-line" id="coDiscountRow" style="display:none; color:var(--accent-red); font-weight:700;">
+              <span>Discount:</span>
+              <span id="coDiscount">-$0.00</span>
+            </div>
+
+            <div class="co-summary-line">
+              <span>Shipping:</span>
+              <span id="coShipping">$9.99</span>
+            </div>
+
+            <div class="co-summary-divider"></div>
+
+            <div class="co-summary-total-line">
+              <span>TOTAL TO PAY:</span>
+              <span id="coTotal">$0.00</span>
+            </div>
+
+            <div class="co-trust-pill-box">
+              <div class="trust-item">
+                <span class="trust-icon">⚽🔒</span>
+                <span>Guaranteed Safe &amp; Secure</span>
+              </div>
+              <div class="trust-item points">
+                <span class="trust-icon">⭐</span>
+                <span id="coPointsText">Earn 230 Vault Points!</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- MASTER BOTTOM COMPLETE ORDER BUTTON -->
+      <div class="co-master-submit-row">
+        <button type="submit" id="directPayBtn" class="co-master-submit-btn">
+          ⚡ COMPLETE VAULT DISPATCH ORDER →
+        </button>
+      </div>
+    </form>
   </main>
 
   <!-- Shared Cart Drawer -->
