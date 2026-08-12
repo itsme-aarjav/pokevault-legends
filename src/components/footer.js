@@ -41,7 +41,7 @@ export function renderFooter() {
           </div>
         </div>
 
-        <div class="footer-col">
+        <div class="footer-col nav-col-marketplace">
           <h4 class="footer-heading">MARKETPLACE</h4>
           <ul class="footer-links">
             <li><a href="shop.html">Shop All Products</a></li>
@@ -53,7 +53,7 @@ export function renderFooter() {
           </ul>
         </div>
 
-        <div class="footer-col">
+        <div class="footer-col nav-col-customer">
           <h4 class="footer-heading">CUSTOMER VAULT</h4>
           <ul class="footer-links">
             <li><a href="cart.html">View Shopping Cart</a></li>
