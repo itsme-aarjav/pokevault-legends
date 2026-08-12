@@ -136,7 +136,7 @@ class ProductPage {
             </div>
 
             <!-- BUY NOW PAY LATER (BNPL) WIDGET -->
-            <div style="margin-top:8px; font-family:var(--font-mono); font-size:0.82rem; color:#1E293B; display:flex; align-items:center; gap:6px;">
+            <div class="pd-bnpl-row">
               <span>or 4 interest-free payments of <strong>$${(p.price / 4).toFixed(2)}</strong> with</span>
               <span style="font-weight:900; background:#FFB3C6; color:#000; padding:1px 6px; border-radius:4px; font-size:0.75rem;">Klarna.</span>
               <span style="font-weight:900; background:#B2F5EA; color:#000; padding:1px 6px; border-radius:4px; font-size:0.75rem;">afterpay</span>
@@ -144,14 +144,14 @@ class ProductPage {
           </div>
 
           <!-- GEOLOCATION DELIVERY ESTIMATOR & TRUST BADGES -->
-          <div style="background:#FFF; border:2px solid #000; border-radius:8px; padding:1rem; margin-bottom:1.5rem; display:flex; flex-direction:column; gap:8px;">
-            <div style="display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:0.85rem; color:#1E293B; font-weight:700;">
+          <div class="pd-delivery-box">
+            <div class="pd-delivery-row">
               <span style="font-size:1.2rem;">🚚</span>
               <span>Order within <strong style="color:var(--accent-red);">2 hrs 14 mins</strong> to get it by <strong style="text-decoration:underline;">Friday, Aug 14</strong></span>
             </div>
-            <div style="display:flex; align-items:center; gap:14px; font-family:var(--font-mono); font-size:0.78rem; color:#475569; border-top:1px solid #EEE; padding-top:8px; flex-wrap:wrap;">
-              <span class="authenticity-trigger" id="vaultAuthBadgeTrigger" style="color:#059669; font-weight:800; display:flex; align-items:center; gap:4px;" title="Click to view our 5-Point Vault Inspection Guarantee">🛡️ 100% Vault Authenticity Guaranteed</span>
-              <span style="color:#2563EB; font-weight:800; display:flex; align-items:center; gap:4px;" id="pdPokeCoinsSpan">
+            <div class="pd-trust-badges">
+              <span class="authenticity-trigger" id="vaultAuthBadgeTrigger" style="color:#059669; font-weight:800; display:inline-flex; align-items:center; gap:4px;" title="Click to view our 5-Point Vault Inspection Guarantee">🛡️ 100% Vault Authenticity Guaranteed</span>
+              <span style="color:#2563EB; font-weight:800; display:inline-flex; align-items:center; gap:4px;" id="pdPokeCoinsSpan">
                 🪙 Earn <span id="pdCoinsCount">${initialCoins.toLocaleString('en-US')}</span> PokéCoins (<span id="pdCoinsValue">$${initialRewardsVal}</span> rewards value)
               </span>
             </div>
@@ -172,7 +172,7 @@ class ProductPage {
           </div>
 
           <!-- DESCRIPTION -->
-          <p style="font-family:var(--font-mono); font-size:0.95rem; line-height:1.6; color:#222; margin-bottom:1.5rem;">
+          <p class="pd-description">
             ${p.description}
           </p>
 
@@ -215,17 +215,19 @@ class ProductPage {
           </div>
 
           <!-- SPECIFICATIONS ACCORDION / TABLE -->
-          <div style="background:#FFF; border:3px solid #000; box-shadow:4px 4px 0px #000; border-radius:8px; padding:1.25rem;">
-            <h3 style="font-family:var(--font-title); font-size:1.1rem; margin-top:0; border-bottom:2px solid #000; padding-bottom:8px;">PRODUCT SPECIFICATIONS</h3>
-            <table class="admin-table" style="margin-top:10px;">
-              <tbody>
-                <tr><td>Category</td><td style="font-weight:700;">${p.categoryName}</td></tr>
-                <tr><td>Associated Pokémon</td><td style="font-weight:700;">${p.pokemon}</td></tr>
-                ${p.specs ? Object.entries(p.specs).map(([key, val]) => `
-                  <tr><td>${key}</td><td style="font-weight:700;">${val}</td></tr>
-                `).join('') : ''}
-              </tbody>
-            </table>
+          <div class="pd-specs-box">
+            <h3 class="pd-specs-title">PRODUCT SPECIFICATIONS</h3>
+            <div class="pd-specs-table-wrap">
+              <table class="admin-table" style="margin-top:10px;">
+                <tbody>
+                  <tr><td>Category</td><td style="font-weight:700;">${p.categoryName}</td></tr>
+                  <tr><td>Associated Pokémon</td><td style="font-weight:700;">${p.pokemon}</td></tr>
+                  ${p.specs ? Object.entries(p.specs).map(([key, val]) => `
+                    <tr><td>${key}</td><td style="font-weight:700;">${val}</td></tr>
+                  `).join('') : ''}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
