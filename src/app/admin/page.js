@@ -138,7 +138,7 @@ export default function AdminPage() {
               {products.map(p => (
                 <tr key={p.id}>
                   <td style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <img src={p.image} style={{ width: '40px', height: '40px', objectFit: 'contain', background: '#111', borderRadius: '4px' }} alt={p.name} />
+                    <img src={p.image} style={{ width: '40px', height: '40px', objectFit: 'contain', background: '#FFFFFF', borderRadius: '4px', border: '1px solid #000', position: 'relative', zIndex: 2 }} alt={p.name} />
                     <strong style={{ fontFamily: 'var(--font-title)' }}>{p.name}</strong>
                   </td>
                   <td>{p.categoryName}</td>
