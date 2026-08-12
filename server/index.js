@@ -67,28 +67,13 @@ app.use('/api/inventory', inventoryRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/paypal', paypalRouter);
 
-// Root welcome endpoint
+// Serve static assets and workspace HTML pages
+app.use(express.static('.'));
+app.use('/public', express.static('public'));
+
+// Root route serves index.html
 app.get('/', (req, res) => {
-  res.send(`
-    <div style="font-family: monospace; background: #FFF056; color: #000; padding: 2rem; min-height: 100vh;">
-      <h1 style="color: #D32F10; font-size: 2.2rem; margin-bottom: 0;">⚡ POKÉVAULT LEGENDS — EXPRESS BACKEND API</h1>
-      <p style="font-weight: bold;">Status: ONLINE | Port: ${PORT} | Supabase DB: ${isSupabaseConfigured() ? '✅ CONNECTED' : '⚠️ DEMO MODE'}</p>
-      <hr style="border-color: #000;" />
-      <h3>Available API Endpoints:</h3>
-      <ul>
-        <li><code>GET /api/health</code> — API Status &amp; Supabase Connection Check</li>
-        <li><code>GET /api/cards</code> — All Pokémon cards catalog</li>
-        <li><code>GET /api/cards/:id</code> — Single Pokémon card details</li>
-        <li><code>POST /api/cards</code> — Add new card [🔒 Admin Key Required]</li>
-        <li><code>PUT /api/cards/:id</code> — Update card [🔒 Admin Key Required]</li>
-        <li><code>GET /api/inventory</code> — Real-time card inventory stock levels</li>
-        <li><code>PUT /api/inventory/:cardId</code> — Update card stock level [🔒 Admin Key Required]</li>
-        <li><code>POST /api/orders</code> — Create &amp; dispatch new customer order</li>
-        <li><code>GET /api/orders</code> — Customer orders history [🔒 Admin Key Required]</li>
-        <li><code>GET /api/orders/:id</code> — Single order details [🔒 Admin Key Required]</li>
-      </ul>
-    </div>
-  `);
+  res.sendFile('index.html', { root: '.' });
 });
 
 app.listen(PORT, () => {
