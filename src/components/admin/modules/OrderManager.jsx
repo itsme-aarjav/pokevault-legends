@@ -1,71 +1,12 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { supabase } from '../../../lib/supabase.js';
+import { INITIAL_ORDERS } from '../../../data/orders.js';
 
-const SAMPLE_ORDERS = [
-  {
-    id: 'ord_1001',
-    order_id: 'PV-89412',
-    customer_name: 'Ash Ketchum',
-    customer_email: 'ash@pallettown.jp',
-    shipping_address: '123 Pallet Town Way, Kanto Region, 90210',
-    total_amount: 145.00,
-    subtotal: 135.01,
-    discount_amount: 0.00,
-    insurance_cost: 9.99,
-    status: 'Unfulfilled',
-    payment_method: 'PayPal',
-    payment_status: 'COMPLETED',
-    tracking_number: null,
-    created_at: new Date(Date.now() - 3600000 * 2).toISOString(),
-    items: [
-      { card_name: 'Gengar Heavyweight Hoodie', selectedSize: 'XL', quantity: 1, unit_price: 65.00 },
-      { card_name: 'Gengar Tactical Sling Bag', selectedSize: null, quantity: 1, unit_price: 35.00 }
-    ]
-  },
-  {
-    id: 'ord_1002',
-    order_id: 'PV-89413',
-    customer_name: 'Misty Waterflower',
-    customer_email: 'misty@ceruleangym.io',
-    shipping_address: '456 Gym Leader Lane, Cerulean City, 10001',
-    total_amount: 89.99,
-    subtotal: 80.00,
-    discount_amount: 0.00,
-    insurance_cost: 9.99,
-    status: 'Processing',
-    payment_method: 'PayPal',
-    payment_status: 'COMPLETED',
-    tracking_number: null,
-    created_at: new Date(Date.now() - 3600000 * 12).toISOString(),
-    items: [
-      { card_name: 'Pikachu Cyberpunk Neon Sign', selectedSize: null, quantity: 1, unit_price: 80.00 }
-    ]
-  },
-  {
-    id: 'ord_1003',
-    order_id: 'PV-89414',
-    customer_name: 'Brock Slate',
-    customer_email: 'brock@pewtergym.org',
-    shipping_address: '789 Rock Gym Blvd, Pewter City, 94102',
-    total_amount: 210.00,
-    subtotal: 200.01,
-    discount_amount: 0.00,
-    insurance_cost: 9.99,
-    status: 'Shipped',
-    payment_method: 'PayPal',
-    payment_status: 'COMPLETED',
-    tracking_number: 'USPS: 9400111899562145879',
-    created_at: new Date(Date.now() - 3600000 * 48).toISOString(),
-    items: [
-      { card_name: 'Umbreon VMAX Special Art Holo', selectedSize: null, quantity: 1, unit_price: 200.00 }
-    ]
-  }
-];
+export default function OrderManager({ orders: externalOrders, setOrders: externalSetOrders, initialOrders = [], onRefresh }) {
+  const [localOrders, setLocalOrders] = useState(initialOrders.length > 0 ? initialOrders : INITIAL_ORDERS);
+  const orders = externalOrders || localOrders;
+  const setOrders = externalSetOrders || setLocalOrders;
 
-export default function OrderManager({ initialOrders = [], onRefresh }) {
-  const [orders, setOrders] = useState(initialOrders.length > 0 ? initialOrders : SAMPLE_ORDERS);
   const [statusFilter, setStatusFilter] = useState('All');
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isCreatingDraft, setIsCreatingDraft] = useState(false);
