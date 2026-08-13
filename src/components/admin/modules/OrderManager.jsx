@@ -1,5 +1,5 @@
-'use client';
-
+import React, { useState, useMemo } from 'react';
+import { supabase } from '../../../lib/supabase.js';
 import { INITIAL_ORDERS } from '../../../data/orders.js';
 
 export default function OrderManager({ orders: externalOrders, setOrders: externalSetOrders, initialOrders = [], onRefresh }) {
