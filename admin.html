@@ -6,19 +6,66 @@
   <title>⚡ POKEVAULT CONTROL CENTER — Admin Dashboard</title>
   <meta name="description" content="Production-ready Admin Dashboard for PokeVault Legends." />
   
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            amber: {
+              400: '#fbbf24',
+              300: '#fcd34d'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
+  <!-- React 18 & ReactDOM 18 UMD Fallbacks -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- ES Module Import Maps for Browser ESM Loading -->
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.3.1",
+        "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+        "react-dom": "https://esm.sh/react-dom@18.3.1",
+        "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.45.0"
+      }
+    }
+  </script>
+
+  <!-- Babel Standalone for in-browser JSX transpilation -->
+  <script src="https://unpkg.com/@babel/standalone@7.24.0/babel.min.js"></script>
+
   <!-- Global Stylesheet -->
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body style="background-color: #09090b; color: #ffffff; min-height: 100vh; margin: 0;">
   <!-- React Mount Point -->
-  <div id="adminRoot"></div>
+  <div id="adminRoot">
+    <div style="min-height: 100vh; background-color: #09090b; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: monospace; color: #ffffff; padding: 2rem;">
+      <div style="width: 48px; height: 48px; border: 4px solid #fbbf24; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
+      <p style="color: #a1a1aa; font-weight: bold; font-size: 0.9rem;">Initializing PokeVault Admin Control Center...</p>
+    </div>
+    <style>
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+  </div>
 
-  <!-- Vite ES Module Entry Script -->
-  <script type="module" src="/src/admin.js"></script>
+  <!-- In-Browser Transpiled ES Module -->
+  <script type="text/babel" data-type="module" src="src/admin.js"></script>
 </body>
 </html>

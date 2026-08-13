@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ALL_PRODUCTS } from '../../../data/products';
-import { supabase } from '../../../lib/supabase';
+import { ALL_PRODUCTS } from '../../../data/products.js';
+import { supabase } from '../../../lib/supabase.js';
 
 export default function InventoryMatrix({ initialProducts = ALL_PRODUCTS, onRefresh }) {
   const [products, setProducts] = useState(initialProducts);

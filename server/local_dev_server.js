@@ -75,8 +75,18 @@ const server = http.createServer((req, res) => {
     filePath = path.join(process.cwd(), 'public', reqUrl);
   }
 
-  if (!fs.existsSync(filePath) && fs.existsSync(filePath + '.html')) {
-    filePath = filePath + '.html';
+  if (!fs.existsSync(filePath)) {
+    if (fs.existsSync(filePath + '.jsx')) {
+      filePath = filePath + '.jsx';
+    } else if (fs.existsSync(filePath + '.js')) {
+      filePath = filePath + '.js';
+    } else if (fs.existsSync(filePath + '.html')) {
+      filePath = filePath + '.html';
+    } else if (fs.existsSync(path.join(filePath, 'index.jsx'))) {
+      filePath = path.join(filePath, 'index.jsx');
+    } else if (fs.existsSync(path.join(filePath, 'index.js'))) {
+      filePath = path.join(filePath, 'index.js');
+    }
   }
 
   if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {

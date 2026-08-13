@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import { ALL_PRODUCTS } from '../../../data/products';
+import { ALL_PRODUCTS } from '../../../data/products.js';
 
 /**
  * AnalyticsReports Component (Shopify-Class Module 1)

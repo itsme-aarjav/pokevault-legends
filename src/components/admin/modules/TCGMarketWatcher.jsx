@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ALL_PRODUCTS } from '../../../data/products';
+import { ALL_PRODUCTS } from '../../../data/products.js';
 
 export default function TCGMarketWatcher({ products = ALL_PRODUCTS }) {
   const cardsList = products.filter(p => p.category === 'trading-cards' || p.category === 'cards');
