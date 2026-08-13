@@ -71,14 +71,49 @@ CREATE TABLE IF NOT EXISTS public.order_items (
   item_total NUMERIC(10, 2) NOT NULL
 );
 
+-- 5. STORE SETTINGS TABLE (Hype Drop & VIP Gate Lock)
+CREATE TABLE IF NOT EXISTS public.store_settings (
+  id TEXT PRIMARY KEY DEFAULT 'default',
+  is_hype_drop_active BOOLEAN DEFAULT false,
+  drop_password TEXT DEFAULT 'POKEVAULTVIP',
+  drop_timestamp TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now() + interval '3 days'),
+  opt_in_count INTEGER DEFAULT 342,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Add Cross-Sell & TCG Market Price fields to cards table if not exists
+ALTER TABLE public.cards ADD COLUMN IF NOT EXISTS cross_sell_id TEXT REFERENCES public.cards(id);
+ALTER TABLE public.cards ADD COLUMN IF NOT EXISTS bundle_discount INTEGER DEFAULT 10;
+ALTER TABLE public.cards ADD COLUMN IF NOT EXISTS tcg_market_price NUMERIC(10, 2);
+
+-- Insert default store settings record if not present
+INSERT INTO public.store_settings (id, is_hype_drop_active, drop_password, drop_timestamp, opt_in_count)
+VALUES ('default', false, 'POKEVAULTVIP', now() + interval '3 days', 342)
+ON CONFLICT (id) DO NOTHING;
+
 -- Enable Row Level Security (RLS)
 ALTER TABLE public.cards ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.inventory ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.order_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.store_settings ENABLE ROW LEVEL SECURITY;
 
 -- Read policies for public access
 CREATE POLICY "Public Cards Select Policy" ON public.cards FOR SELECT USING (true);
 CREATE POLICY "Public Inventory Select Policy" ON public.inventory FOR SELECT USING (true);
 CREATE POLICY "Public Orders Select Policy" ON public.orders FOR SELECT USING (true);
 CREATE POLICY "Public Order Items Select Policy" ON public.order_items FOR SELECT USING (true);
+CREATE POLICY "Public Store Settings Select Policy" ON public.store_settings FOR SELECT USING (true);
+
+-- Admin Write Policies (Allow write actions for admin role or authenticated service users)
+CREATE POLICY "Admin Cards All Policy" ON public.cards FOR ALL USING (
+  (auth.jwt() ->> 'role' = 'admin') OR (auth.jwt() -> 'user_metadata' ->> 'role' = 'admin') OR (auth.role() = 'authenticated')
+);
+
+CREATE POLICY "Admin Orders All Policy" ON public.orders FOR ALL USING (
+  (auth.jwt() ->> 'role' = 'admin') OR (auth.jwt() -> 'user_metadata' ->> 'role' = 'admin') OR (auth.role() = 'authenticated')
+);
+
+CREATE POLICY "Admin Settings All Policy" ON public.store_settings FOR ALL USING (
+  (auth.jwt() ->> 'role' = 'admin') OR (auth.jwt() -> 'user_metadata' ->> 'role' = 'admin') OR (auth.role() = 'authenticated')
+);
