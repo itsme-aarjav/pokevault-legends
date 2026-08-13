@@ -3,10 +3,13 @@ import { createRoot } from 'react-dom/client';
 import { StoreProvider } from './context/StoreContext.jsx';
 import AdminDashboard from './components/admin/AdminDashboard.jsx';
 
+const ReactObj = (typeof window !== 'undefined' && window.React) ? window.React : React;
+const ComponentClass = ReactObj.Component || Component;
+
 /**
  * React Error Boundary to prevent silent blank black screens
  */
-class AdminErrorBoundary extends Component {
+class AdminErrorBoundary extends ComponentClass {
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -100,6 +103,7 @@ function AppRoot() {
 
 const mountContainer = document.getElementById('adminRoot') || document.body;
 if (mountContainer) {
-  const root = createRoot(mountContainer);
-  root.render(React.createElement(AppRoot));
+  const rootFn = (typeof window !== 'undefined' && window.ReactDOM?.createRoot) ? window.ReactDOM.createRoot : createRoot;
+  const root = rootFn(mountContainer);
+  root.render(ReactObj.createElement(AppRoot));
 }
