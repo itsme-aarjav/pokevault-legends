@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { supabase, getStoreSettings } from '../../lib/supabase';
+import { supabase, getStoreSettings } from '../../lib/supabase.js';
 
 /**
  * HypeDropController Component (Module 5 / Custom Feature)
