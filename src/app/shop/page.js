@@ -14,6 +14,7 @@ export default function ShopPage() {
   const [inStockOnly, setInStockOnly] = useState(false);
   const [sortBy, setSortBy] = useState('featured');
   const [displayedCount, setDisplayedCount] = useState(12);
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
   const filteredProducts = useMemo(() => {
     return filterProducts({
@@ -53,8 +54,18 @@ export default function ShopPage() {
 
       {/* MAIN SHOP CONTENT WRAPPER */}
       <div className="shop-page-layout">
+        {/* MOBILE FILTER TOGGLE BUTTON */}
+        <button
+          className="mobile-filter-toggle-btn"
+          onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
+          aria-label="Toggle Filter Options"
+        >
+          <span>{mobileFilterOpen ? '⚡ Hide Filters' : '⚡ Filter & Sort Products'}</span>
+          <span style={{ fontSize: '1.1rem' }}>{mobileFilterOpen ? '▲' : '▼'}</span>
+        </button>
+
         {/* FILTER SIDEBAR */}
-        <aside className="shop-sidebar">
+        <aside className={`shop-sidebar ${mobileFilterOpen ? 'open' : ''}`}>
           <div className="sidebar-header">
             <h3 className="sidebar-title">🔍 FILTER MARKETPLACE</h3>
             <button className="btn-clear-filters" onClick={handleReset}>Reset All</button>
