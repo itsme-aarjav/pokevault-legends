@@ -1,18 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import AdminProtectedRoute from './AdminProtectedRoute';
-import AdminLayout from './AdminLayout';
+import AdminProtectedRoute from './AdminProtectedRoute.jsx';
+import AdminLayout from './AdminLayout.jsx';
 
-import AnalyticsReports from './modules/AnalyticsReports';
-import OrderManager from './modules/OrderManager';
-import InventoryMatrix from './modules/InventoryMatrix';
-import CustomerCRM from './modules/CustomerCRM';
-import DiscountsPromos from './modules/DiscountsPromos';
-import HypeDropGate from './modules/HypeDropGate';
-import TCGMarketWatcher from './modules/TCGMarketWatcher';
-import FraudRiskAnalyzer from './modules/FraudRiskAnalyzer';
-import StoreSettings from './modules/StoreSettings';
+import AnalyticsReports from './modules/AnalyticsReports.jsx';
+import OrderManager from './modules/OrderManager.jsx';
+import InventoryMatrix from './modules/InventoryMatrix.jsx';
+import CustomerCRM from './modules/CustomerCRM.jsx';
+import DiscountsPromos from './modules/DiscountsPromos.jsx';
+import HypeDropGate from './modules/HypeDropGate.jsx';
+import TCGMarketWatcher from './modules/TCGMarketWatcher.jsx';
+import FraudRiskAnalyzer from './modules/FraudRiskAnalyzer.jsx';
+import StoreSettings from './modules/StoreSettings.jsx';
 
 /**
  * AdminDashboard Main Container Component
