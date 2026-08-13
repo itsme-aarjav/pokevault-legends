@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { isSupabaseConfigured } from '../../lib/supabase';
+import { isSupabaseConfigured } from '../../lib/supabase.js';
 
 /**
  * AdminLayout Component
