@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { isSupabaseConfigured } from '../../../lib/supabase';
+import { isSupabaseConfigured } from '../../../lib/supabase.js';
 
 export default function StoreSettings() {
   const [storeName, setStoreName] = useState('POKÉVAULT LEGENDS');
