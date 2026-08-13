@@ -1,6 +1,7 @@
-import { createClient } from '@supabase/supabase-js';
+/**
+ * Supabase client helper supporting both ES module imports and browser UMD window fallbacks
+ */
 
-// Environment variable lookup supporting Next.js, Vite, and Node environments
 const getEnvVar = (key, viteKey) => {
   if (typeof process !== 'undefined' && process.env && process.env[key]) {
     return process.env[key];
@@ -23,9 +24,18 @@ export const isSupabaseConfigured = () => {
   );
 };
 
-export const supabase = isSupabaseConfigured()
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : null;
+let clientInstance = null;
+if (isSupabaseConfigured()) {
+  try {
+    if (typeof window !== 'undefined' && window.supabase?.createClient) {
+      clientInstance = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+    }
+  } catch (e) {
+    console.warn('Supabase client init warning:', e);
+  }
+}
+
+export const supabase = clientInstance;
 
 /**
  * Fetch Hype Drop Lock-State Settings from Supabase DB or Local Fallback
