@@ -41,7 +41,7 @@ export default function FraudRiskAnalyzer() {
           <div className="flex items-center gap-2">
             <span className="text-2xl">🛡️</span>
             <h2 className="text-2xl font-black uppercase text-white tracking-wide">
-              "Beyond Shopify" Native Fraud &amp; Risk Analyzer
+              PokeVault Native Fraud & Risk Shield
             </h2>
           </div>
           <p className="text-zinc-400 text-xs mt-1">

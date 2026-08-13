@@ -17,7 +17,7 @@ import StoreSettings from './modules/StoreSettings.jsx';
 /**
  * AdminDashboard Main Container Component
  * 
- * Aggregates all 9 Shopify-class + Beyond Shopify modules into a single control panel.
+ * Aggregates all 9 PokeVault Enterprise modules into a single control panel.
  */
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('overview');

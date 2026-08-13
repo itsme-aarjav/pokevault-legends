@@ -6,7 +6,7 @@ import { supabase, getStoreSettings } from '../../lib/supabase.js';
 /**
  * HypeDropController Component (Module 5 / Custom Feature)
  * 
- * Controls store lock-state ("Beyond Shopify" Hype Drop Controller).
+ * Controls store lock-state (PokeVault Pro Hype Drop Controller).
  * Toggles storefront access behind a VIP password gate with countdown timer & email opt-ins.
  */
 export default function HypeDropController() {
@@ -75,7 +75,7 @@ export default function HypeDropController() {
             </h2>
           </div>
           <p className="text-zinc-400 text-xs mt-1">
-            "Beyond Shopify" VIP Gate — Lock storefront behind a release countdown timer &amp; email opt-in password wall.
+            Exclusive VIP Gate — Lock storefront behind a release countdown timer &amp; email opt-in password wall.
           </p>
         </div>
 

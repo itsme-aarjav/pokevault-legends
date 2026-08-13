@@ -24,7 +24,7 @@ export default function TCGMarketWatcher({ products = ALL_PRODUCTS }) {
           <div className="flex items-center gap-2">
             <span className="text-2xl">🃏</span>
             <h2 className="text-2xl font-black uppercase text-white tracking-wide">
-              "Beyond Shopify" TCG Card Market Watcher
+              PokeVault Native TCG Card Market Watcher
             </h2>
           </div>
           <p className="text-zinc-400 text-xs mt-1">
