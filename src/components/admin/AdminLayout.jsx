@@ -20,11 +20,15 @@ export default function AdminLayout({ activeTab, setActiveTab, children }) {
   };
 
   const navItems = [
-    { id: 'overview', label: 'Overview & Analytics', icon: '📊' },
-    { id: 'orders', label: 'Order Fulfillment', icon: '📦' },
-    { id: 'products', label: 'Product & Bundle Manager', icon: '👕' },
-    { id: 'customers', label: 'Customer CRM & Tiers', icon: '👥' },
-    { id: 'hypedrop', label: 'Hype Drop Controller', icon: '🔥' }
+    { id: 'overview', label: 'Analytics & Reports', icon: '📊' },
+    { id: 'orders', label: 'Orders & Pipeline', icon: '📦' },
+    { id: 'products', label: 'Inventory & Variants', icon: '👕' },
+    { id: 'customers', label: 'Customers & Loyalty', icon: '👥' },
+    { id: 'discounts', label: 'Discounts & Promos', icon: '🏷️' },
+    { id: 'hypedrop', label: 'Hype Drop Controller', icon: '🔥' },
+    { id: 'tcgmarket', label: 'TCG Market Watcher', icon: '🃏' },
+    { id: 'fraudrisk', label: 'Fraud Risk Shield', icon: '🛡️' },
+    { id: 'settings', label: 'Store Configuration', icon: '⚙️' }
   ];
 
   return (
@@ -53,14 +57,14 @@ export default function AdminLayout({ activeTab, setActiveTab, children }) {
           </div>
 
           {/* TAB NAVIGATION BUTTONS */}
-          <nav className="p-3 space-y-1">
+          <nav className="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-160px)]">
             {navItems.map(item => {
               const isActive = activeTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold tracking-wide transition-all ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-bold tracking-wide transition-all ${
                     isActive
                       ? 'bg-amber-400 text-black shadow-lg shadow-amber-400/10'
                       : 'text-zinc-400 hover:text-white hover:bg-zinc-800/60'
