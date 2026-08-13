@@ -1,3 +1,3 @@
-import HypeDropController from '../HypeDropController';
+import HypeDropController from '../HypeDropController.jsx';
 
 export default HypeDropController;
