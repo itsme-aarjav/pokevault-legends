@@ -62,7 +62,7 @@ export default function Navbar({ onOpenCart }) {
         </div>
       </div>
 
-      <!-- MAIN NAVBAR -->
+      {/* MAIN NAVBAR */}
       <header class="navbar">
         <div class="nav-left">
           <button class="icon-btn" onClick={onOpenCart} aria-label="View Shopping Cart">
