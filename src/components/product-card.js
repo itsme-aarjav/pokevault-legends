@@ -38,8 +38,12 @@ export function renderProductCard(product) {
         </div>
 
         <div class="card-price-row">
-          <div class="card-price-current">$${product.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
-          ${product.originalPrice ? `<div class="card-price-original">$${product.originalPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>` : ''}
+          <div class="card-price-current">₹${Math.round(product.price > 500 ? product.price : product.price * 83).toLocaleString('en-IN')}</div>
+          ${product.originalPrice ? `<div class="card-price-original">₹${Math.round(product.originalPrice > 500 ? product.originalPrice : product.originalPrice * 83).toLocaleString('en-IN')}</div>` : ''}
+        </div>
+
+        <div style="font-size:0.72rem; color:#008060; font-weight:700; display:flex; align-items:center; gap:4px; margin-bottom:8px;">
+          <span>⚡ Free BlueDart Delivery</span> • <span>📦 Mumbai Vault Stock</span>
         </div>
 
         <div class="card-actions-row">

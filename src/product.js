@@ -127,19 +127,19 @@ class ProductPage {
             <a href="#reviewsSection" style="color:#000; text-decoration:underline;">(${totalCount} customer reviews)</a>
           </div>
 
-          <!-- PRICE & BNPL INSTALLMENTS BOX -->
+          <!-- PRICE & UPI / EMI BOX -->
           <div class="pd-price-box">
             <div class="pd-price-row">
-              <div class="pd-price-main">$${p.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
-              ${p.originalPrice ? `<div class="pd-price-original">$${p.originalPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>` : ''}
+              <div class="pd-price-main">₹${Math.round(p.price > 500 ? p.price : p.price * 83).toLocaleString('en-IN')}</div>
+              ${p.originalPrice ? `<div class="pd-price-original">₹${Math.round(p.originalPrice > 500 ? p.originalPrice : p.originalPrice * 83).toLocaleString('en-IN')}</div>` : ''}
               ${p.discountPercent ? `<span class="pd-discount-badge">SAVE ${p.discountPercent}%</span>` : ''}
             </div>
 
-            <!-- BUY NOW PAY LATER (BNPL) WIDGET -->
-            <div class="pd-bnpl-row">
-              <span>or 4 interest-free payments of <strong>$${(p.price / 4).toFixed(2)}</strong> with</span>
-              <span style="font-weight:900; background:#FFB3C6; color:#000; padding:1px 6px; border-radius:4px; font-size:0.75rem;">Klarna.</span>
-              <span style="font-weight:900; background:#B2F5EA; color:#000; padding:1px 6px; border-radius:4px; font-size:0.75rem;">afterpay</span>
+            <!-- UPI & NO-COST EMI WIDGET -->
+            <div class="pd-bnpl-row" style="flex-wrap:wrap; gap:8px;">
+              <span>⚡ <strong>Instant UPI Pay</strong> (GPay, PhonePe, Paytm) or <strong>No-Cost EMI</strong> from ₹${Math.round((p.price > 500 ? p.price : p.price * 83) / 3).toLocaleString('en-IN')}/mo</span>
+              <span style="font-weight:900; background:#EBF5FA; color:#2C6ECB; padding:1px 6px; border-radius:4px; font-size:0.75rem;">UPI</span>
+              <span style="font-weight:900; background:#E3FCEF; color:#006644; padding:1px 6px; border-radius:4px; font-size:0.75rem;">COD</span>
             </div>
           </div>
 
@@ -147,12 +147,12 @@ class ProductPage {
           <div class="pd-delivery-box">
             <div class="pd-delivery-row">
               <span style="font-size:1.2rem;">🚚</span>
-              <span>Order within <strong style="color:var(--accent-red);">2 hrs 14 mins</strong> to get it by <strong style="text-decoration:underline;">Friday, Aug 14</strong></span>
+              <span>Order within <strong style="color:var(--accent-red);">2 hrs 14 mins</strong> for <strong>Free BlueDart Express Air Delivery</strong> (1-2 Days Pan-India)</span>
             </div>
             <div class="pd-trust-badges">
-              <span class="authenticity-trigger" id="vaultAuthBadgeTrigger" style="color:#059669; font-weight:800; display:inline-flex; align-items:center; gap:4px;" title="Click to view our 5-Point Vault Inspection Guarantee">🛡️ 100% Vault Authenticity Guaranteed</span>
+              <span class="authenticity-trigger" id="vaultAuthBadgeTrigger" style="color:#059669; font-weight:800; display:inline-flex; align-items:center; gap:4px;" title="Click to view our 5-Point Vault Inspection Guarantee">🛡️ 100% Genuine Japanese Pokemon Center & PSA Authenticated</span>
               <span style="color:#2563EB; font-weight:800; display:inline-flex; align-items:center; gap:4px;" id="pdPokeCoinsSpan">
-                🪙 Earn <span id="pdCoinsCount">${initialCoins.toLocaleString('en-US')}</span> PokéCoins (<span id="pdCoinsValue">$${initialRewardsVal}</span> rewards value)
+                🪙 Earn <span id="pdCoinsCount">${initialCoins.toLocaleString('en-IN')}</span> PokéCoins (₹${Math.round(initialRewardsVal * 83 || 150)} rewards value)
               </span>
             </div>
           </div>

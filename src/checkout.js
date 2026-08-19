@@ -66,6 +66,7 @@ class CheckoutPage {
     itemsList.innerHTML = this.cart.map(item => {
       const p = item.product;
       if (!p) return '';
+      const inrPrice = Math.round(p.price > 500 ? p.price : p.price * 83);
       return `
         <div class="co-item-row">
           <div class="co-item-thumb-box">
@@ -73,28 +74,32 @@ class CheckoutPage {
           </div>
           <div class="co-item-details">
             <div class="co-item-name">${item.quantity} x ${p.name}</div>
-            <div class="co-item-price">$${p.price.toFixed(2)}</div>
+            <div class="co-item-price">₹${inrPrice.toLocaleString('en-IN')}</div>
           </div>
         </div>
       `;
     }).join('');
 
     const totals = this.getCalculatedTotals();
+    const inrSubtotal = totals.subtotal > 500 ? totals.subtotal : totals.subtotal * 83;
+    const inrShipping = totals.shipping > 0 ? (totals.shipping > 50 ? totals.shipping : 150) : 0;
+    const inrDiscount = totals.discount > 500 ? totals.discount : totals.discount * 83;
+    const inrTotal = inrSubtotal + inrShipping - inrDiscount;
 
-    if (subtotalEl) subtotalEl.textContent = `$${totals.subtotal.toFixed(2)}`;
-    if (shippingEl) shippingEl.textContent = totals.shipping > 0 ? `$${totals.shipping.toFixed(2)}` : 'FREE';
+    if (subtotalEl) subtotalEl.textContent = `₹${Math.round(inrSubtotal).toLocaleString('en-IN')}`;
+    if (shippingEl) shippingEl.textContent = inrShipping > 0 ? `₹${inrShipping}` : 'FREE';
 
     if (discountRow) {
-      if (totals.discount > 0) {
+      if (inrDiscount > 0) {
         discountRow.style.display = 'flex';
-        if (discountEl) discountEl.textContent = `-$${totals.discount.toFixed(2)}`;
+        if (discountEl) discountEl.textContent = `-₹${Math.round(inrDiscount).toLocaleString('en-IN')}`;
       } else {
         discountRow.style.display = 'none';
       }
     }
 
-    if (totalEl) totalEl.textContent = `$${totals.total.toFixed(2)}`;
-    if (pointsText) pointsText.textContent = `Earn ${totals.vaultPoints} Vault Points!`;
+    if (totalEl) totalEl.textContent = `₹${Math.round(inrTotal).toLocaleString('en-IN')}`;
+    if (pointsText) pointsText.textContent = `⚡ Instant UPI Verification & 18% GST Receipt Guaranteed`;
   }
 
   bindFormEvents() {
