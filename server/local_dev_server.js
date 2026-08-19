@@ -4,6 +4,7 @@ import path from 'path';
 import { ALL_PRODUCTS, getProductById, getProductsByCategory } from '../src/data/products.js';
 import { CATEGORIES_DATA, getCategoryById } from '../src/data/categories.js';
 import { renderProductSSR, renderCategorySSR } from './ssr_renderer.js';
+import { handleVendureRequest } from './vendure/vendure-config.js';
 
 const PORT = 8080;
 
@@ -23,10 +24,14 @@ const MIME_TYPES = {
   '.txt': 'text/plain; charset=utf-8'
 };
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://localhost:${PORT}`);
   const reqUrl = parsedUrl.pathname;
   const searchParams = parsedUrl.searchParams;
+
+  // 0. Vendure Backend GraphQL & Admin Dashboard Interception
+  const vendureHandled = await handleVendureRequest(req, res, reqUrl);
+  if (vendureHandled) return;
 
   // API Endpoints
   if (reqUrl === '/api/cards' || reqUrl === '/api/products') {
