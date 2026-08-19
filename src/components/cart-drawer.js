@@ -92,24 +92,27 @@ export function updateCartDrawerUI() {
   const cart = getCart();
   const subtotal = getCartSubtotal();
 
-  // Update Free Shipping Progress Bar
-  if (subtotal === 0) {
-    if (freeMsg) freeMsg.innerHTML = `Add items to qualify for <strong>FREE Vault Shipping</strong>!`;
+  // Update Free Shipping Progress Bar (India BlueDart: ₹999 threshold)
+  const FREE_SHIPPING_INR = 999;
+  const inrSubtotal = subtotal > 500 ? subtotal : subtotal * 83;
+
+  if (inrSubtotal === 0) {
+    if (freeMsg) freeMsg.innerHTML = `Add items to qualify for <strong>FREE BlueDart Express Delivery (India)</strong>!`;
     if (freeProgress) freeProgress.style.width = '0%';
-  } else if (subtotal >= FREE_SHIPPING_THRESHOLD) {
-    if (freeMsg) freeMsg.innerHTML = `🎉 <strong>UNLOCKED!</strong> You qualified for <strong>FREE Vault Shipping</strong>!`;
+  } else if (inrSubtotal >= FREE_SHIPPING_INR) {
+    if (freeMsg) freeMsg.innerHTML = `🎉 <strong>UNLOCKED!</strong> You qualified for <strong>FREE BlueDart Express Delivery</strong>!`;
     if (freeProgress) freeProgress.style.width = '100%';
   } else {
-    const diff = FREE_SHIPPING_THRESHOLD - subtotal;
-    const pct = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));
-    if (freeMsg) freeMsg.innerHTML = `You are only <strong>$${diff.toFixed(2)}</strong> away from <strong>FREE Vault Shipping</strong>!`;
+    const diff = FREE_SHIPPING_INR - inrSubtotal;
+    const pct = Math.min(100, Math.round((inrSubtotal / FREE_SHIPPING_INR) * 100));
+    if (freeMsg) freeMsg.innerHTML = `Add <strong>₹${Math.round(diff).toLocaleString('en-IN')}</strong> more for <strong>FREE BlueDart Express Delivery</strong>!`;
     if (freeProgress) freeProgress.style.width = `${pct}%`;
   }
 
   // Handle Empty Cart
   if (cart.length === 0) {
-    container.innerHTML = `<div class="cart-empty-msg">YOUR VAULT IS EMPTY. ADD SOME LEGENDS!</div>`;
-    if (subtotalEl) subtotalEl.textContent = '$0.00';
+    container.innerHTML = `<div class="cart-empty-msg">YOUR VAULT CART IS EMPTY. DISCOVER AUTHENTIC LEGENDS!</div>`;
+    if (subtotalEl) subtotalEl.textContent = '₹0';
     if (discountRow) discountRow.style.display = 'none';
     if (upsellsList) upsellsList.innerHTML = '';
     return;
@@ -118,19 +121,20 @@ export function updateCartDrawerUI() {
   const promo = getPromoState();
   let discountAmount = 0;
   if (promo.discountPercent > 0) {
-    discountAmount = (subtotal * promo.discountPercent) / 100;
+    discountAmount = (inrSubtotal * promo.discountPercent) / 100;
   }
 
   container.innerHTML = cart.map(item => {
     const p = item.product;
     if (!p) return '';
+    const itemPriceINR = Math.round(p.price > 500 ? p.price : p.price * 83);
     return `
       <div class="cart-item-row" data-id="${p.id}">
         <img src="${p.image}" class="cart-item-thumb" alt="${p.name}" loading="lazy" />
         <div class="cart-item-details">
           <div class="cart-item-title">${p.name}</div>
           <div class="cart-item-meta">${p.categoryName}</div>
-          <div class="cart-item-price">$${(p.price * item.quantity).toFixed(2)}</div>
+          <div class="cart-item-price">₹${(itemPriceINR * item.quantity).toLocaleString('en-IN')}</div>
           <div class="cart-qty-row" style="margin-top:6px; display:flex; align-items:center; gap:6px;">
             <button class="btn-qty drawer-qty-dec" data-id="${p.id}">-</button>
             <span style="font-family:var(--font-mono); font-weight:700; font-size:0.85rem;">${item.quantity}</span>
@@ -142,22 +146,24 @@ export function updateCartDrawerUI() {
     `;
   }).join('');
 
-  // Render Intelligent In-Cart Upsells
+  // Render In-Cart Upsells in INR
   if (upsellsList) {
     const all = getAllProducts();
     const cartIds = new Set(cart.map(i => i.id));
     const suggested = all.filter(p => !cartIds.has(p.id)).slice(0, 3);
 
-    upsellsList.innerHTML = suggested.map(p => `
+    upsellsList.innerHTML = suggested.map(p => {
+      const upsellPriceINR = Math.round(p.price > 500 ? p.price : p.price * 83);
+      return `
       <div style="background:#FFF; border:2px solid #000; border-radius:6px; padding:6px 10px; display:flex; align-items:center; gap:8px; min-width:210px; flex-shrink:0;">
         <img src="${p.image}" style="width:40px; height:40px; object-fit:contain;" alt="${p.name}" />
         <div style="flex:1; overflow:hidden;">
           <div style="font-family:var(--font-title); font-size:0.75rem; font-weight:900; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#000;">${p.name}</div>
-          <div style="font-family:var(--font-mono); font-size:0.75rem; font-weight:700; color:var(--accent-red);">$${p.price.toFixed(2)}</div>
+          <div style="font-family:var(--font-mono); font-size:0.75rem; font-weight:700; color:var(--accent-red);">₹${upsellPriceINR.toLocaleString('en-IN')}</div>
         </div>
         <button class="btn-pill drawer-upsell-add-btn" data-upsell-id="${p.id}" style="padding:4px 8px; font-size:0.7rem;">+ Add</button>
       </div>
-    `).join('');
+    `}).join('');
 
     upsellsList.querySelectorAll('.drawer-upsell-add-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -167,11 +173,11 @@ export function updateCartDrawerUI() {
     });
   }
 
-  if (subtotalEl) subtotalEl.textContent = `$${(subtotal - discountAmount).toFixed(2)}`;
+  if (subtotalEl) subtotalEl.textContent = `₹${Math.round(inrSubtotal - discountAmount).toLocaleString('en-IN')}`;
   if (discountRow) {
     if (discountAmount > 0) {
       discountRow.style.display = 'flex';
-      if (discountEl) discountEl.textContent = `-$${discountAmount.toFixed(2)}`;
+      if (discountEl) discountEl.textContent = `-₹${Math.round(discountAmount).toLocaleString('en-IN')}`;
     } else {
       discountRow.style.display = 'none';
     }
