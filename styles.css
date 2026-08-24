@@ -5113,7 +5113,7 @@ main {
 /* Social Proof Live Purchase Toast */
 .cro-toast-container {
   position: fixed;
-  bottom: 24px;
+  bottom: 84px;
   left: 24px;
   z-index: 9999;
   display: flex;
@@ -5471,19 +5471,48 @@ main {
   contain-intrinsic-size: 300px 420px;
 }
 
-/* Maximum Container Containment for 4K / Ultra-wide Screens */
-.container,
+/* Full-Width Full-Bleed Layouts with Centered Content for Ultrawide / 4K Screens */
+.navbar,
+.ticker-wrap,
 .hero-section,
 .marquee-bar,
+.page-hero-banner,
+.about-hero-section,
+.footer-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box;
+}
+
+.footer-wrap {
+  background: #000000 !important;
+}
+
+/* Centered Inner Containers */
+.container,
 .shop-page-wrap,
 .categories-grid,
 .product-page-wrap,
 .cart-page-wrap,
 .checkout-page-wrap,
-.footer-wrap {
-  max-width: 1440px !important;
+.trust-seals-grid,
+.footer-main-grid,
+.footer-bottom-bar,
+.hero-content-wrap,
+.about-hero-inner,
+.about-main-wrap,
+.blog-catalog-wrap,
+.blog-article-wrap,
+.verify-portal-wrap,
+.rewards-portal-wrap,
+.track-portal-wrap,
+.mystery-vault-wrap {
+  max-width: 1360px !important;
   margin-left: auto !important;
   margin-right: auto !important;
+  box-sizing: border-box;
 }
 
 /* ==========================================================================
@@ -6181,19 +6210,6 @@ main {
   display: none;
   background-repeat: no-repeat;
   z-index: 100;
-}
-
-/* Currency Switcher in Header */
-.currency-select-box {
-  background: #FFFFFF;
-  border: 2px solid #000000;
-  border-radius: 12px;
-  padding: 4px 8px;
-  font-family: var(--font-mono);
-  font-weight: 800;
-  font-size: 0.8rem;
-  cursor: pointer;
-  box-shadow: 2px 2px 0px #000000;
 }
 
 /* ==========================================================================
