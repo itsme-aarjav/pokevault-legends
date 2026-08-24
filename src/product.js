@@ -77,6 +77,15 @@ class ProductPage {
     const initialRewardsVal = (initialCoins / 100).toFixed(2);
     const unitPriceINR = Math.round(p.price > 500 ? p.price : p.price * 83);
 
+    // Bundle Items Calculation
+    const bundleItem1 = related[0] || this.allProducts[1];
+    const bundleItem2 = related[1] || this.allProducts[2];
+    const b1PriceINR = Math.round(bundleItem1.price > 500 ? bundleItem1.price : bundleItem1.price * 83);
+    const b2PriceINR = Math.round(bundleItem2.price > 500 ? bundleItem2.price : bundleItem2.price * 83);
+    const rawBundleTotal = unitPriceINR + b1PriceINR + b2PriceINR;
+    const discountedBundleTotal = Math.round(rawBundleTotal * 0.85);
+    const bundleSavings = rawBundleTotal - discountedBundleTotal;
+
     root.innerHTML = `
       <!-- BREADCRUMBS -->
       <div class="breadcrumb-nav" style="margin-bottom: 1.5rem;">
@@ -267,6 +276,54 @@ class ProductPage {
               </div>
               <button class="btn-pill" id="stickyAddToCartBtn" style="padding:10px 20px; font-size:1rem; flex-shrink:0;">
                 🛒 Add to Cart
+              </button>
+            </div>
+          </div>
+
+          <!-- FREQUENTLY BOUGHT TOGETHER BUNDLE BUILDER -->
+          <div class="bundle-builder-wrap">
+            <div style="font-family:var(--font-mono); font-weight:800; font-size:0.8rem; color:var(--accent-red); letter-spacing:1px; margin-bottom:4px;">
+              ⚡ 1-CLICK VAULT BUNDLE (SAVE 15%)
+            </div>
+            <h3 style="font-family:var(--font-title); font-weight:900; font-size:1.15rem; color:#000; margin:0 0 10px;">
+              FREQUENTLY BOUGHT TOGETHER
+            </h3>
+
+            <div class="bundle-items-row">
+              <img src="${p.image}" class="bundle-item-thumb" alt="${p.name}" />
+              <span class="bundle-plus-icon">+</span>
+              <img src="${bundleItem1.image}" class="bundle-item-thumb" alt="${bundleItem1.name}" />
+              <span class="bundle-plus-icon">+</span>
+              <img src="${bundleItem2.image}" class="bundle-item-thumb" alt="${bundleItem2.name}" />
+            </div>
+
+            <div style="margin: 12px 0;">
+              <div class="bundle-checkbox-row">
+                <input type="checkbox" id="bundleCheckThis" checked disabled />
+                <label for="bundleCheckThis"><strong>This item:</strong> ${p.name} (₹${unitPriceINR.toLocaleString('en-IN')})</label>
+              </div>
+              <div class="bundle-checkbox-row">
+                <input type="checkbox" id="bundleCheck1" checked />
+                <label for="bundleCheck1"><strong>Add:</strong> ${bundleItem1.name} (₹${b1PriceINR.toLocaleString('en-IN')})</label>
+              </div>
+              <div class="bundle-checkbox-row">
+                <input type="checkbox" id="bundleCheck2" checked />
+                <label for="bundleCheck2"><strong>Add:</strong> ${bundleItem2.name} (₹${b2PriceINR.toLocaleString('en-IN')})</label>
+              </div>
+            </div>
+
+            <div style="background:#FFFDE7; border:2px solid #000; border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:#64748B;">BUNDLE TOTAL (15% OFF INCLUDED):</div>
+                <div style="font-family:var(--font-mono); font-weight:900; font-size:1.25rem; color:#000;">
+                  ₹${discountedBundleTotal.toLocaleString('en-IN')}
+                  <span style="font-size:0.85rem; color:#64748B; text-decoration:line-through; margin-left:6px;">₹${rawBundleTotal.toLocaleString('en-IN')}</span>
+                  <span style="background:#DCFCE7; color:#16A34A; font-size:0.72rem; padding:2px 6px; border-radius:4px; margin-left:4px; font-weight:800;">SAVE ₹${bundleSavings.toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+
+              <button class="btn-pill" id="addBundleBtn" style="padding:10px 18px; font-size:0.9rem;">
+                ⚡ Add All 3 to Cart
               </button>
             </div>
           </div>
@@ -654,6 +711,61 @@ class ProductPage {
         }
       });
     });
+
+    // 1-Click Vault Bundle Add-to-Cart Handler
+    const addBundleBtn = document.getElementById('addBundleBtn');
+    addBundleBtn?.addEventListener('click', () => {
+      addToCart(p.id, 1);
+      if (document.getElementById('bundleCheck1')?.checked) addToCart(bundleItem1.id, 1);
+      if (document.getElementById('bundleCheck2')?.checked) addToCart(bundleItem2.id, 1);
+      
+      confetti({ particleCount: 90, spread: 80, origin: { y: 0.65 } });
+      addBundleBtn.innerHTML = '✓ Vault Bundle Added (15% Saved)!';
+      addBundleBtn.style.background = '#10B981';
+      setTimeout(() => {
+        addBundleBtn.innerHTML = '⚡ Add All 3 to Cart';
+        addBundleBtn.style.background = '';
+      }, 1800);
+    });
+
+    // Interactive Image Hover Magnifier Lens
+    const stageCanvas = document.getElementById('pdMainStageCanvas');
+    const mainImg = document.getElementById('mainGalleryImg');
+    if (stageCanvas && mainImg) {
+      let lens = document.getElementById('pdMagnifierLens');
+      if (!lens) {
+        lens = document.createElement('div');
+        lens.id = 'pdMagnifierLens';
+        lens.className = 'magnifier-lens';
+        stageCanvas.appendChild(lens);
+      }
+
+      stageCanvas.addEventListener('mouseenter', () => {
+        lens.style.display = 'block';
+        lens.style.backgroundImage = `url('${mainImg.src}')`;
+        lens.style.backgroundSize = `${mainImg.offsetWidth * 2.5}px ${mainImg.offsetHeight * 2.5}px`;
+      });
+
+      stageCanvas.addEventListener('mouseleave', () => {
+        lens.style.display = 'none';
+      });
+
+      stageCanvas.addEventListener('mousemove', (e) => {
+        const rect = stageCanvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const lensW = lens.offsetWidth / 2;
+        const lensH = lens.offsetHeight / 2;
+
+        lens.style.left = `${x - lensW}px`;
+        lens.style.top = `${y - lensH}px`;
+
+        const bgX = -((x * 2.5) - lensW);
+        const bgY = -((y * 2.5) - lensH);
+        lens.style.backgroundPosition = `${bgX}px ${bgY}px`;
+      });
+    }
 
     // Start Live Real-Time Ticking Dispatch Countdown & Live Viewer Counter
     startLiveDispatchCountdown('pdDispatchCountdown');
