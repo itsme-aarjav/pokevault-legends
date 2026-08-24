@@ -1,4 +1,4 @@
-import { getCart, getWishlist } from '../utils/store.js';
+import { getCart, getWishlist, getCurrency, setCurrency } from '../utils/store.js';
 import { searchProducts } from '../data/products.js';
 import { initSocialProofToast } from '../utils/social-proof.js';
 
@@ -7,6 +7,7 @@ export function renderNavbar(activePage = 'home') {
   const wishlist = getWishlist();
   const totalCartUnits = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalWishlistCount = wishlist.length;
+  const currentCurr = getCurrency();
 
   return `
     <!-- TOP TICKER MARQUEE (Trust & Urgency) -->
@@ -38,6 +39,15 @@ export function renderNavbar(activePage = 'home') {
           </svg>
           <span class="cart-count" id="wishlistCount" style="background:var(--accent-red);">${totalWishlistCount}</span>
         </a>
+
+        <!-- CURRENCY SWITCHER -->
+        <select id="headerCurrencySelect" class="currency-select-box" aria-label="Select Store Currency">
+          <option value="INR" ${currentCurr === 'INR' ? 'selected' : ''}>₹ INR</option>
+          <option value="USD" ${currentCurr === 'USD' ? 'selected' : ''}>$ USD</option>
+          <option value="EUR" ${currentCurr === 'EUR' ? 'selected' : ''}>€ EUR</option>
+          <option value="GBP" ${currentCurr === 'GBP' ? 'selected' : ''}>£ GBP</option>
+          <option value="JPY" ${currentCurr === 'JPY' ? 'selected' : ''}>¥ JPY</option>
+        </select>
       </div>
 
       <a href="index.html" class="logo-stamp">
@@ -57,11 +67,11 @@ export function renderNavbar(activePage = 'home') {
       <nav class="nav-right">
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link ${activePage === 'home' ? 'active' : ''}">Home</a></li>
-          <li><a href="shop.html" class="nav-link ${activePage === 'shop' ? 'active' : ''}">Shop All</a></li>
-          <li><a href="categories.html" class="nav-link ${activePage === 'categories' ? 'active' : ''}">Categories</a></li>
-          <li><a href="wishlist.html" class="nav-link ${activePage === 'wishlist' ? 'active' : ''}">Wishlist</a></li>
-          <li><a href="about.html" class="nav-link ${activePage === 'about' ? 'active' : ''}">About</a></li>
-          <li><a href="contact.html" class="nav-link ${activePage === 'contact' ? 'active' : ''}">Contact</a></li>
+          <li><a href="shop.html" class="nav-link ${activePage === 'shop' ? 'active' : ''}">Shop</a></li>
+          <li><a href="verify.html" class="nav-link ${activePage === 'verify' ? 'active' : ''}">Verify 🔍</a></li>
+          <li><a href="rewards.html" class="nav-link ${activePage === 'rewards' ? 'active' : ''}">Rewards 🪙</a></li>
+          <li><a href="track.html" class="nav-link ${activePage === 'track' ? 'active' : ''}">Track 📦</a></li>
+          <li><a href="mystery-vault.html" class="nav-link ${activePage === 'mystery' ? 'active' : ''}">Mystery 🎁</a></li>
         </ul>
 
         <button class="mobile-nav-toggle" id="mobileNavToggleBtn" aria-label="Open Mobile Menu">
@@ -87,10 +97,12 @@ export function renderNavbar(activePage = 'home') {
           <li><a href="index.html" class="mobile-nav-link ${activePage === 'home' ? 'active' : ''}">⚡ Home</a></li>
           <li><a href="shop.html" class="mobile-nav-link ${activePage === 'shop' ? 'active' : ''}">🛒 Shop All Merchandise</a></li>
           <li><a href="categories.html" class="mobile-nav-link ${activePage === 'categories' ? 'active' : ''}">🏷️ Categories Directory</a></li>
+          <li><a href="verify.html" class="mobile-nav-link ${activePage === 'verify' ? 'active' : ''}">🔍 Verify PSA Slabs</a></li>
+          <li><a href="rewards.html" class="mobile-nav-link ${activePage === 'rewards' ? 'active' : ''}">🪙 PokéCoins VIP Rewards</a></li>
+          <li><a href="track.html" class="mobile-nav-link ${activePage === 'track' ? 'active' : ''}">📦 Track My Package</a></li>
+          <li><a href="mystery-vault.html" class="mobile-nav-link ${activePage === 'mystery' ? 'active' : ''}">🎁 Mystery Vault Simulator</a></li>
           <li><a href="wishlist.html" class="mobile-nav-link ${activePage === 'wishlist' ? 'active' : ''}">❤️ My Saved Wishlist</a></li>
-          <li><a href="cart.html" class="mobile-nav-link ${activePage === 'cart' ? 'active' : ''}">📦 Shopping Cart</a></li>
-          <li><a href="about.html" class="mobile-nav-link ${activePage === 'about' ? 'active' : ''}">📜 About PokéVault</a></li>
-          <li><a href="contact.html" class="mobile-nav-link ${activePage === 'contact' ? 'active' : ''}">📞 Contact Support</a></li>
+          <li><a href="cart.html" class="mobile-nav-link ${activePage === 'cart' ? 'active' : ''}">🛍️ Shopping Cart</a></li>
         </ul>
       </div>
     </div>
@@ -105,14 +117,13 @@ export function renderNavbar(activePage = 'home') {
         <span class="mob-nav-icon">🛍️</span>
         <span>Shop</span>
       </a>
-      <a href="categories.html" class="mob-nav-item ${activePage === 'categories' ? 'active' : ''}">
-        <span class="mob-nav-icon">🏷️</span>
-        <span>Categories</span>
+      <a href="rewards.html" class="mob-nav-item ${activePage === 'rewards' ? 'active' : ''}">
+        <span class="mob-nav-icon">🪙</span>
+        <span>Rewards</span>
       </a>
-      <a href="wishlist.html" class="mob-nav-item ${activePage === 'wishlist' ? 'active' : ''}">
-        <span class="mob-nav-icon">❤️</span>
-        <span>Wishlist</span>
-        <span class="mob-nav-badge" id="mobWishlistCount">${totalWishlistCount}</span>
+      <a href="track.html" class="mob-nav-item ${activePage === 'track' ? 'active' : ''}">
+        <span class="mob-nav-icon">📦</span>
+        <span>Track</span>
       </a>
       <a href="cart.html" class="mob-nav-item ${activePage === 'cart' ? 'active' : ''}" id="mobCartBtn">
         <span class="mob-nav-icon">🛒</span>
@@ -126,6 +137,13 @@ export function renderNavbar(activePage = 'home') {
 export function initNavbarEvents() {
   // Initialize Global Social Proof Toast notifications
   initSocialProofToast();
+
+  // Currency Switcher Event
+  const currencySelect = document.getElementById('headerCurrencySelect');
+  currencySelect?.addEventListener('change', (e) => {
+    setCurrency(e.target.value);
+    window.location.reload();
+  });
 
   // Mobile Nav Handlers
   const mobileNavToggleBtn = document.getElementById('mobileNavToggleBtn');
