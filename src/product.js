@@ -11,6 +11,7 @@ import { getAllProducts, getProductById } from './data/products.js';
 import { getReviewsForProduct } from './data/reviews.js';
 import { addToCart, toggleWishlist, isInWishlist } from './utils/store.js';
 import { injectProductSeo } from './utils/seo.js';
+import { initLiveViewerCounter, startLiveDispatchCountdown, initExitIntentModal } from './utils/social-proof.js';
 
 import confettiModule from 'canvas-confetti';
 const confetti = confettiModule?.default || confettiModule || ((typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {});
@@ -38,6 +39,7 @@ class ProductPage {
 
     initNavbarEvents();
     initCartDrawerEvents();
+    initExitIntentModal();
   }
 
   renderProductDetails() {
@@ -73,6 +75,7 @@ class ProductPage {
 
     const initialCoins = Math.floor(p.price * 10);
     const initialRewardsVal = (initialCoins / 100).toFixed(2);
+    const unitPriceINR = Math.round(p.price > 500 ? p.price : p.price * 83);
 
     root.innerHTML = `
       <!-- BREADCRUMBS -->
@@ -130,7 +133,7 @@ class ProductPage {
           <!-- PRICE & UPI / EMI BOX -->
           <div class="pd-price-box">
             <div class="pd-price-row">
-              <div class="pd-price-main">₹${Math.round(p.price > 500 ? p.price : p.price * 83).toLocaleString('en-IN')}</div>
+              <div class="pd-price-main">₹${unitPriceINR.toLocaleString('en-IN')}</div>
               ${p.originalPrice ? `<div class="pd-price-original">₹${Math.round(p.originalPrice > 500 ? p.originalPrice : p.originalPrice * 83).toLocaleString('en-IN')}</div>` : ''}
               ${p.discountPercent ? `<span class="pd-discount-badge">SAVE ${p.discountPercent}%</span>` : ''}
             </div>
@@ -143,17 +146,33 @@ class ProductPage {
 
             <!-- UPI & NO-COST EMI WIDGET -->
             <div class="pd-bnpl-row" style="flex-wrap:wrap; gap:8px; margin-top:8px;">
-              <span>⚡ <strong>Instant UPI Pay</strong> (GPay, PhonePe, Paytm) or <strong>No-Cost EMI</strong> from ₹${Math.round((p.price > 500 ? p.price : p.price * 83) / 3).toLocaleString('en-IN')}/mo</span>
+              <span>⚡ <strong>Instant UPI Pay</strong> (GPay, PhonePe, Paytm) or <strong>No-Cost EMI</strong> from ₹${Math.round(unitPriceINR / 3).toLocaleString('en-IN')}/mo</span>
               <span style="font-weight:900; background:#EBF5FA; color:#2C6ECB; padding:1px 6px; border-radius:4px; font-size:0.75rem;">UPI</span>
               <span style="font-weight:900; background:#E3FCEF; color:#006644; padding:1px 6px; border-radius:4px; font-size:0.75rem;">COD</span>
             </div>
           </div>
 
-          <!-- GEOLOCATION DELIVERY ESTIMATOR & TRUST BADGES -->
+          <!-- LIVE STOCK & VELOCITY SCARCITY BAR -->
+          <div class="pd-scarcity-box">
+            <div class="pd-scarcity-header">
+              <span style="color:#DC2626; font-weight:800; font-family:var(--font-mono); font-size:0.85rem;">
+                🔥 HIGH DEMAND: Only ${p.inStock || 2} left in Mumbai Vault
+              </span>
+              <span style="font-size:0.75rem; color:#475569; font-weight:700;">88% Claimed</span>
+            </div>
+            <div class="pd-scarcity-track">
+              <div class="pd-scarcity-fill" style="width: 88%;"></div>
+            </div>
+            <div style="font-size:0.75rem; color:#64748B; margin-top:4px;">
+              ⚡ <strong>24 collectors</strong> ordered from this category in the last 12 hours.
+            </div>
+          </div>
+
+          <!-- GEOLOCATION DELIVERY ESTIMATOR & LIVE COUNTDOWN -->
           <div class="pd-delivery-box">
             <div class="pd-delivery-row">
               <span style="font-size:1.2rem;">🚚</span>
-              <span>Order within <strong style="color:var(--accent-red);" id="pdDispatchCountdown">2 hrs 45 mins</strong> for <strong>Free BlueDart Express Air Delivery</strong> (1-2 Days Pan-India)</span>
+              <span>Order within <strong id="pdDispatchCountdown" style="display:inline-block;"></strong> for <strong>Free BlueDart Express Air Dispatch</strong> (1-2 Days Pan-India)</span>
             </div>
             <div class="pd-trust-badges">
               <span class="authenticity-trigger" id="vaultAuthBadgeTrigger" style="color:#059669; font-weight:800; display:inline-flex; align-items:center; gap:4px; cursor:pointer;" title="Click to view our 5-Point Vault Inspection Guarantee">🛡️ 100% Genuine Japanese Pokemon Center & PSA Authenticated (Click to Inspect)</span>
@@ -199,13 +218,45 @@ class ProductPage {
             </button>
           </div>
 
+          <!-- 4-POINT BUYER PROTECTION SHIELD -->
+          <div class="buyer-protection-shield">
+            <div class="shield-item">
+              <span class="shield-icon">🔒</span>
+              <div>
+                <strong>256-Bit SSL Checkout</strong>
+                <div>Bank-grade encrypted payments</div>
+              </div>
+            </div>
+            <div class="shield-item">
+              <span class="shield-icon">🛡️</span>
+              <div>
+                <strong>100% Vault Authenticity</strong>
+                <div>PSA/BGS serialized guarantee</div>
+              </div>
+            </div>
+            <div class="shield-item">
+              <span class="shield-icon">📦</span>
+              <div>
+                <strong>Transit Protection</strong>
+                <div>Insured armored bubble box</div>
+              </div>
+            </div>
+            <div class="shield-item">
+              <span class="shield-icon">🔄</span>
+              <div>
+                <strong>30-Day Zero-Risk Returns</strong>
+                <div>100% hassle-free refund</div>
+              </div>
+            </div>
+          </div>
+
           <!-- STICKY ADD TO CART BAR ON SCROLL -->
           <div class="sticky-buy-bar" id="stickyBuyBar">
             <div class="sticky-product-info">
               <img src="${p.image}" class="sticky-product-thumb" alt="${p.name}" />
               <div class="sticky-product-text">
                 <div class="sticky-product-title">${p.name}</div>
-                <div class="sticky-product-price" id="stickyPriceVal">$${(p.price * this.selectedQty).toFixed(2)}</div>
+                <div class="sticky-product-price" id="stickyPriceVal">₹${(unitPriceINR * this.selectedQty).toLocaleString('en-IN')}</div>
               </div>
             </div>
             <div class="sticky-buy-actions">
@@ -603,6 +654,10 @@ class ProductPage {
         }
       });
     });
+
+    // Start Live Real-Time Ticking Dispatch Countdown & Live Viewer Counter
+    startLiveDispatchCountdown('pdDispatchCountdown');
+    initLiveViewerCounter('pdLiveViewersBadge', 14);
 
     // Bind Related Product Cards
     const relatedGrid = document.getElementById('relatedProductsGrid');
