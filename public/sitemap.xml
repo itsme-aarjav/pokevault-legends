@@ -34,6 +34,30 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://pokevault-legends.com/verify.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://pokevault-legends.com/rewards.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://pokevault-legends.com/track.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://pokevault-legends.com/mystery-vault.html</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://pokevault-legends.com/category.html?id=trading-cards</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>weekly</changefreq>
