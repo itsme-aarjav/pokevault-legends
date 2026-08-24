@@ -10,14 +10,14 @@ export function renderNavbar(activePage = 'home') {
   const currentCurr = getCurrency();
 
   return `
-    <!-- TOP TICKER MARQUEE (Trust & Urgency) -->
+    <!-- TOP TICKER MARQUEE (Trust, Pop Culture & Urgency) -->
     <div class="ticker-wrap">
       <div class="ticker-move">
-        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> ⚡ FREE INSURED BLUEDART VAULT SHIPPING ON ALL ORDERS ₹2,500+</span>
-        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 🛡️ 100% OFFICIAL POKÉMON &amp; PSA / BGS GRADED AUTHENTICITY GUARANTEE</span>
-        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 🎁 USE CODE "POKEVAULT10" FOR 10% OFF YOUR VAULT ORDER</span>
-        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 🔒 30-DAY ZERO-RISK MONEY-BACK VAULT RETURN GUARANTEE</span>
-        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> ⚡ FREE INSURED BLUEDART VAULT SHIPPING ON ALL ORDERS ₹2,500+</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 🔥 POP CULTURE WATCH: 1st Edition Charizard &amp; Illustrator Pikachu Slabs Surge +214% in 2026</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 🌸 DIRECT FROM TOKYO: Authentic Akihabara Pokémon Center Exclusives with Japanese Tags</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> ⚡ FREE INSURED BLUEDART VAULT AIR SHIPPING ON ORDERS ₹2,500+</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 🛡️ 100% PSA &amp; BGS AUTHENTICITY WITH 5-POINT FORENSIC VAULT AUDIT</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 🎁 USE CODE "POKEVAULT10" FOR 10% OFF YOUR COLLECTOR ORDER</span>
       </div>
     </div>
 
@@ -70,8 +70,9 @@ export function renderNavbar(activePage = 'home') {
           <li><a href="shop.html" class="nav-link ${activePage === 'shop' ? 'active' : ''}">Shop</a></li>
           <li><a href="verify.html" class="nav-link ${activePage === 'verify' ? 'active' : ''}">Verify 🔍</a></li>
           <li><a href="rewards.html" class="nav-link ${activePage === 'rewards' ? 'active' : ''}">Rewards 🪙</a></li>
-          <li><a href="track.html" class="nav-link ${activePage === 'track' ? 'active' : ''}">Track 📦</a></li>
           <li><a href="mystery-vault.html" class="nav-link ${activePage === 'mystery' ? 'active' : ''}">Mystery 🎁</a></li>
+          <li><a href="blog.html" class="nav-link ${activePage === 'blog' ? 'active' : ''}">Journal 📰</a></li>
+          <li><a href="about.html" class="nav-link ${activePage === 'about' ? 'active' : ''}">About</a></li>
         </ul>
 
         <button class="mobile-nav-toggle" id="mobileNavToggleBtn" aria-label="Open Mobile Menu">
@@ -99,8 +100,10 @@ export function renderNavbar(activePage = 'home') {
           <li><a href="categories.html" class="mobile-nav-link ${activePage === 'categories' ? 'active' : ''}">🏷️ Categories Directory</a></li>
           <li><a href="verify.html" class="mobile-nav-link ${activePage === 'verify' ? 'active' : ''}">🔍 Verify PSA Slabs</a></li>
           <li><a href="rewards.html" class="mobile-nav-link ${activePage === 'rewards' ? 'active' : ''}">🪙 PokéCoins VIP Rewards</a></li>
-          <li><a href="track.html" class="mobile-nav-link ${activePage === 'track' ? 'active' : ''}">📦 Track My Package</a></li>
           <li><a href="mystery-vault.html" class="mobile-nav-link ${activePage === 'mystery' ? 'active' : ''}">🎁 Mystery Vault Simulator</a></li>
+          <li><a href="blog.html" class="mobile-nav-link ${activePage === 'blog' ? 'active' : ''}">📰 The PokéVault Journal</a></li>
+          <li><a href="track.html" class="mobile-nav-link ${activePage === 'track' ? 'active' : ''}">📦 Track My Package</a></li>
+          <li><a href="about.html" class="mobile-nav-link ${activePage === 'about' ? 'active' : ''}">📜 About PokéVault</a></li>
           <li><a href="wishlist.html" class="mobile-nav-link ${activePage === 'wishlist' ? 'active' : ''}">❤️ My Saved Wishlist</a></li>
           <li><a href="cart.html" class="mobile-nav-link ${activePage === 'cart' ? 'active' : ''}">🛍️ Shopping Cart</a></li>
         </ul>
