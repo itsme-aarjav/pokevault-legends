@@ -1,10 +1,6 @@
-/**
- * POKÉVAULT LEGENDS — Shared Navbar Component
- * Renders consistent header, search auto-complete, wishlist badge, cart badge, and mobile drawer.
- */
-
 import { getCart, getWishlist } from '../utils/store.js';
 import { searchProducts } from '../data/products.js';
+import { initSocialProofToast } from '../utils/social-proof.js';
 
 export function renderNavbar(activePage = 'home') {
   const cart = getCart();
@@ -13,14 +9,14 @@ export function renderNavbar(activePage = 'home') {
   const totalWishlistCount = wishlist.length;
 
   return `
-    <!-- TOP TICKER MARQUEE -->
+    <!-- TOP TICKER MARQUEE (Trust & Urgency) -->
     <div class="ticker-wrap">
       <div class="ticker-move">
-        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> NATIONWIDE FLAT-RATE VAULT SHIPPING ON ALL MERCHANDISE &amp; SLABS</span>
-        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 100% OFFICIAL POKÉMON CENTER &amp; PSA / BGS AUTHENTICATED</span>
-        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> USE CODE "POKEVAULT10" FOR 10% OFF YOUR ENTIRE ORDER</span>
-        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> OVER 60+ EXCLUSIVE POKÉMON COLLECTIBLES IN STOCK</span>
-        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> NATIONWIDE FLAT-RATE VAULT SHIPPING ON ALL MERCHANDISE &amp; SLABS</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> ⚡ FREE INSURED BLUEDART VAULT SHIPPING ON ALL ORDERS ₹2,500+</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 🛡️ 100% OFFICIAL POKÉMON &amp; PSA / BGS GRADED AUTHENTICITY GUARANTEE</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 🎁 USE CODE "POKEVAULT10" FOR 10% OFF YOUR VAULT ORDER</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> 🔒 30-DAY ZERO-RISK MONEY-BACK VAULT RETURN GUARANTEE</span>
+        <span class="ticker-item"><img src="assets/pokeball-emoji.png" alt="Pokéball" class="pokeball-emoji-sm" /> ⚡ FREE INSURED BLUEDART VAULT SHIPPING ON ALL ORDERS ₹2,500+</span>
       </div>
     </div>
 
@@ -98,10 +94,39 @@ export function renderNavbar(activePage = 'home') {
         </ul>
       </div>
     </div>
+
+    <!-- STICKY MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-bottom-nav" aria-label="Mobile Bottom Navigation">
+      <a href="index.html" class="mob-nav-item ${activePage === 'home' ? 'active' : ''}">
+        <span class="mob-nav-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="shop.html" class="mob-nav-item ${activePage === 'shop' ? 'active' : ''}">
+        <span class="mob-nav-icon">🛍️</span>
+        <span>Shop</span>
+      </a>
+      <a href="categories.html" class="mob-nav-item ${activePage === 'categories' ? 'active' : ''}">
+        <span class="mob-nav-icon">🏷️</span>
+        <span>Categories</span>
+      </a>
+      <a href="wishlist.html" class="mob-nav-item ${activePage === 'wishlist' ? 'active' : ''}">
+        <span class="mob-nav-icon">❤️</span>
+        <span>Wishlist</span>
+        <span class="mob-nav-badge" id="mobWishlistCount">${totalWishlistCount}</span>
+      </a>
+      <a href="cart.html" class="mob-nav-item ${activePage === 'cart' ? 'active' : ''}" id="mobCartBtn">
+        <span class="mob-nav-icon">🛒</span>
+        <span>Cart</span>
+        <span class="mob-nav-badge" id="mobCartCount">${totalCartUnits}</span>
+      </a>
+    </nav>
   `;
 }
 
 export function initNavbarEvents() {
+  // Initialize Global Social Proof Toast notifications
+  initSocialProofToast();
+
   // Mobile Nav Handlers
   const mobileNavToggleBtn = document.getElementById('mobileNavToggleBtn');
   const mobileNavOverlay = document.getElementById('mobileNavOverlay');
@@ -136,10 +161,10 @@ export function initNavbarEvents() {
       } else {
         searchDropdown.innerHTML = matches.map(item => `
           <a href="product.html?id=${item.id}" class="search-dropdown-item">
-            <img src="${item.image}" alt="${item.name}" />
+            <img src="${item.image}" alt="${item.name}" loading="lazy" width="40" height="40" />
             <div>
               <div class="search-item-title">${item.name}</div>
-              <div class="search-item-meta">${item.categoryName} • $${item.price.toFixed(2)}</div>
+              <div class="search-item-meta">${item.categoryName} • ₹${Math.round(item.price > 500 ? item.price : item.price * 83).toLocaleString('en-IN')}</div>
             </div>
           </a>
         `).join('') + `<a href="search.html?q=${encodeURIComponent(q)}" class="search-view-all">View all results for "${q}" →</a>`;
@@ -157,13 +182,19 @@ export function initNavbarEvents() {
   // Update Dynamic Badges on Custom Events
   window.addEventListener('pv-cart-updated', (e) => {
     const cart = e.detail || getCart();
+    const count = cart.reduce((sum, i) => sum + i.quantity, 0);
     const countEl = document.getElementById('cartCount');
-    if (countEl) countEl.textContent = cart.reduce((sum, i) => sum + i.quantity, 0);
+    if (countEl) countEl.textContent = count;
+    const mobCountEl = document.getElementById('mobCartCount');
+    if (mobCountEl) mobCountEl.textContent = count;
   });
 
   window.addEventListener('pv-wishlist-updated', (e) => {
     const wishlist = e.detail || getWishlist();
+    const count = wishlist.length;
     const countEl = document.getElementById('wishlistCount');
-    if (countEl) countEl.textContent = wishlist.length;
+    if (countEl) countEl.textContent = count;
+    const mobCountEl = document.getElementById('mobWishlistCount');
+    if (mobCountEl) mobCountEl.textContent = count;
   });
 }
