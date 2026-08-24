@@ -1,6 +1,7 @@
 /**
  * POKÉVAULT LEGENDS — Conversion Rate Optimization (CRO) & Social Proof Engine
- * Manages live customer activity, scarcity indicators, dispatch countdowns, and trust notifications.
+ * Manages live customer activity, live ticking dispatch countdowns, scarcity bars,
+ * exit-intent bonuses, and authenticity trust seals.
  */
 
 const RECENT_PURCHASES = [
@@ -69,54 +70,153 @@ export function initSocialProofToast() {
     }, 6500);
   };
 
-  // First toast after 3.5 seconds, then recurring every 18 seconds
+  // First toast after 3.5 seconds, then recurring every 16 seconds
   setTimeout(showNextToast, 3500);
-  setInterval(showNextToast, 18000);
+  setInterval(showNextToast, 16000);
 }
 
 /**
  * Starts a realistic live viewer counter for high urgency on product details
  */
-export function initLiveViewerCounter(elementId, baseCount = 12) {
-  const el = document.getElementById(elementId);
+export function initLiveViewerCounter(elementId, baseCount = 14) {
+  const el = typeof elementId === 'string' ? document.getElementById(elementId) : elementId;
   if (!el) return;
 
-  let currentViewers = Math.floor(baseCount + Math.random() * 8);
+  let currentViewers = Math.floor(baseCount + Math.random() * 6);
 
   const updateDisplay = () => {
     el.innerHTML = `
       <span class="live-pulse-dot"></span>
-      <span class="live-view-count"><strong>${currentViewers} collectors</strong> are viewing this vault item right now</span>
+      <span class="live-view-count"><strong>${currentViewers} collectors</strong> viewing right now</span>
     `;
   };
 
   updateDisplay();
 
-  // Subtle fluctuation every 4-8 seconds
+  // Subtle natural fluctuation every 4-7 seconds
   setInterval(() => {
     const delta = Math.random() > 0.5 ? 1 : -1;
-    currentViewers = Math.max(5, currentViewers + delta);
+    currentViewers = Math.max(6, Math.min(28, currentViewers + delta));
     updateDisplay();
-  }, 5000);
+  }, 4500);
 }
 
 /**
- * Calculates remaining time until today's dispatch cutoff (e.g. 5:00 PM)
+ * Live Ticking Same-Day Dispatch Countdown Timer (ticks every second!)
  */
-export function getDispatchCutoffTime() {
-  const now = new Date();
-  const cutoff = new Date();
-  cutoff.setHours(17, 0, 0, 0); // 5 PM Cutoff
+export function startLiveDispatchCountdown(elementId = 'pdDispatchCountdown') {
+  const el = typeof elementId === 'string' ? document.getElementById(elementId) : elementId;
+  if (!el) return;
 
-  if (now > cutoff) {
-    cutoff.setDate(cutoff.getDate() + 1);
+  const updateClock = () => {
+    const now = new Date();
+    const cutoff = new Date();
+    cutoff.setHours(17, 0, 0, 0); // 5:00 PM Daily Cutoff
+
+    if (now >= cutoff) {
+      cutoff.setDate(cutoff.getDate() + 1);
+    }
+
+    const diffMs = cutoff - now;
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+    const pad = (n) => String(n).padStart(2, '0');
+    el.innerHTML = `<span class="dispatch-live-ticker">${pad(hours)}h ${pad(mins)}m ${pad(secs)}s</span>`;
+  };
+
+  updateClock();
+  setInterval(updateClock, 1000);
+}
+
+/**
+ * Renders an animated Free Shipping Progress Bar
+ */
+export function renderFreeShippingBar(currentTotal, threshold = 2500) {
+  const diff = threshold - currentTotal;
+  const progressPercent = Math.min(100, Math.round((currentTotal / threshold) * 100));
+
+  if (diff <= 0) {
+    return `
+      <div class="free-shipping-bar-box unlocked">
+        <div class="fs-text">🎉 <strong>FREE EXPRESS SHIPPING UNLOCKED!</strong> BlueDart Priority Air Dispatch.</div>
+        <div class="fs-track"><div class="fs-fill" style="width: 100%; background: #10B981;"></div></div>
+      </div>
+    `;
   }
 
-  const diffMs = cutoff - now;
-  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-  const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+  return `
+    <div class="free-shipping-bar-box">
+      <div class="fs-text">🚚 Add <strong>₹${Math.round(diff).toLocaleString('en-IN')}</strong> more to unlock <strong>FREE BlueDart Air Shipping</strong>!</div>
+      <div class="fs-track"><div class="fs-fill" style="width: ${progressPercent}%;"></div></div>
+    </div>
+  `;
+}
 
-  return `${diffHours}h ${diffMins}m`;
+/**
+ * Initializes Exit-Intent Trainer Promo Modal (Triggered when moving cursor towards browser tab bar)
+ */
+export function initExitIntentModal() {
+  if (typeof document === 'undefined') return;
+  if (sessionStorage.getItem('pv_exit_intent_shown')) return;
+
+  let modalOverlay = document.getElementById('pvExitIntentOverlay');
+  if (!modalOverlay) {
+    modalOverlay = document.createElement('div');
+    modalOverlay.id = 'pvExitIntentOverlay';
+    modalOverlay.className = 'exit-intent-overlay';
+    modalOverlay.innerHTML = `
+      <div class="exit-intent-card animate-pop-in">
+        <button class="exit-intent-close" id="closeExitIntentBtn" aria-label="Close">&times;</button>
+        <div class="exit-intent-badge">⚡ COLLECTOR'S SPECIAL OFFER</div>
+        <h3 class="exit-intent-title">WAIT, TRAINER! DON'T LEAVE YOUR VAULT BEHIND</h3>
+        <p class="exit-intent-desc">Take an extra <strong>10% OFF</strong> your entire cart right now. Armored express shipping and PSA/BGS vault guarantees included.</p>
+        
+        <div class="exit-intent-coupon-box">
+          <div class="exit-coupon-code">POKEVAULT10</div>
+          <button class="exit-copy-btn" id="exitIntentCopyBtn">COPY CODE</button>
+        </div>
+
+        <div style="font-size:0.78rem; color:#64748B; margin-top:12px;">
+          ✓ Valid for next 15 minutes • Applies to all 64 merchandise items & slabs
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modalOverlay);
+
+    const closeBtn = document.getElementById('closeExitIntentBtn');
+    const copyBtn = document.getElementById('exitIntentCopyBtn');
+
+    const closeModal = () => {
+      modalOverlay.classList.remove('active');
+      sessionStorage.setItem('pv_exit_intent_shown', 'true');
+    };
+
+    closeBtn?.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    copyBtn?.addEventListener('click', () => {
+      navigator.clipboard.writeText('POKEVAULT10').then(() => {
+        copyBtn.textContent = 'COPIED! ✓';
+        copyBtn.style.background = '#10B981';
+        copyBtn.style.color = '#FFF';
+        setTimeout(closeModal, 1200);
+      });
+    });
+  }
+
+  // Detect mouse leaving viewport at the top
+  const onMouseLeave = (e) => {
+    if (e.clientY <= 10 && !sessionStorage.getItem('pv_exit_intent_shown')) {
+      modalOverlay.classList.add('active');
+      document.removeEventListener('mouseleave', onMouseLeave);
+    }
+  };
+
+  document.addEventListener('mouseleave', onMouseLeave);
 }
 
 /**
