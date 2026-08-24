@@ -10,11 +10,21 @@ export function renderProductCard(product) {
   const starsHtml = '★'.repeat(Math.floor(product.rating)) + (product.rating % 1 !== 0 ? '½' : '');
   const isLowStock = product.inStock && product.inStock <= 3;
 
+  // Pop Culture Hype Tag
+  let popCultureTag = product.badge;
+  if (!popCultureTag) {
+    if (product.category === 'trading-cards') popCultureTag = '👑 S-TIER GRAIL';
+    else if (product.category === 'plush-toys') popCultureTag = '🌸 TOKYO DROP';
+    else if (product.category === 'figures-statues') popCultureTag = '🔥 VIRAL GRAIL';
+    else if (product.category === 'clothing-apparel') popCultureTag = '⚡ STREETWEAR';
+    else if (product.price > 80) popCultureTag = '💎 COLLECTOR PIECE';
+  }
+
   return `
     <div class="card-item-box" data-product-id="${product.id}">
       <div class="card-image-wrap">
         ${product.discountPercent ? `<div class="card-discount-tag">-${product.discountPercent}%</div>` : ''}
-        ${product.badge ? `<div class="card-badge">${product.badge}</div>` : ''}
+        ${popCultureTag ? `<div class="card-badge">${popCultureTag}</div>` : ''}
         <button class="card-wishlist-btn ${isWishlisted ? 'active' : ''}" data-wishlist-id="${product.id}" aria-label="Toggle Wishlist for ${product.name}">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="${isWishlisted ? '#E94057' : 'none'}" stroke="${isWishlisted ? '#E94057' : '#000'}" stroke-width="2">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
