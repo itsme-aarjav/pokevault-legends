@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { ALL_PRODUCTS } from '../src/data/products.js';
 import { CATEGORIES_DATA } from '../src/data/categories.js';
+import { BLOG_POSTS } from '../src/data/blogs.js';
 
 const SITE_URL = 'https://pokevault-legends.com';
 const TODAY = new Date().toISOString().split('T')[0];
@@ -32,14 +33,14 @@ let xml = `<?xml version="1.0" encoding="UTF-8"?>
   <url>
     <loc>${SITE_URL}/about.html</loc>
     <lastmod>${TODAY}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>${SITE_URL}/contact.html</loc>
     <lastmod>${TODAY}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>${SITE_URL}/verify.html</loc>
@@ -65,7 +66,28 @@ let xml = `<?xml version="1.0" encoding="UTF-8"?>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
+  <url>
+    <loc>${SITE_URL}/blog.html</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
 `;
+
+// Blog Posts (5 Authority Articles)
+BLOG_POSTS.forEach(b => {
+  xml += `  <url>
+    <loc>${SITE_URL}/blog-post.html?slug=${b.slug}</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+    <image:image>
+      <image:loc>${SITE_URL}${b.heroImage}</image:loc>
+      <image:title>${b.title.replace(/&/g, '&amp;')}</image:title>
+      <image:caption>${b.subtitle.replace(/&/g, '&amp;')}</image:caption>
+    </image:image>
+  </url>\n`;
+});
 
 // Categories
 CATEGORIES_DATA.forEach(cat => {
