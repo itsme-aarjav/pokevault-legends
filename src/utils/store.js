@@ -132,3 +132,80 @@ export const toggleWishlist = (productId) => {
   dispatchWishlistUpdate();
   return added;
 };
+
+// ==========================================================================
+// MULTI-CURRENCY CONVERTER SYSTEM (INR, USD, EUR, GBP, JPY)
+// ==========================================================================
+export const CURRENCY_RATES = {
+  INR: { symbol: '₹', rate: 83.0, label: 'INR (₹)' },
+  USD: { symbol: '$', rate: 1.0, label: 'USD ($)' },
+  EUR: { symbol: '€', rate: 0.92, label: 'EUR (€)' },
+  GBP: { symbol: '£', rate: 0.79, label: 'GBP (£)' },
+  JPY: { symbol: '¥', rate: 155.0, label: 'JPY (¥)' }
+};
+
+export const getCurrency = () => {
+  return localStorage.getItem('pvCurrency') || 'INR';
+};
+
+export const setCurrency = (currCode) => {
+  if (CURRENCY_RATES[currCode]) {
+    localStorage.setItem('pvCurrency', currCode);
+    window.dispatchEvent(new CustomEvent('pv-currency-changed', { detail: currCode }));
+  }
+};
+
+export const formatPrice = (priceUSD, targetCurrency = null) => {
+  const curr = targetCurrency || getCurrency();
+  const config = CURRENCY_RATES[curr] || CURRENCY_RATES.INR;
+  
+  // If price is stored in USD
+  const converted = priceUSD * config.rate;
+  
+  if (curr === 'INR' || curr === 'JPY') {
+    return `${config.symbol}${Math.round(converted).toLocaleString('en-IN')}`;
+  }
+  return `${config.symbol}${converted.toFixed(2)}`;
+};
+
+// ==========================================================================
+// POKÉCOINS LOYALTY & REWARDS STATE
+// ==========================================================================
+export const getPokeCoins = () => {
+  return parseInt(localStorage.getItem('pvCoins') || '450', 10);
+};
+
+export const addPokeCoins = (amount) => {
+  const current = getPokeCoins();
+  const updated = Math.max(0, current + amount);
+  localStorage.setItem('pvCoins', updated.toString());
+  window.dispatchEvent(new CustomEvent('pv-coins-updated', { detail: updated }));
+  return updated;
+};
+
+export const getStreakData = () => {
+  try {
+    return JSON.parse(localStorage.getItem('pvStreak') || '{"count": 3, "lastClaimed": ""}');
+  } catch (e) {
+    return { count: 3, lastClaimed: "" };
+  }
+};
+
+export const claimDailyStreak = () => {
+  const today = new Date().toISOString().split('T')[0];
+  const streak = getStreakData();
+  
+  if (streak.lastClaimed === today) {
+    return { success: false, message: "You already claimed today's streak bonus! Come back tomorrow." };
+  }
+
+  streak.count = (streak.count % 7) + 1;
+  streak.lastClaimed = today;
+  localStorage.setItem('pvStreak', JSON.stringify(streak));
+  
+  const bonusCoins = 50 * streak.count;
+  addPokeCoins(bonusCoins);
+  
+  return { success: true, bonusCoins, streakCount: streak.count };
+};
+
