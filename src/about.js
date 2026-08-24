@@ -9,6 +9,7 @@ import { renderCartDrawer, initCartDrawerEvents } from './components/cart-drawer
 class AboutPage {
   constructor() {
     this.initLayout();
+    this.initAccordion();
   }
 
   initLayout() {
@@ -18,6 +19,19 @@ class AboutPage {
 
     initNavbarEvents();
     initCartDrawerEvents();
+  }
+
+  initAccordion() {
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const btn = item.querySelector('.faq-question-btn');
+      btn?.addEventListener('click', () => {
+        const isOpen = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        if (!isOpen) {
+          item.classList.add('active');
+        }
+      });
+    });
   }
 }
 
