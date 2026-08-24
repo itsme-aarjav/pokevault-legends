@@ -12,6 +12,7 @@ import { getReviewsForProduct } from './data/reviews.js';
 import { addToCart, toggleWishlist, isInWishlist } from './utils/store.js';
 import { injectProductSeo } from './utils/seo.js';
 import { initLiveViewerCounter, startLiveDispatchCountdown, initExitIntentModal } from './utils/social-proof.js';
+import { Slab3DViewer } from './components/slab-3d-viewer.js';
 
 import confettiModule from 'canvas-confetti';
 const confetti = confettiModule?.default || confettiModule || ((typeof window !== 'undefined' && window.confetti) ? window.confetti : () => {});
@@ -24,6 +25,7 @@ class ProductPage {
     this.product = getProductById(cardId) || this.allProducts[0];
     this.reviews = getReviewsForProduct(this.product.id);
     this.selectedQty = 1;
+    this.slab3DViewer = null;
 
     // Inject Rich Schema.org Product, Offer, AggregateRating, Review & Breadcrumb JSON-LD
     injectProductSeo(this.product, this.reviews);
@@ -99,8 +101,15 @@ class ProductPage {
       <div class="pd-grid">
         <!-- LEFT: GALLERY & IMAGES -->
         <div class="pd-stage-box">
+          <!-- 2D Photo / 3D Hologram Toggle Bar -->
+          <div class="pd-stage-toggle-bar">
+            <button type="button" class="stage-toggle-btn active" id="btnShow2DPhoto">📸 Photo Gallery</button>
+            <button type="button" class="stage-toggle-btn" id="btnShow3DHolo">🎮 3D Hologram Stage</button>
+          </div>
+
           <div id="pdMainStageCanvas" class="pd-main-stage">
             <img id="mainGalleryImg" src="${p.image}" alt="${p.name}" class="pd-main-img" />
+            <div id="pd3DViewerContainer" style="display:none; width:100%; height:450px;"></div>
           </div>
 
           <!-- THUMBNAIL STRIP -->
@@ -571,6 +580,31 @@ class ProductPage {
         const mainImg = document.getElementById('mainGalleryImg');
         if (mainImg) mainImg.src = btn.getAttribute('data-img');
       });
+    });
+
+    // 2D Photo / 3D Hologram Toggle Handlers
+    const btn2D = document.getElementById('btnShow2DPhoto');
+    const btn3D = document.getElementById('btnShow3DHolo');
+    const mainImgEl = document.getElementById('mainGalleryImg');
+    const viewer3DContainer = document.getElementById('pd3DViewerContainer');
+
+    btn2D?.addEventListener('click', () => {
+      btn2D.classList.add('active');
+      btn3D?.classList.remove('active');
+      if (mainImgEl) mainImgEl.style.display = 'block';
+      if (viewer3DContainer) viewer3DContainer.style.display = 'none';
+    });
+
+    btn3D?.addEventListener('click', () => {
+      btn3D.classList.add('active');
+      btn2D?.classList.remove('active');
+      if (mainImgEl) mainImgEl.style.display = 'none';
+      if (viewer3DContainer) {
+        viewer3DContainer.style.display = 'block';
+        if (!this.slab3DViewer) {
+          this.slab3DViewer = new Slab3DViewer(viewer3DContainer, p);
+        }
+      }
     });
 
     // Quantity & Price & PokéCoins Synchronized Handlers
