@@ -5106,6 +5106,387 @@ main {
   background-color: #FFFFFF !important;
 }
 
+/* ==========================================================================
+   CRO & TRUST ENGINE STYLES (Social Proof, Urgency, Trust Seals, Sticky CTA)
+   ========================================================================== */
+
+/* Social Proof Live Purchase Toast */
+.cro-toast-container {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.cro-toast-item {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 3px solid #000000;
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 4px 4px 0px #000000;
+  max-width: 380px;
+  font-family: var(--font-body);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cro-toast-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  background: var(--accent-yellow, #FFF056);
+  border: 2px solid #000000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 900;
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.cro-toast-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.cro-toast-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  margin-bottom: 2px;
+}
+
+.cro-toast-buyer {
+  font-weight: 800;
+  color: #000000;
+}
+
+.cro-toast-loc {
+  color: #666666;
+}
+
+.cro-toast-verified {
+  background: #DCFCE7;
+  color: #15803D;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 10px;
+  border: 1px solid #86EFAC;
+}
+
+.cro-toast-item-title {
+  font-size: 0.85rem;
+  color: #1E293B;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.cro-toast-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+}
+
+.cro-toast-time {
+  color: #94A3B8;
+}
+
+.cro-toast-badge {
+  background: #F1F5F9;
+  color: #0F172A;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid #CBD5E1;
+}
+
+.cro-toast-close {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: 900;
+  cursor: pointer;
+  color: #64748B;
+  padding: 0 4px;
+  line-height: 1;
+}
+.cro-toast-close:hover {
+  color: #000000;
+}
+
+/* Animations */
+.animate-pop-in {
+  animation: popInToast 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-out {
+  animation: fadeOutToast 0.3s ease-out forwards;
+}
+
+@keyframes popInToast {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOutToast {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(15px) scale(0.95);
+  }
+}
+
+/* Live Pulse Dot */
+.live-pulse-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #22C55E;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  animation: pulseDot 1.8s infinite;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+@keyframes pulseDot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+/* Trust Seals Grid Component */
+.trust-seals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.trust-seal-card {
+  background: #FFFFFF;
+  border: 3px solid #000000;
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  box-shadow: 4px 4px 0px #000000;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trust-seal-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000000;
+}
+
+.trust-seal-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: #FFF056;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.trust-seal-title {
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 0.95rem;
+  color: #000000;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.trust-seal-desc {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: #475569;
+  line-height: 1.4;
+}
+
+/* Dispatch Urgency Banner */
+.urgency-banner {
+  background: #FEF3C7;
+  border: 2px solid #F59E0B;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #92400E;
+}
+
+.urgency-timer-highlight {
+  background: #F59E0B;
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+/* Promo Copy Toast */
+.promo-copy-toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000000;
+  color: #FFF056;
+  border: 2px solid #FFF056;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  z-index: 10000;
+  animation: popInToast 0.3s ease forwards;
+}
+
+/* Mobile Sticky Bottom Navigation */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: #FFFFFF;
+  border-top: 3px solid #000000;
+  z-index: 999;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+  padding: 4px 12px;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  body {
+    padding-bottom: 70px;
+  }
+  
+  .cro-toast-container {
+    bottom: 76px;
+    left: 12px;
+    right: 12px;
+  }
+  
+  .cro-toast-item {
+    max-width: 100%;
+  }
+}
+
+.mob-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #000000;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 0.68rem;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+
+.mob-nav-item.active {
+  background: #FFF056;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.mob-nav-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.mob-nav-badge {
+  position: absolute;
+  top: 2px;
+  right: 6px;
+  background: #E94057;
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: 900;
+  padding: 1px 5px;
+  border-radius: 10px;
+  border: 1.5px solid #000000;
+}
+
+/* Performance & GPU Accelerated Rendering */
+.card-item-box {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 420px;
+}
+
+/* Maximum Container Containment for 4K / Ultra-wide Screens */
+.container,
+.hero-section,
+.marquee-bar,
+.shop-page-wrap,
+.categories-grid,
+.product-page-wrap,
+.cart-page-wrap,
+.checkout-page-wrap,
+.footer-wrap {
+  max-width: 1440px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
 
 
 
