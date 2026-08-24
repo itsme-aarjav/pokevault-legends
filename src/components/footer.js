@@ -73,12 +73,11 @@ export function renderFooter() {
         <div class="footer-col nav-col-customer">
           <h4 class="footer-heading">CUSTOMER VAULT</h4>
           <ul class="footer-links">
+            <li><a href="blog.html">📰 The PokéVault Journal</a></li>
             <li><a href="verify.html">🔍 Verify PSA Slabs</a></li>
             <li><a href="rewards.html">🪙 PokéCoins VIP Rewards</a></li>
             <li><a href="track.html">📦 Track My Order</a></li>
             <li><a href="mystery-vault.html">🎁 Mystery Vault Simulator</a></li>
-            <li><a href="cart.html">View Shopping Cart</a></li>
-            <li><a href="wishlist.html">My Saved Wishlist</a></li>
             <li><a href="about.html">About PokéVault</a></li>
             <li><a href="contact.html">Contact Support &amp; FAQ</a></li>
           </ul>
