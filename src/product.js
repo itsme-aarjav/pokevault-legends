@@ -109,8 +109,8 @@ class ProductPage {
           <div class="pd-badges-row">
             <span class="stock-badge in-stock">${p.availability}</span>
             <span style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700; background:#000; color:#FFF056; padding:2px 8px; border-radius:4px;">${p.categoryName}</span>
-            <span style="background:#FEF2F2; color:#DC2626; border:1px solid #FCA5A5; font-family:var(--font-mono); font-weight:800; font-size:0.78rem; padding:3px 10px; border-radius:12px; display:inline-flex; align-items:center; gap:4px;">
-              🔥 <strong>14 collectors</strong> viewing right now
+            <span id="pdLiveViewersBadge" style="background:#FEF2F2; color:#DC2626; border:1px solid #FCA5A5; font-family:var(--font-mono); font-weight:800; font-size:0.78rem; padding:3px 10px; border-radius:12px; display:inline-flex; align-items:center; gap:4px;">
+              <span class="live-pulse-dot"></span> <strong>14 collectors</strong> viewing right now
             </span>
           </div>
 
@@ -124,7 +124,7 @@ class ProductPage {
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:1.25rem; font-family:var(--font-mono); font-size:0.9rem;">
             <span style="color:var(--accent-orange); font-size:1.1rem;">${starsHtml}</span>
             <strong style="color:#000;">${p.rating.toFixed(1)}</strong>
-            <a href="#reviewsSection" style="color:#000; text-decoration:underline;">(${totalCount} customer reviews)</a>
+            <a href="#reviewsSection" style="color:#000; text-decoration:underline;">(${totalCount} verified buyer reviews)</a>
           </div>
 
           <!-- PRICE & UPI / EMI BOX -->
@@ -135,8 +135,14 @@ class ProductPage {
               ${p.discountPercent ? `<span class="pd-discount-badge">SAVE ${p.discountPercent}%</span>` : ''}
             </div>
 
+            <!-- PROMO CODE CALLOUT -->
+            <div style="background:#FFF056; border:2px solid #000; border-radius:6px; padding:6px 10px; margin-top:8px; display:flex; align-items:center; justify-content:space-between; font-size:0.8rem; font-weight:800;">
+              <span>🎁 Get Extra 10% OFF — Use Code: <code style="background:#000; color:#FFF056; padding:2px 6px; border-radius:4px; margin-left:4px;">POKEVAULT10</code></span>
+              <button onclick="navigator.clipboard.writeText('POKEVAULT10'); alert('Promo code POKEVAULT10 copied!');" style="background:#000; color:#FFF; border:none; border-radius:4px; padding:3px 8px; font-size:0.75rem; cursor:pointer; font-weight:700;">Copy</button>
+            </div>
+
             <!-- UPI & NO-COST EMI WIDGET -->
-            <div class="pd-bnpl-row" style="flex-wrap:wrap; gap:8px;">
+            <div class="pd-bnpl-row" style="flex-wrap:wrap; gap:8px; margin-top:8px;">
               <span>⚡ <strong>Instant UPI Pay</strong> (GPay, PhonePe, Paytm) or <strong>No-Cost EMI</strong> from ₹${Math.round((p.price > 500 ? p.price : p.price * 83) / 3).toLocaleString('en-IN')}/mo</span>
               <span style="font-weight:900; background:#EBF5FA; color:#2C6ECB; padding:1px 6px; border-radius:4px; font-size:0.75rem;">UPI</span>
               <span style="font-weight:900; background:#E3FCEF; color:#006644; padding:1px 6px; border-radius:4px; font-size:0.75rem;">COD</span>
@@ -147,10 +153,10 @@ class ProductPage {
           <div class="pd-delivery-box">
             <div class="pd-delivery-row">
               <span style="font-size:1.2rem;">🚚</span>
-              <span>Order within <strong style="color:var(--accent-red);">2 hrs 14 mins</strong> for <strong>Free BlueDart Express Air Delivery</strong> (1-2 Days Pan-India)</span>
+              <span>Order within <strong style="color:var(--accent-red);" id="pdDispatchCountdown">2 hrs 45 mins</strong> for <strong>Free BlueDart Express Air Delivery</strong> (1-2 Days Pan-India)</span>
             </div>
             <div class="pd-trust-badges">
-              <span class="authenticity-trigger" id="vaultAuthBadgeTrigger" style="color:#059669; font-weight:800; display:inline-flex; align-items:center; gap:4px;" title="Click to view our 5-Point Vault Inspection Guarantee">🛡️ 100% Genuine Japanese Pokemon Center & PSA Authenticated</span>
+              <span class="authenticity-trigger" id="vaultAuthBadgeTrigger" style="color:#059669; font-weight:800; display:inline-flex; align-items:center; gap:4px; cursor:pointer;" title="Click to view our 5-Point Vault Inspection Guarantee">🛡️ 100% Genuine Japanese Pokemon Center & PSA Authenticated (Click to Inspect)</span>
               <span style="color:#2563EB; font-weight:800; display:inline-flex; align-items:center; gap:4px;" id="pdPokeCoinsSpan">
                 🪙 Earn <span id="pdCoinsCount">${initialCoins.toLocaleString('en-IN')}</span> PokéCoins (₹${Math.round(initialRewardsVal * 83 || 150)} rewards value)
               </span>
