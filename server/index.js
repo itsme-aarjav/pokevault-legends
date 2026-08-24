@@ -34,22 +34,9 @@ app.use(cors({
 app.use(express.json({ limit: '1mb' }));
 
 // ─── Admin Auth Middleware ─────────────────────────────────────────────────
-// All write routes require X-Admin-Key header matching ADMIN_SECRET_KEY env var
-const ADMIN_KEY = process.env.ADMIN_SECRET_KEY;
+import { requireAdmin } from './middleware/auth.js';
+export { requireAdmin };
 
-export const requireAdmin = (req, res, next) => {
-  if (!ADMIN_KEY) {
-    return res.status(503).json({ success: false, error: 'Admin key not configured on server.' });
-  }
-  const provided = req.headers['x-admin-key'];
-  if (!provided || provided !== ADMIN_KEY) {
-    return res.status(401).json({
-      success: false,
-      error: 'Unauthorized: Invalid or missing X-Admin-Key header.'
-    });
-  }
-  next();
-};
 
 // ─── API Health Check ──────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
