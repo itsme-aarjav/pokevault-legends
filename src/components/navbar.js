@@ -39,15 +39,6 @@ export function renderNavbar(activePage = 'home') {
           </svg>
           <span class="cart-count" id="wishlistCount" style="background:var(--accent-red);">${totalWishlistCount}</span>
         </a>
-
-        <!-- CURRENCY SWITCHER -->
-        <select id="headerCurrencySelect" class="currency-select-box" aria-label="Select Store Currency">
-          <option value="INR" ${currentCurr === 'INR' ? 'selected' : ''}>₹ INR</option>
-          <option value="USD" ${currentCurr === 'USD' ? 'selected' : ''}>$ USD</option>
-          <option value="EUR" ${currentCurr === 'EUR' ? 'selected' : ''}>€ EUR</option>
-          <option value="GBP" ${currentCurr === 'GBP' ? 'selected' : ''}>£ GBP</option>
-          <option value="JPY" ${currentCurr === 'JPY' ? 'selected' : ''}>¥ JPY</option>
-        </select>
       </div>
 
       <a href="index.html" class="logo-stamp">
@@ -140,13 +131,6 @@ export function renderNavbar(activePage = 'home') {
 export function initNavbarEvents() {
   // Initialize Global Social Proof Toast notifications
   initSocialProofToast();
-
-  // Currency Switcher Event
-  const currencySelect = document.getElementById('headerCurrencySelect');
-  currencySelect?.addEventListener('change', (e) => {
-    setCurrency(e.target.value);
-    window.location.reload();
-  });
 
   // Mobile Nav Handlers
   const mobileNavToggleBtn = document.getElementById('mobileNavToggleBtn');
