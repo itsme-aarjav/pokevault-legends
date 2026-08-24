@@ -8,7 +8,7 @@ import { renderFooter } from './components/footer.js';
 import { renderCartDrawer, initCartDrawerEvents } from './components/cart-drawer.js';
 import { renderProductCard, bindProductCardEvents } from './components/product-card.js';
 import { getAllProducts } from './data/products.js';
-import { Hero3DStage } from './hero-3d-stage.js';
+import { Hero3DSlab } from './components/hero-3d.js';
 import { ThreeCardViewer } from './three-card-viewer.js';
 import { addToCart } from './utils/store.js';
 
@@ -39,14 +39,16 @@ class MainStore {
   initHeroStage() {
     const container = document.getElementById('hero3DStageContainer');
     if (container) {
-      this.heroStage = new Hero3DStage(container);
+      this.heroStage = new Hero3DSlab('hero3DStageContainer', 'charizard');
 
-      document.getElementById('btnExplodeSlab')?.addEventListener('click', () => {
-        if (this.heroStage) this.heroStage.toggleExplodedView();
-      });
-
-      document.getElementById('btnAutoSpin')?.addEventListener('click', () => {
-        if (this.heroStage) this.heroStage.toggleAutoSpin();
+      // Card Switcher Pills
+      document.querySelectorAll('.hero-3d-card-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.hero-3d-card-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          const cardKey = pill.getAttribute('data-card');
+          if (this.heroStage) this.heroStage.switchCard(cardKey);
+        });
       });
     }
   }
