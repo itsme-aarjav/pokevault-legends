@@ -5744,6 +5744,459 @@ main {
   transform: scale(1.04);
 }
 
+/* ==========================================================================
+   VAULT SLAB CERTIFICATE VERIFICATION PORTAL STYLES
+   ========================================================================== */
+.verify-portal-wrap,
+.rewards-portal-wrap,
+.track-portal-wrap,
+.mystery-vault-wrap {
+  padding: 2rem 1rem 5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.portal-hero-banner {
+  background: #FFF056;
+  border: 4px solid #000000;
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  box-shadow: 6px 6px 0px #000000;
+  margin-bottom: 2.5rem;
+}
+
+.portal-hero-title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: #000000;
+  margin: 0 0 8px;
+  letter-spacing: 1px;
+}
+
+.portal-hero-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: #1E293B;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.cert-search-box {
+  display: flex;
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+  border: 3px solid #000000;
+  border-radius: 30px;
+  background: #FFFFFF;
+  overflow: hidden;
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.cert-search-input {
+  flex: 1;
+  border: none;
+  padding: 12px 18px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  outline: none;
+}
+
+.cert-search-btn {
+  background: var(--accent-red);
+  color: #FFFFFF;
+  border: none;
+  padding: 0 24px;
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 0.95rem;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+/* Interactive Holographic Certificate Card */
+.holo-cert-card {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+  border: 4px solid #000000;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 8px 8px 0px #000000;
+  position: relative;
+  overflow: hidden;
+  margin: 2rem auto;
+  max-width: 850px;
+}
+
+.holo-cert-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 0.04),
+    rgba(255, 240, 86, 0.08),
+    rgba(0, 255, 200, 0.06),
+    rgba(255, 0, 128, 0.04)
+  );
+  pointer-events: none;
+  animation: holoSheen 10s infinite linear;
+}
+
+@keyframes holoSheen {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.cert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 3px solid #000000;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.cert-stamp-badge {
+  background: #DCFCE7;
+  color: #15803D;
+  border: 2px solid #16A34A;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-weight: 900;
+  font-size: 0.85rem;
+  box-shadow: 2px 2px 0px #16A34A;
+}
+
+.cert-details-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .cert-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cert-slab-preview {
+  background: #FFFFFF;
+  border: 3px solid #000000;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.cert-slab-img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+}
+
+.cert-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+
+.cert-specs-table td {
+  padding: 8px 10px;
+  border-bottom: 1px dashed #CBD5E1;
+}
+
+.cert-specs-table td:first-child {
+  color: #64748B;
+  font-weight: 700;
+  width: 40%;
+}
+
+.cert-specs-table td:last-child {
+  color: #0F172A;
+  font-weight: 900;
+}
+
+/* ==========================================================================
+   POKÉCOINS VIP LOYALTY & REWARDS HUB STYLES
+   ========================================================================== */
+.rewards-hero-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .rewards-hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tier-status-card {
+  background: #FFFFFF;
+  border: 4px solid #000000;
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: 6px 6px 0px #000000;
+}
+
+.tier-progress-track {
+  height: 14px;
+  background: #E2E8F0;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 12px 0 6px;
+}
+
+.tier-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F59E0B, #10B981);
+  border-radius: 8px;
+}
+
+.daily-streak-card {
+  background: linear-gradient(135deg, #FFFDE7 0%, #FFF056 100%);
+  border: 4px solid #000000;
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: 6px 6px 0px #000000;
+  text-align: center;
+}
+
+.streak-days-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.streak-day-dot {
+  width: 36px;
+  height: 36px;
+  border: 2px solid #000000;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 900;
+  font-size: 0.8rem;
+}
+
+.streak-day-dot.active {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.rewards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.reward-card {
+  background: #FFFFFF;
+  border: 3px solid #000000;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 4px 4px 0px #000000;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   LIVE ORDER TRACKING STYLES
+   ========================================================================== */
+.track-timeline-card {
+  background: #FFFFFF;
+  border: 4px solid #000000;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 6px 6px 0px #000000;
+  margin-top: 2rem;
+}
+
+.timeline-steps-wrap {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin: 2.5rem 0;
+}
+
+@media (max-width: 640px) {
+  .timeline-steps-wrap {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+  flex: 1;
+}
+
+.timeline-icon-box {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #000000;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  box-shadow: 3px 3px 0px #000000;
+  margin-bottom: 8px;
+}
+
+.timeline-step.completed .timeline-icon-box {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.timeline-step.current .timeline-icon-box {
+  background: #FFF056;
+  animation: pulseDot 1.8s infinite;
+}
+
+/* ==========================================================================
+   MYSTERY CHEST UNBOXING SIMULATOR STYLES
+   ========================================================================== */
+.mystery-chest-tier-card {
+  background: #FFFFFF;
+  border: 4px solid #000000;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  box-shadow: 6px 6px 0px #000000;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.mystery-chest-tier-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0px #000000;
+}
+
+.mystery-chest-img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin: 1rem auto;
+}
+
+.unboxing-stage-box {
+  background: #000000;
+  border: 4px solid #FFF056;
+  border-radius: 20px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: #FFFFFF;
+  margin: 2rem 0;
+  box-shadow: 8px 8px 0px #000000;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   "FREQUENTLY BOUGHT TOGETHER" BUNDLE BUILDER STYLES
+   ========================================================================== */
+.bundle-builder-wrap {
+  background: #FFFFFF;
+  border: 3px solid #000000;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 5px 5px 0px #000000;
+  margin: 2.5rem 0;
+}
+
+.bundle-items-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.bundle-item-thumb {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  padding: 4px;
+  background: #FFFFFF;
+  object-fit: contain;
+}
+
+.bundle-plus-icon {
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: #000000;
+}
+
+.bundle-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+/* ==========================================================================
+   IMAGE ZOOM / MAGNIFIER LENS
+   ========================================================================== */
+.magnifier-container {
+  position: relative;
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+.magnifier-lens {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border: 3px solid #000000;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  pointer-events: none;
+  display: none;
+  background-repeat: no-repeat;
+  z-index: 100;
+}
+
+/* Currency Switcher in Header */
+.currency-select-box {
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.8rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px #000000;
+}
+
+
 
 
 
