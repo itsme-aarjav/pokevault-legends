@@ -68,7 +68,7 @@ app.listen(PORT, () => {
   ================================================================
   ⚡ POKÉVAULT LEGENDS Express Server Running on http://localhost:${PORT}
   DATABASE STATUS: ${isSupabaseConfigured() ? '✅ Supabase Connected' : '⚠️ Local Demo Mode'}
-  ADMIN AUTH:      ${ADMIN_KEY ? '✅ Admin Key Set' : '❌ WARNING: ADMIN_SECRET_KEY not set in .env'}
+  ADMIN AUTH:      ${process.env.ADMIN_SECRET_KEY ? '✅ Admin Key Set' : '❌ WARNING: ADMIN_SECRET_KEY not set in .env'}
   API BASE URL:    http://localhost:${PORT}/api
   ================================================================
   `);
