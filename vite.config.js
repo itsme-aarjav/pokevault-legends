@@ -23,7 +23,13 @@ export default defineConfig({
         about: resolve(__dirname, 'about.html'),
         contact: resolve(__dirname, 'contact.html'),
         product: resolve(__dirname, 'product.html'),
-        admin: resolve(__dirname, 'admin.html')
+        admin: resolve(__dirname, 'admin.html'),
+        blog: resolve(__dirname, 'blog.html'),
+        blogPost: resolve(__dirname, 'blog-post.html'),
+        mysteryVault: resolve(__dirname, 'mystery-vault.html'),
+        rewards: resolve(__dirname, 'rewards.html'),
+        track: resolve(__dirname, 'track.html'),
+        verify: resolve(__dirname, 'verify.html')
       }
     }
   },
