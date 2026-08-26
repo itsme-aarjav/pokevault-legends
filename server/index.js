@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import cardsRouter from './routes/cards.js';
 import inventoryRouter from './routes/inventory.js';
@@ -9,6 +11,11 @@ import paypalRouter from './routes/paypal.js';
 import { isSupabaseConfigured } from './supabase.js';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DIST_DIR = path.resolve(__dirname, '../dist');
+const PUBLIC_DIR = path.resolve(__dirname, '../public');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -54,13 +61,27 @@ app.use('/api/inventory', inventoryRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/paypal', paypalRouter);
 
-// Serve static assets and workspace HTML pages
-app.use(express.static('.'));
-app.use('/public', express.static('public'));
+// Serve static assets from Vite production build in dist/
+app.use(express.static(DIST_DIR, { extensions: ['html'] }));
+app.use('/public', express.static(PUBLIC_DIR));
 
-// Root route serves index.html
-app.get('/', (req, res) => {
-  res.sendFile('index.html', { root: '.' });
+// Dynamic client routes fallback
+app.get('/product/*', (req, res) => {
+  res.sendFile(path.join(DIST_DIR, 'product.html'));
+});
+
+app.get('/category/*', (req, res) => {
+  res.sendFile(path.join(DIST_DIR, 'category.html'));
+});
+
+app.get('/blog/*', (req, res) => {
+  res.sendFile(path.join(DIST_DIR, 'blog-post.html'));
+});
+
+// Root route and SPA fallback for non-API client navigation
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api/')) return next();
+  res.sendFile(path.join(DIST_DIR, 'index.html'));
 });
 
 app.listen(PORT, () => {
