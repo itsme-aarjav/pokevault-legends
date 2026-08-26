@@ -19,6 +19,7 @@ const PUBLIC_DIR = path.resolve(__dirname, '../public');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+const HOST = process.env.HOST || '0.0.0.0';
 
 // ─── CORS: Allowed storefront, ALB, and local development origins ─────────
 const ALLOWED_ORIGINS = [
@@ -87,13 +88,13 @@ app.get('*', (req, res, next) => {
   res.sendFile(path.join(DIST_DIR, 'index.html'));
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log(`
   ================================================================
-  ⚡ POKÉVAULT LEGENDS Express Server Running on http://localhost:${PORT}
+  ⚡ POKÉVAULT LEGENDS Express Server Running on http://${HOST}:${PORT}
   DATABASE STATUS: ${isSupabaseConfigured() ? '✅ Supabase Connected' : '⚠️ Local Demo Mode'}
   ADMIN AUTH:      ${process.env.ADMIN_SECRET_KEY ? '✅ Admin Key Set' : '❌ WARNING: ADMIN_SECRET_KEY not set in .env'}
-  API BASE URL:    http://localhost:${PORT}/api
+  API BASE URL:    http://${HOST}:${PORT}/api
   ================================================================
   `);
 });
