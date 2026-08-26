@@ -20,19 +20,22 @@ const PUBLIC_DIR = path.resolve(__dirname, '../public');
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// ─── CORS: only allow the storefront origin ────────────────────────────────
+// ─── CORS: Allowed storefront, ALB, and local development origins ─────────
 const ALLOWED_ORIGINS = [
   'http://localhost:3000',
-  'http://localhost:5173', // vite dev
-  process.env.STOREFRONT_ORIGIN   // set this in prod .env
+  'http://localhost:5173',
+  'http://pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com',
+  process.env.STOREFRONT_ORIGIN
 ].filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
-    // allow server-to-server (no origin header) and listed origins
-    if (!origin || ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
-    callback(new Error(`CORS blocked: ${origin}`));
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS blocked: ${origin}`));
   },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Key']
 }));
