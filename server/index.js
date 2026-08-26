@@ -88,7 +88,7 @@ app.get('*', (req, res, next) => {
   res.sendFile(path.join(DIST_DIR, 'index.html'));
 });
 
-app.listen(PORT, HOST, () => {
+const server = app.listen(PORT, HOST, () => {
   console.log(`
   ================================================================
   ⚡ POKÉVAULT LEGENDS Express Server Running on http://${HOST}:${PORT}
@@ -98,3 +98,19 @@ app.listen(PORT, HOST, () => {
   ================================================================
   `);
 });
+
+// ─── Graceful Shutdown Handling (for systemd & AWS ASG / ALB draining) ─────
+const handleShutdown = (signal) => {
+  console.log(`\n[Server] Received ${signal}. Starting graceful shutdown...`);
+  server.close(() => {
+    console.log('[Server] HTTP server closed cleanly.');
+    process.exit(0);
+  });
+  setTimeout(() => {
+    console.error('[Server] Graceful shutdown timeout exceeded. Forcing exit.');
+    process.exit(1);
+  }, 10000).unref();
+};
+
+process.on('SIGTERM', () => handleShutdown('SIGTERM'));
+process.on('SIGINT', () => handleShutdown('SIGINT'));
