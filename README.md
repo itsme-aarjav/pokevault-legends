@@ -53,57 +53,96 @@ The production deployment of **POKÉVAULT LEGENDS** is engineered on **Amazon We
 
 ```mermaid
 flowchart TD
-    subgraph Clients ["🌐 End-User Layer"]
-        Browser["Desktop & Mobile Web Clients"]
+    %% Styling Classes
+    classDef awsBox fill:#232F3E,stroke:#FF9900,stroke-width:2px,color:#FFFFFF;
+    classDef clientBox fill:#1E293B,stroke:#38BDF8,stroke-width:2px,color:#FFFFFF;
+    classDef vpcBox fill:#0F172A,stroke:#0EA5E9,stroke-width:2px,stroke-dasharray: 5 5,color:#38BDF8;
+    classDef asgBox fill:#18181B,stroke:#F59E0B,stroke-width:2px,color:#FFFFFF;
+    classDef monitorBox fill:#1E1B4B,stroke:#818CF8,stroke-width:2px,color:#FFFFFF;
+    classDef externalBox fill:#064E3B,stroke:#10B981,stroke-width:2px,color:#FFFFFF;
+    classDef mirrorBox fill:#134E4A,stroke:#14B8A6,stroke-width:2px,color:#FFFFFF;
+
+    subgraph Clients ["🌐 User & Client Layer"]
+        User["👥 Web & Mobile Browsers<br/>(Global Users)"]
     end
+    class Clients clientBox;
 
-    subgraph AWSCloud ["☁️ AWS Production Cloud Infrastructure (ap-south-1)"]
+    subgraph AWSCloud ["☁️ AWS Cloud Production Infrastructure (ap-south-1 / Mumbai)"]
+        
         subgraph Ingress ["Public Ingress & Routing"]
-            ALB["AWS Application Load Balancer\npokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com"]
+            IGW["🌐 Internet Gateway"]
+            ALB["⚖️ AWS Application Load Balancer (ALB)<br/><code>pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com</code><br/>• HTTP (80) & HTTPS (443) Listeners<br/>• Health Probes via /api/health<br/>• Cross-Zone Load Balancing"]
         end
+        class Ingress awsBox;
 
-        subgraph VPC ["Amazon VPC (Virtual Private Cloud)"]
-            subgraph SecurityGroup ["Security Groups & Firewalls"]
-                subgraph ComputeLayer ["EC2 Compute Instances & Process Management"]
-                    NodeService["Node.js / Express Runtime\n(Host: 0.0.0.0 | Port: 5001)\nManaged via systemd / PM2"]
+        subgraph VPC ["🛡️ Amazon Virtual Private Cloud (VPC)"]
+            
+            subgraph SecurityGroup ["🔒 Security Groups & Subnets"]
+                subgraph ASG ["🔄 AWS Auto Scaling Group (ASG) & Target Group (Port: 5001)"]
+                    EC2["🖥️ Amazon EC2 Compute Instances<br/>(Ubuntu LTS / Node.js 18+ Runtime)"]
+                    Systemd["⚙️ systemd Daemon Manager<br/>(Auto-Restart & Process Supervision)"]
                     
-                    subgraph Handlers ["Application Execution Modules"]
-                        StaticServe["Vite SPA Static File Server\n(dist/ & public/ assets)"]
-                        APIEndpoints["Express REST API Endpoints\n(/api/cards, /api/inventory, /api/orders, /api/paypal)"]
-                        HealthCheck["Target Group Health Probe\n(/api/health)"]
-                        GracefulShutdown["Graceful Shutdown Handler\n(SIGTERM / SIGINT 10s Drain)"]
+                    subgraph ExpressCore ["⚡ POKÉVAULT Self-Contained Express Service (0.0.0.0:5001)"]
+                        StaticEngine["📁 Vite SPA Static Server<br/>(dist/ & public/ served by Express — No S3)"]
+                        APIEngine["🔌 Full REST API Router<br/>(/api/cards, /api/orders, /api/paypal — No Lambda)"]
+                        PriceValidator["🛡️ Server-Side Price Verification<br/>(Anti-Cart Tamper Security)"]
+                        DrainHandler["🛑 Graceful Drain Handler<br/>(SIGTERM / ASG Scale-In 10s Window)"]
                     end
                 end
+                class ASG asgBox;
             end
+            class SecurityGroup vpcBox;
         end
+        class VPC vpcBox;
+
+        subgraph Monitoring ["📊 AWS CloudWatch Observability & Monitoring"]
+            CW_Metrics["📈 Amazon CloudWatch Metrics<br/>• ALB RequestCount & TargetResponseTime<br/>• HTTP 4XX / 5XX Error Rates<br/>• EC2 CPU & Memory Utilization"]
+            CW_Logs["📜 CloudWatch Logs / journald<br/>• Express Server Output (stdout/stderr)<br/>• ALB Ingress Access Logs"]
+            CW_Alarms["🚨 CloudWatch Alarms & Dynamic Scaling<br/>• Scale-Out on High CPU / Latency<br/>• Unhealthy Host Detection & Auto-Healing"]
+        end
+        class Monitoring monitorBox;
+
     end
+    class AWSCloud awsBox;
 
     subgraph ExternalServices ["🗄️ Managed Data & Payment Gateways"]
-        SupabaseDB[("Supabase PostgreSQL Database\n(Cards, Orders, Inventory Tables)")]
-        PayPalAPI["PayPal Orders API\n(Payment Verification & Capture)"]
+        SupabaseDB[("🗄️ Supabase PostgreSQL<br/>(Master Catalog, Orders & Inventory Tables)<br/>• TLS Encrypted Queries<br/>• Row Level Security (RLS)")]
+        PayPalAPI["💳 PayPal Developer API<br/>(Payment Capture & Order Verification)"]
     end
+    class ExternalServices externalBox;
 
     subgraph ActiveMirror ["⚡ Continuous Deployment Mirror (Cost-Optimized)"]
-        NetlifyEdge["Netlify CDN + Serverless Functions\n(Zero-Idle-Cost Active Preview)"]
+        Netlify["🌐 Netlify Global CDN + Serverless Functions<br/>(Zero-Idle-Cost Active Preview)"]
     end
+    class ActiveMirror mirrorBox;
 
-    %% Client Flows
-    Browser -->|HTTP / HTTPS Traffic| ALB
-    Browser -.->|Active Live Demo| NetlifyEdge
+    %% Routing Flows
+    User -->|HTTPS / HTTP Traffic| IGW
+    User -.->|Zero-Cost Staging Demo| Netlify
+    IGW --> ALB
 
-    %% Ingress to Compute
-    ALB -->|Forward to Target Group (Port 5001)| NodeService
-    ALB -->|Periodic Health Probes| HealthCheck
+    %% ALB to ASG Compute
+    ALB -->|Forward to ASG Target Group (Port 5001)| EC2
+    ALB -->|Health Probe: GET /api/health| APIEngine
+    EC2 --> Systemd
+    Systemd --> ExpressCore
 
-    %% Node Service Internal Modules
-    NodeService --> StaticServe
-    NodeService --> APIEndpoints
-    NodeService --> HealthCheck
-    NodeService --> GracefulShutdown
+    %% Internal Application Execution
+    ExpressCore --> StaticEngine
+    ExpressCore --> APIEngine
+    APIEngine --> PriceValidator
+    ExpressCore --> DrainHandler
 
     %% Data & Gateway Integrations
-    APIEndpoints -->|Encrypted TLS Queries| SupabaseDB
-    APIEndpoints -->|REST Payment Auth| PayPalAPI
+    PriceValidator -->|Encrypted SQL Connection| SupabaseDB
+    APIEngine -->|REST Payment Auth| PayPalAPI
+
+    %% Monitoring Telemetry & Scaling
+    ALB -.->|Access Logs & Latency Metrics| CW_Metrics
+    ALB -.->|Target Health Status| CW_Alarms
+    EC2 -.->|Instance Metrics & Logs| CW_Metrics
+    ExpressCore -.->|Stream App Stdout/Stderr| CW_Logs
+    CW_Alarms -.->|Trigger Dynamic Scale In/Out| ASG
 ```
 
 ---
@@ -113,16 +152,16 @@ flowchart TD
 ### 1. AWS Application Load Balancer (ALB)
 - **ALB Endpoint**: `http://pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com`
 - **Region**: `ap-south-1` (Asia Pacific - Mumbai)
-- **Traffic Routing**: Distributes incoming HTTP/HTTPS traffic evenly across backend target instances.
+- **Traffic Routing**: Distributes incoming HTTP/HTTPS traffic evenly across backend EC2 instances in the Auto Scaling Group.
 - **Health Checks**: Continuously polls the `/api/health` endpoint on port `5001`. Automatically deregisters unhealthy targets to maintain 99.99% uptime.
 - **CORS Whitelisting**: Explicitly whitelisted in Express CORS middleware (`server/index.js`) to allow cross-origin requests from load-balanced subdomains and local development origins.
 
-### 2. Amazon EC2 Compute & Process Management
-- **Runtime Environment**: Node.js 18+ LTS running an optimized production Express server bound to `0.0.0.0:5001`.
+### 2. AWS Auto Scaling Group (ASG) & EC2 Compute
+- **Dynamic Scaling**: Automatically scales EC2 instances horizontally in response to traffic spikes and CPU utilization alarms.
+- **Self-Contained Single-Bundle Runtime (No S3 / No Lambda)**: The Express application serves both the bundled Vite SPA static assets (`dist/`, `public/`) and all REST API routes on `0.0.0.0:5001`, completely eliminating S3 bucket maintenance and Lambda cold starts.
 - **Process Supervisor**: Managed via `systemd` / `pm2` service units for auto-restart on failure and boot-time initialization.
-- **Single-Bundle Static & API Delivery**: The Express server directly serves optimized production assets from `dist/` and `public/` while handling dynamic client-side SPA routing (`/product/*`, `/category/*`, `/blog/*`).
 
-### 3. Graceful Connection Draining (ASG & ALB Integration)
+### 3. Graceful Connection Draining (ASG Scale-In & ALB Integration)
 - **Zero-Downtime Deployments**: Implemented via `server/index.js` graceful shutdown handlers for `SIGTERM` and `SIGINT` signals:
   ```javascript
   // Graceful Shutdown Handling (for systemd & AWS ASG / ALB draining)
@@ -140,7 +179,12 @@ flowchart TD
   ```
 - **Connection Draining**: Provides a 10-second window during Auto Scaling Group (ASG) scale-in or application redeployments to complete in-flight transactions before terminating the process.
 
-### 4. VPC, Security Groups & Networking
+### 4. Amazon CloudWatch Observability & Monitoring
+- **ALB & Target Metrics**: Tracks `RequestCount`, `TargetResponseTime`, and `HTTPCode_Target_5XX_Count` in real time.
+- **CloudWatch Alarms**: Configured alarms trigger Auto Scaling Group scale-out events when CPU exceeds thresholds and alert on target health check failures.
+- **Unified Logging**: Aggregates Express application stdout/stderr logs alongside systemd `journald` and ALB access logs.
+
+### 5. VPC, Security Groups & Networking
 - **Ingress Rules**: ALB listens on standard HTTP (80) and HTTPS (443) ports.
 - **EC2 Security Group**: Restricted to receive inbound application traffic only from the ALB Security Group on port `5001`.
 - **Egress Rules**: Outbound access on port 443 for TLS communication with Supabase PostgreSQL and PayPal APIs.
