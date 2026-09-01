@@ -51,85 +51,9 @@ The production deployment of **POKÉVAULT LEGENDS** is engineered on **Amazon We
 
 ## 🏗️ System Architecture & Data Flow
 
-```mermaid
-flowchart TD
-    %% Professional Styling Classes (Corporate Light Theme)
-    classDef awsBox fill:#F8F9FA,stroke:#232F3E,stroke-width:2px,color:#212529;
-    classDef clientBox fill:#FFFFFF,stroke:#6C757D,stroke-width:2px,color:#212529;
-    classDef vpcBox fill:#F8F9FA,stroke:#0073BB,stroke-width:2px,stroke-dasharray: 5 5,color:#0073BB;
-    classDef subnetBox fill:#FFFFFF,stroke:#0073BB,stroke-width:1.5px,color:#0073BB;
-    classDef computeBox fill:#FEF5E6,stroke:#D86613,stroke-width:2px,color:#212529;
-    classDef monitorBox fill:#FAF5F7,stroke:#CC2264,stroke-width:2px,color:#212529;
-    classDef externalBox fill:#E6F4EA,stroke:#1E8E3E,stroke-width:2px,color:#212529;
-    classDef mirrorBox fill:#F0F4F8,stroke:#1A73E8,stroke-width:2px,color:#212529;
-
-    subgraph Clients ["User & Client Access"]
-        User["Web & Mobile Browsers<br/>Global Users"]
-    end
-
-    subgraph AWSCloud ["AWS Production Cloud Infrastructure: ap-south-1 / Mumbai"]
-        
-        subgraph VPC ["Amazon Virtual Private Cloud: VPC"]
-            
-            subgraph PublicSubnets ["Public Ingress Subnets: Multi-AZ"]
-                ALB["AWS Application Load Balancer: ALB<br/>pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com<br/>• HTTP 80 & HTTPS 443 Listeners<br/>• Health Checks via /api/health<br/>• Cross-Zone Traffic Routing"]
-            end
-
-            subgraph AppSubnets ["Application Compute Subnets: Target Group Port 5001"]
-                subgraph ASG_Group ["AWS Auto Scaling Group: ASG"]
-                    Express_App["Amazon EC2 Instances: Node.js 18+ & systemd<br/>POKÉVAULT Production Service (0.0.0.0:5001)<br/>• Vite SPA Static File Server (dist/ & public/)<br/>• Express REST APIs (/api/cards, /orders, /paypal)<br/>• Server-Side Price Verification Engine<br/>• SIGTERM 10s Connection Draining Handler"]
-                end
-            end
-
-        end
-
-        subgraph Monitoring ["AWS CloudWatch Observability & Monitoring"]
-            CW_Metrics["CloudWatch Metrics<br/>• ALB RequestCount & Target Latency<br/>• HTTP 4XX / 5XX Error Rates<br/>• EC2 CPU & Memory Utilization"]
-            CW_Logs["CloudWatch Logs & journald<br/>• Express Application stdout/stderr<br/>• ALB Ingress Access Logs"]
-            CW_Alarms["CloudWatch Alarms & Scaling<br/>• Triggers ASG Scale-Out on High Load<br/>• Target Health Failure Alerts"]
-        end
-
-    end
-
-    subgraph ExternalServices ["Managed Data & Payment Gateways"]
-        SupabaseDB[("Supabase PostgreSQL Database<br/>Master Catalog, Orders & Inventory Tables<br/>• TLS Encrypted Queries<br/>• Row Level Security: RLS")]
-        PayPalAPI["PayPal Developer API<br/>Payment Capture & Order Verification"]
-    end
-
-    subgraph ActiveMirror ["Continuous Deployment Mirror: Cost-Optimized"]
-        Netlify["Netlify Global CDN + Serverless Functions<br/>Zero-Idle-Cost Active Preview"]
-    end
-
-    %% Client Routing
-    User -->|"HTTPS / HTTP Traffic"| ALB
-    User -.->|"Zero-Cost Active Mirror"| Netlify
-
-    %% ALB to Compute Inside VPC
-    ALB -->|"Forward Ingress Traffic: Port 5001"| Express_App
-    ALB -->|"Health Probe: GET /api/health"| Express_App
-
-    %% Data & Gateway Integrations
-    Express_App -->|"Encrypted SQL Queries"| SupabaseDB
-    Express_App -->|"Payment Authorization"| PayPalAPI
-
-    %% Observability Telemetry & Scaling
-    ALB -.->|"Access Logs & Latency Metrics"| CW_Metrics
-    ALB -.->|"Target Health Status"| CW_Alarms
-    Express_App -.->|"System & App Logs"| CW_Logs
-    Express_App -.->|"Instance Metrics"| CW_Metrics
-    CW_Alarms -.->|"Trigger ASG Scale In / Out"| Express_App
-
-    %% Styling Classes
-    class Clients clientBox;
-    class PublicSubnets subnetBox;
-    class AppSubnets subnetBox;
-    class ASG_Group computeBox;
-    class VPC vpcBox;
-    class Monitoring monitorBox;
-    class AWSCloud awsBox;
-    class ExternalServices externalBox;
-    class ActiveMirror mirrorBox;
-```
+<p align="center">
+  <img src="./assets/aws-architecture.png" alt="POKÉVAULT LEGENDS AWS Cloud Production Architecture" width="100%" />
+</p>
 
 ---
 
