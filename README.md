@@ -57,48 +57,40 @@ flowchart TD
     classDef awsBox fill:#232F3E,stroke:#FF9900,stroke-width:2px,color:#FFFFFF;
     classDef clientBox fill:#1E293B,stroke:#38BDF8,stroke-width:2px,color:#FFFFFF;
     classDef vpcBox fill:#0F172A,stroke:#0EA5E9,stroke-width:2px,stroke-dasharray: 5 5,color:#38BDF8;
-    classDef asgBox fill:#18181B,stroke:#F59E0B,stroke-width:2px,color:#FFFFFF;
+    classDef computeBox fill:#18181B,stroke:#F59E0B,stroke-width:2px,color:#FFFFFF;
     classDef monitorBox fill:#1E1B4B,stroke:#818CF8,stroke-width:2px,color:#FFFFFF;
     classDef externalBox fill:#064E3B,stroke:#10B981,stroke-width:2px,color:#FFFFFF;
     classDef mirrorBox fill:#134E4A,stroke:#14B8A6,stroke-width:2px,color:#FFFFFF;
 
-    subgraph Clients ["🌐 User & Client Layer"]
+    subgraph Clients ["🌐 User & Client Access"]
         User["👥 Web & Mobile Browsers<br/>(Global Users)"]
     end
     class Clients clientBox;
 
-    subgraph AWSCloud ["☁️ AWS Cloud Production Infrastructure (ap-south-1 / Mumbai)"]
+    subgraph AWSCloud ["☁️ AWS Production Cloud Infrastructure (ap-south-1 / Mumbai)"]
         
         subgraph Ingress ["Public Ingress & Routing"]
             IGW["🌐 Internet Gateway"]
-            ALB["⚖️ AWS Application Load Balancer (ALB)<br/><code>pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com</code><br/>• HTTP (80) & HTTPS (443) Listeners<br/>• Health Probes via /api/health<br/>• Cross-Zone Load Balancing"]
+            ALB["⚖️ AWS Application Load Balancer (ALB)<br/>pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com<br/>• HTTP (80) & HTTPS (443) Listeners<br/>• Health Probes via /api/health<br/>• Cross-Zone Load Balancing"]
         end
         class Ingress awsBox;
 
         subgraph VPC ["🛡️ Amazon Virtual Private Cloud (VPC)"]
             
-            subgraph SecurityGroup ["🔒 Security Groups & Subnets"]
-                subgraph ASG ["🔄 AWS Auto Scaling Group (ASG) & Target Group (Port: 5001)"]
-                    EC2["🖥️ Amazon EC2 Compute Instances<br/>(Ubuntu LTS / Node.js 18+ Runtime)"]
-                    Systemd["⚙️ systemd Daemon Manager<br/>(Auto-Restart & Process Supervision)"]
-                    
-                    subgraph ExpressCore ["⚡ POKÉVAULT Self-Contained Express Service (0.0.0.0:5001)"]
-                        StaticEngine["📁 Vite SPA Static Server<br/>(dist/ & public/ served by Express — No S3)"]
-                        APIEngine["🔌 Full REST API Router<br/>(/api/cards, /api/orders, /api/paypal — No Lambda)"]
-                        PriceValidator["🛡️ Server-Side Price Verification<br/>(Anti-Cart Tamper Security)"]
-                        DrainHandler["🛑 Graceful Drain Handler<br/>(SIGTERM / ASG Scale-In 10s Window)"]
-                    end
-                end
-                class ASG asgBox;
+            subgraph ASG_Group ["🔄 AWS Auto Scaling Group (ASG) - Target Group Port: 5001"]
+                EC2_Node["🖥️ Amazon EC2 Instances<br/>(Ubuntu LTS / Node.js 18+ Runtime)"]
+                Systemd_Daemon["⚙️ systemd Service Daemon<br/>(Auto-Restart & Process Supervision)"]
+                Express_App["⚡ POKÉVAULT Express App (0.0.0.0:5001)<br/>• Vite SPA Static Server (dist/ & public/ — No S3)<br/>• REST API Router (/api/cards, /orders — No Lambda)<br/>• Server-Side Price Verification<br/>• SIGTERM 10s Graceful Drain Handler"]
             end
-            class SecurityGroup vpcBox;
+            class ASG_Group computeBox;
+
         end
         class VPC vpcBox;
 
         subgraph Monitoring ["📊 AWS CloudWatch Observability & Monitoring"]
-            CW_Metrics["📈 Amazon CloudWatch Metrics<br/>• ALB RequestCount & TargetResponseTime<br/>• HTTP 4XX / 5XX Error Rates<br/>• EC2 CPU & Memory Utilization"]
-            CW_Logs["📜 CloudWatch Logs / journald<br/>• Express Server Output (stdout/stderr)<br/>• ALB Ingress Access Logs"]
-            CW_Alarms["🚨 CloudWatch Alarms & Dynamic Scaling<br/>• Scale-Out on High CPU / Latency<br/>• Unhealthy Host Detection & Auto-Healing"]
+            CW_Metrics["📈 CloudWatch Metrics<br/>• ALB RequestCount & Latency<br/>• HTTP 4XX / 5XX Error Rates<br/>• EC2 CPU & Memory Utilization"]
+            CW_Logs["📜 CloudWatch Logs & journald<br/>• Express Server stdout/stderr<br/>• ALB Ingress Access Logs"]
+            CW_Alarms["🚨 CloudWatch Alarms & Scaling<br/>• Auto Scaling Scale-Out on High CPU<br/>• Target Health Failure Alerts"]
         end
         class Monitoring monitorBox;
 
@@ -116,33 +108,27 @@ flowchart TD
     end
     class ActiveMirror mirrorBox;
 
-    %% Routing Flows
+    %% Client Routing
     User -->|HTTPS / HTTP Traffic| IGW
     User -.->|Zero-Cost Staging Demo| Netlify
     IGW --> ALB
 
-    %% ALB to ASG Compute
-    ALB -->|Forward to ASG Target Group (Port 5001)| EC2
-    ALB -->|Health Probe: GET /api/health| APIEngine
-    EC2 --> Systemd
-    Systemd --> ExpressCore
-
-    %% Internal Application Execution
-    ExpressCore --> StaticEngine
-    ExpressCore --> APIEngine
-    APIEngine --> PriceValidator
-    ExpressCore --> DrainHandler
+    %% ALB to Compute
+    ALB -->|Forward to ASG Target Group (Port 5001)| EC2_Node
+    ALB -->|Health Probe: GET /api/health| Express_App
+    EC2_Node --> Systemd_Daemon
+    Systemd_Daemon --> Express_App
 
     %% Data & Gateway Integrations
-    PriceValidator -->|Encrypted SQL Connection| SupabaseDB
-    APIEngine -->|REST Payment Auth| PayPalAPI
+    Express_App -->|Encrypted SQL Connection| SupabaseDB
+    Express_App -->|REST Payment Auth| PayPalAPI
 
     %% Monitoring Telemetry & Scaling
     ALB -.->|Access Logs & Latency Metrics| CW_Metrics
     ALB -.->|Target Health Status| CW_Alarms
-    EC2 -.->|Instance Metrics & Logs| CW_Metrics
-    ExpressCore -.->|Stream App Stdout/Stderr| CW_Logs
-    CW_Alarms -.->|Trigger Dynamic Scale In/Out| ASG
+    EC2_Node -.->|Instance Metrics & Logs| CW_Metrics
+    Express_App -.->|Stream App Stdout/Stderr| CW_Logs
+    CW_Alarms -.->|Trigger ASG Scale In/Out| EC2_Node
 ```
 
 ---
