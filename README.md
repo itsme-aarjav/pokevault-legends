@@ -52,7 +52,7 @@ The production deployment of **POKÉVAULT LEGENDS** is engineered on **Amazon We
 ## 🏗️ System Architecture & Data Flow
 
 <p align="center">
-  <img src="./assets/aws-architecture.png" alt="POKÉVAULT LEGENDS AWS Cloud Production Architecture" width="100%" />
+  <img src="./assets/aws-architecture.svg" alt="POKÉVAULT LEGENDS AWS Cloud Production Architecture" width="100%" />
 </p>
 
 ---
