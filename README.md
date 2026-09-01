@@ -63,24 +63,24 @@ flowchart TD
     classDef mirrorBox fill:#134E4A,stroke:#14B8A6,stroke-width:2px,color:#FFFFFF;
 
     subgraph Clients ["🌐 User & Client Access"]
-        User["👥 Web & Mobile Browsers<br/>(Global Users)"]
+        User["👥 Web & Mobile Browsers<br/>Global Users"]
     end
     class Clients clientBox;
 
-    subgraph AWSCloud ["☁️ AWS Production Cloud Infrastructure (ap-south-1 / Mumbai)"]
+    subgraph AWSCloud ["☁️ AWS Production Cloud Infrastructure: ap-south-1 / Mumbai"]
         
         subgraph Ingress ["Public Ingress & Routing"]
             IGW["🌐 Internet Gateway"]
-            ALB["⚖️ AWS Application Load Balancer (ALB)<br/>pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com<br/>• HTTP (80) & HTTPS (443) Listeners<br/>• Health Probes via /api/health<br/>• Cross-Zone Load Balancing"]
+            ALB["⚖️ AWS Application Load Balancer: ALB<br/>pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com<br/>• HTTP 80 & HTTPS 443 Listeners<br/>• Health Probes via /api/health<br/>• Cross-Zone Load Balancing"]
         end
         class Ingress awsBox;
 
-        subgraph VPC ["🛡️ Amazon Virtual Private Cloud (VPC)"]
+        subgraph VPC ["🛡️ Amazon Virtual Private Cloud: VPC"]
             
-            subgraph ASG_Group ["🔄 AWS Auto Scaling Group (ASG) - Target Group Port: 5001"]
-                EC2_Node["🖥️ Amazon EC2 Instances<br/>(Ubuntu LTS / Node.js 18+ Runtime)"]
-                Systemd_Daemon["⚙️ systemd Service Daemon<br/>(Auto-Restart & Process Supervision)"]
-                Express_App["⚡ POKÉVAULT Express App (0.0.0.0:5001)<br/>• Vite SPA Static Server (dist/ & public/ — No S3)<br/>• REST API Router (/api/cards, /orders — No Lambda)<br/>• Server-Side Price Verification<br/>• SIGTERM 10s Graceful Drain Handler"]
+            subgraph ASG_Group ["🔄 AWS Auto Scaling Group: ASG - Target Group Port 5001"]
+                EC2_Node["🖥️ Amazon EC2 Instances<br/>Ubuntu LTS / Node.js 18+ Runtime"]
+                Systemd_Daemon["⚙️ systemd Service Daemon<br/>Auto-Restart & Process Supervision"]
+                Express_App["⚡ POKÉVAULT Express App: 0.0.0.0:5001<br/>• Vite SPA Static Server: dist & public - No S3<br/>• REST API Router: /api/cards, /orders - No Lambda<br/>• Server-Side Price Verification<br/>• SIGTERM 10s Graceful Drain Handler"]
             end
             class ASG_Group computeBox;
 
@@ -98,37 +98,37 @@ flowchart TD
     class AWSCloud awsBox;
 
     subgraph ExternalServices ["🗄️ Managed Data & Payment Gateways"]
-        SupabaseDB[("🗄️ Supabase PostgreSQL<br/>(Master Catalog, Orders & Inventory Tables)<br/>• TLS Encrypted Queries<br/>• Row Level Security (RLS)")]
-        PayPalAPI["💳 PayPal Developer API<br/>(Payment Capture & Order Verification)"]
+        SupabaseDB[("🗄️ Supabase PostgreSQL<br/>Master Catalog, Orders & Inventory Tables<br/>• TLS Encrypted Queries<br/>• Row Level Security: RLS")]
+        PayPalAPI["💳 PayPal Developer API<br/>Payment Capture & Order Verification"]
     end
     class ExternalServices externalBox;
 
-    subgraph ActiveMirror ["⚡ Continuous Deployment Mirror (Cost-Optimized)"]
-        Netlify["🌐 Netlify Global CDN + Serverless Functions<br/>(Zero-Idle-Cost Active Preview)"]
+    subgraph ActiveMirror ["⚡ Continuous Deployment Mirror: Cost-Optimized"]
+        Netlify["🌐 Netlify Global CDN + Serverless Functions<br/>Zero-Idle-Cost Active Preview"]
     end
     class ActiveMirror mirrorBox;
 
     %% Client Routing
-    User -->|HTTPS / HTTP Traffic| IGW
-    User -.->|Zero-Cost Staging Demo| Netlify
+    User -->|"HTTPS / HTTP Traffic"| IGW
+    User -.->|"Zero-Cost Staging Demo"| Netlify
     IGW --> ALB
 
     %% ALB to Compute
-    ALB -->|Forward to ASG Target Group (Port 5001)| EC2_Node
-    ALB -->|Health Probe: GET /api/health| Express_App
+    ALB -->|"Forward to ASG Target Group: Port 5001"| EC2_Node
+    ALB -->|"Health Probe: GET /api/health"| Express_App
     EC2_Node --> Systemd_Daemon
     Systemd_Daemon --> Express_App
 
     %% Data & Gateway Integrations
-    Express_App -->|Encrypted SQL Connection| SupabaseDB
-    Express_App -->|REST Payment Auth| PayPalAPI
+    Express_App -->|"Encrypted SQL Connection"| SupabaseDB
+    Express_App -->|"REST Payment Auth"| PayPalAPI
 
     %% Monitoring Telemetry & Scaling
-    ALB -.->|Access Logs & Latency Metrics| CW_Metrics
-    ALB -.->|Target Health Status| CW_Alarms
-    EC2_Node -.->|Instance Metrics & Logs| CW_Metrics
-    Express_App -.->|Stream App Stdout/Stderr| CW_Logs
-    CW_Alarms -.->|Trigger ASG Scale In/Out| EC2_Node
+    ALB -.->|"Access Logs & Latency Metrics"| CW_Metrics
+    ALB -.->|"Target Health Status"| CW_Alarms
+    EC2_Node -.->|"Instance Metrics & Logs"| CW_Metrics
+    Express_App -.->|"Stream App Stdout/Stderr"| CW_Logs
+    CW_Alarms -.->|"Trigger ASG Scale In / Out"| EC2_Node
 ```
 
 ---
