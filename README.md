@@ -53,82 +53,82 @@ The production deployment of **POKÉVAULT LEGENDS** is engineered on **Amazon We
 
 ```mermaid
 flowchart TD
-    %% Styling Classes
-    classDef awsBox fill:#232F3E,stroke:#FF9900,stroke-width:2px,color:#FFFFFF;
-    classDef clientBox fill:#1E293B,stroke:#38BDF8,stroke-width:2px,color:#FFFFFF;
-    classDef vpcBox fill:#0F172A,stroke:#0EA5E9,stroke-width:2px,stroke-dasharray: 5 5,color:#38BDF8;
-    classDef computeBox fill:#18181B,stroke:#F59E0B,stroke-width:2px,color:#FFFFFF;
-    classDef monitorBox fill:#1E1B4B,stroke:#818CF8,stroke-width:2px,color:#FFFFFF;
-    classDef externalBox fill:#064E3B,stroke:#10B981,stroke-width:2px,color:#FFFFFF;
-    classDef mirrorBox fill:#134E4A,stroke:#14B8A6,stroke-width:2px,color:#FFFFFF;
+    %% Professional Styling Classes (Corporate Light Theme)
+    classDef awsBox fill:#F8F9FA,stroke:#232F3E,stroke-width:2px,color:#212529;
+    classDef clientBox fill:#FFFFFF,stroke:#6C757D,stroke-width:2px,color:#212529;
+    classDef vpcBox fill:#F8F9FA,stroke:#0073BB,stroke-width:2px,stroke-dasharray: 5 5,color:#0073BB;
+    classDef subnetBox fill:#FFFFFF,stroke:#0073BB,stroke-width:1.5px,color:#0073BB;
+    classDef computeBox fill:#FEF5E6,stroke:#D86613,stroke-width:2px,color:#212529;
+    classDef monitorBox fill:#FAF5F7,stroke:#CC2264,stroke-width:2px,color:#212529;
+    classDef externalBox fill:#E6F4EA,stroke:#1E8E3E,stroke-width:2px,color:#212529;
+    classDef mirrorBox fill:#F0F4F8,stroke:#1A73E8,stroke-width:2px,color:#212529;
 
-    subgraph Clients ["🌐 User & Client Access"]
-        User["👥 Web & Mobile Browsers<br/>Global Users"]
+    subgraph Clients ["User & Client Access"]
+        User["Web & Mobile Browsers<br/>Global Users"]
     end
-    class Clients clientBox;
 
-    subgraph AWSCloud ["☁️ AWS Production Cloud Infrastructure: ap-south-1 / Mumbai"]
+    subgraph AWSCloud ["AWS Production Cloud Infrastructure: ap-south-1 / Mumbai"]
         
-        subgraph Ingress ["Public Ingress & Routing"]
-            IGW["🌐 Internet Gateway"]
-            ALB["⚖️ AWS Application Load Balancer: ALB<br/>pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com<br/>• HTTP 80 & HTTPS 443 Listeners<br/>• Health Probes via /api/health<br/>• Cross-Zone Load Balancing"]
-        end
-        class Ingress awsBox;
-
-        subgraph VPC ["🛡️ Amazon Virtual Private Cloud: VPC"]
+        subgraph VPC ["Amazon Virtual Private Cloud: VPC"]
             
-            subgraph ASG_Group ["🔄 AWS Auto Scaling Group: ASG - Target Group Port 5001"]
-                EC2_Node["🖥️ Amazon EC2 Instances<br/>Ubuntu LTS / Node.js 18+ Runtime"]
-                Systemd_Daemon["⚙️ systemd Service Daemon<br/>Auto-Restart & Process Supervision"]
-                Express_App["⚡ POKÉVAULT Express App: 0.0.0.0:5001<br/>• Vite SPA Static Server: dist & public - No S3<br/>• REST API Router: /api/cards, /orders - No Lambda<br/>• Server-Side Price Verification<br/>• SIGTERM 10s Graceful Drain Handler"]
+            subgraph PublicSubnets ["Public Ingress Subnets: Multi-AZ"]
+                ALB["AWS Application Load Balancer: ALB<br/>pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com<br/>• HTTP 80 & HTTPS 443 Listeners<br/>• Health Checks via /api/health<br/>• Cross-Zone Traffic Routing"]
             end
-            class ASG_Group computeBox;
+
+            subgraph AppSubnets ["Application Compute Subnets: Target Group Port 5001"]
+                subgraph ASG_Group ["AWS Auto Scaling Group: ASG"]
+                    Express_App["Amazon EC2 Instances: Node.js 18+ & systemd<br/>POKÉVAULT Production Service (0.0.0.0:5001)<br/>• Vite SPA Static File Server (dist/ & public/)<br/>• Express REST APIs (/api/cards, /orders, /paypal)<br/>• Server-Side Price Verification Engine<br/>• SIGTERM 10s Connection Draining Handler"]
+                end
+            end
 
         end
-        class VPC vpcBox;
 
-        subgraph Monitoring ["📊 AWS CloudWatch Observability & Monitoring"]
-            CW_Metrics["📈 CloudWatch Metrics<br/>• ALB RequestCount & Latency<br/>• HTTP 4XX / 5XX Error Rates<br/>• EC2 CPU & Memory Utilization"]
-            CW_Logs["📜 CloudWatch Logs & journald<br/>• Express Server stdout/stderr<br/>• ALB Ingress Access Logs"]
-            CW_Alarms["🚨 CloudWatch Alarms & Scaling<br/>• Auto Scaling Scale-Out on High CPU<br/>• Target Health Failure Alerts"]
+        subgraph Monitoring ["AWS CloudWatch Observability & Monitoring"]
+            CW_Metrics["CloudWatch Metrics<br/>• ALB RequestCount & Target Latency<br/>• HTTP 4XX / 5XX Error Rates<br/>• EC2 CPU & Memory Utilization"]
+            CW_Logs["CloudWatch Logs & journald<br/>• Express Application stdout/stderr<br/>• ALB Ingress Access Logs"]
+            CW_Alarms["CloudWatch Alarms & Scaling<br/>• Triggers ASG Scale-Out on High Load<br/>• Target Health Failure Alerts"]
         end
-        class Monitoring monitorBox;
 
     end
-    class AWSCloud awsBox;
 
-    subgraph ExternalServices ["🗄️ Managed Data & Payment Gateways"]
-        SupabaseDB[("🗄️ Supabase PostgreSQL<br/>Master Catalog, Orders & Inventory Tables<br/>• TLS Encrypted Queries<br/>• Row Level Security: RLS")]
-        PayPalAPI["💳 PayPal Developer API<br/>Payment Capture & Order Verification"]
+    subgraph ExternalServices ["Managed Data & Payment Gateways"]
+        SupabaseDB[("Supabase PostgreSQL Database<br/>Master Catalog, Orders & Inventory Tables<br/>• TLS Encrypted Queries<br/>• Row Level Security: RLS")]
+        PayPalAPI["PayPal Developer API<br/>Payment Capture & Order Verification"]
     end
-    class ExternalServices externalBox;
 
-    subgraph ActiveMirror ["⚡ Continuous Deployment Mirror: Cost-Optimized"]
-        Netlify["🌐 Netlify Global CDN + Serverless Functions<br/>Zero-Idle-Cost Active Preview"]
+    subgraph ActiveMirror ["Continuous Deployment Mirror: Cost-Optimized"]
+        Netlify["Netlify Global CDN + Serverless Functions<br/>Zero-Idle-Cost Active Preview"]
     end
-    class ActiveMirror mirrorBox;
 
     %% Client Routing
-    User -->|"HTTPS / HTTP Traffic"| IGW
-    User -.->|"Zero-Cost Staging Demo"| Netlify
-    IGW --> ALB
+    User -->|"HTTPS / HTTP Traffic"| ALB
+    User -.->|"Zero-Cost Active Mirror"| Netlify
 
-    %% ALB to Compute
-    ALB -->|"Forward to ASG Target Group: Port 5001"| EC2_Node
+    %% ALB to Compute Inside VPC
+    ALB -->|"Forward Ingress Traffic: Port 5001"| Express_App
     ALB -->|"Health Probe: GET /api/health"| Express_App
-    EC2_Node --> Systemd_Daemon
-    Systemd_Daemon --> Express_App
 
     %% Data & Gateway Integrations
-    Express_App -->|"Encrypted SQL Connection"| SupabaseDB
-    Express_App -->|"REST Payment Auth"| PayPalAPI
+    Express_App -->|"Encrypted SQL Queries"| SupabaseDB
+    Express_App -->|"Payment Authorization"| PayPalAPI
 
-    %% Monitoring Telemetry & Scaling
+    %% Observability Telemetry & Scaling
     ALB -.->|"Access Logs & Latency Metrics"| CW_Metrics
     ALB -.->|"Target Health Status"| CW_Alarms
-    EC2_Node -.->|"Instance Metrics & Logs"| CW_Metrics
-    Express_App -.->|"Stream App Stdout/Stderr"| CW_Logs
-    CW_Alarms -.->|"Trigger ASG Scale In / Out"| EC2_Node
+    Express_App -.->|"System & App Logs"| CW_Logs
+    Express_App -.->|"Instance Metrics"| CW_Metrics
+    CW_Alarms -.->|"Trigger ASG Scale In / Out"| Express_App
+
+    %% Styling Classes
+    class Clients clientBox;
+    class PublicSubnets subnetBox;
+    class AppSubnets subnetBox;
+    class ASG_Group computeBox;
+    class VPC vpcBox;
+    class Monitoring monitorBox;
+    class AWSCloud awsBox;
+    class ExternalServices externalBox;
+    class ActiveMirror mirrorBox;
 ```
 
 ---
