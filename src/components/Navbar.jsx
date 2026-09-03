@@ -137,12 +137,44 @@ export default function Navbar({ onOpenCart }) {
         <nav class="nav-right">
           <ul class="nav-links">
             <li><Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}>Home</Link></li>
-            <li><Link href="/shop" className={`nav-link ${pathname === '/shop' ? 'active' : ''}`}>Shop All</Link></li>
-            <li><Link href="/categories" className={`nav-link ${pathname === '/categories' ? 'active' : ''}`}>Categories</Link></li>
-            <li><Link href="/wishlist" className={`nav-link ${pathname === '/wishlist' ? 'active' : ''}`}>Wishlist</Link></li>
+            <li><Link href="/shop" className={`nav-link ${pathname === '/shop' ? 'active' : ''}`}>Shop</Link></li>
+            <li><Link href="/categories" className={`nav-link ${pathname === '/categories' ? 'active' : ''}`}>All Categories</Link></li>
+            <li className="nav-item-dropdown">
+              <button type="button" className={`nav-dropdown-trigger ${['/verify', '/rewards', '/mystery-vault', '/blog'].includes(pathname) ? 'active' : ''}`}>
+                Vault Features <span className="nav-dropdown-chevron">▼</span>
+              </button>
+              <div className="nav-dropdown-menu" role="menu">
+                <Link href="/verify" className={`nav-dropdown-item ${pathname === '/verify' ? 'active' : ''}`}>
+                  <span className="nav-dropdown-icon">🔍</span>
+                  <div className="nav-dropdown-text">
+                    <span className="nav-dropdown-title">Verify Certs</span>
+                    <span className="nav-dropdown-desc">PSA &amp; BGS Forensic Audit</span>
+                  </div>
+                </Link>
+                <Link href="/mystery-vault" className={`nav-dropdown-item ${pathname === '/mystery-vault' ? 'active' : ''}`}>
+                  <span className="nav-dropdown-icon">🎁</span>
+                  <div className="nav-dropdown-text">
+                    <span className="nav-dropdown-title">Mystery Vault</span>
+                    <span className="nav-dropdown-desc">Live Box Simulator &amp; Drops</span>
+                  </div>
+                </Link>
+                <Link href="/blog" className={`nav-dropdown-item ${pathname === '/blog' ? 'active' : ''}`}>
+                  <span className="nav-dropdown-icon">📰</span>
+                  <div className="nav-dropdown-text">
+                    <span className="nav-dropdown-title">The Journal</span>
+                    <span className="nav-dropdown-desc">Market News &amp; Master Guides</span>
+                  </div>
+                </Link>
+                <Link href="/rewards" className={`nav-dropdown-item ${pathname === '/rewards' ? 'active' : ''}`}>
+                  <span className="nav-dropdown-icon">🪙</span>
+                  <div className="nav-dropdown-text">
+                    <span className="nav-dropdown-title">VIP Rewards</span>
+                    <span className="nav-dropdown-desc">PokéCoins &amp; Collector Perks</span>
+                  </div>
+                </Link>
+              </div>
+            </li>
             <li><Link href="/about" className={`nav-link ${pathname === '/about' ? 'active' : ''}`}>About</Link></li>
-            <li><Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>Contact</Link></li>
-            <li><Link href="/admin" className="nav-link" style={{ color: 'var(--accent-red)', fontWeight: 700 }}>Admin Vault</Link></li>
           </ul>
 
           <button className="mobile-nav-toggle" onClick={() => setMobileMenuOpen(true)} aria-label="Open Mobile Menu">
@@ -167,12 +199,17 @@ export default function Navbar({ onOpenCart }) {
           <ul class="mobile-nav-links">
             <li><Link href="/" className={`mobile-nav-link ${pathname === '/' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>⚡ Home</Link></li>
             <li><Link href="/shop" className={`mobile-nav-link ${pathname === '/shop' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>🛒 Shop All Merchandise</Link></li>
-            <li><Link href="/categories" className={`mobile-nav-link ${pathname === '/categories' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>🏷️ Categories Directory</Link></li>
-            <li><Link href="/wishlist" className={`mobile-nav-link ${pathname === '/wishlist' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>❤️ My Saved Wishlist</Link></li>
-            <li><Link href="/cart" className={`mobile-nav-link ${pathname === '/cart' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>📦 Shopping Cart</Link></li>
+            <li><Link href="/categories" className={`mobile-nav-link ${pathname === '/categories' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>🏷️ All Categories</Link></li>
+            <li className="mobile-nav-divider"><span>VAULT FEATURES</span></li>
+            <li><Link href="/verify" className={`mobile-nav-link ${pathname === '/verify' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>🔍 Verify PSA Slabs</Link></li>
+            <li><Link href="/mystery-vault" className={`mobile-nav-link ${pathname === '/mystery-vault' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>🎁 Mystery Vault Simulator</Link></li>
+            <li><Link href="/blog" className={`mobile-nav-link ${pathname === '/blog' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>📰 The PokéVault Journal</Link></li>
+            <li><Link href="/rewards" className={`mobile-nav-link ${pathname === '/rewards' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>🪙 PokéCoins VIP Rewards</Link></li>
+            <li className="mobile-nav-divider"><span>MORE</span></li>
+            <li><Link href="/track" className={`mobile-nav-link ${pathname === '/track' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>📦 Track My Package</Link></li>
             <li><Link href="/about" className={`mobile-nav-link ${pathname === '/about' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>📜 About PokéVault</Link></li>
-            <li><Link href="/contact" className={`mobile-nav-link ${pathname === '/contact' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>📞 Contact Support</Link></li>
-            <li><Link href="/admin" className="mobile-nav-link" style={{ color: 'var(--accent-red)' }} onClick={() => setMobileMenuOpen(false)}>🔒 Admin Vault</Link></li>
+            <li><Link href="/wishlist" className={`mobile-nav-link ${pathname === '/wishlist' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>❤️ My Saved Wishlist</Link></li>
+            <li><Link href="/cart" className={`mobile-nav-link ${pathname === '/cart' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>🛍️ Shopping Cart</Link></li>
           </ul>
         </div>
       </div>
