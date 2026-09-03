@@ -47,7 +47,7 @@ export const CATEGORIES_DATA = [
     shortName: "Clothing",
     description: "Vintage Japanese pulp streetwear, embroidered hoodies, graphic tees, and jackets.",
     icon: "👕",
-    image: "",
+    image: "/assets/apparel_gengar_hoodie.png",
     count: 4,
     isFeatured: true,
     bannerColor: "linear-gradient(135deg, #8A2387 0%, #E94057 100%)"
@@ -59,7 +59,7 @@ export const CATEGORIES_DATA = [
     shortName: "Hats & Caps",
     description: "Classic Ash Ketchum trainer caps, embroidered snapbacks, and cozy winter beanies.",
     icon: "🧢",
-    image: "",
+    image: "/assets/hat_ash_ketchum.png",
     count: 3,
     isFeatured: false,
     bannerColor: "linear-gradient(135deg, #F27121 0%, #E94057 100%)"
@@ -71,7 +71,7 @@ export const CATEGORIES_DATA = [
     shortName: "Backpacks & Bags",
     description: "Loungefly mini backpacks, canvas messenger bags, and travel duffels.",
     icon: "🎒",
-    image: "",
+    image: "/assets/bag_charizard_backpack.png",
     count: 3,
     isFeatured: false,
     bannerColor: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)"
@@ -83,7 +83,7 @@ export const CATEGORIES_DATA = [
     shortName: "Toys & Games",
     description: "Monopoly Pokémon edition, 3D Nanoblock puzzles, and Poké Ball throwing blasters.",
     icon: "🎲",
-    image: "",
+    image: "/assets/toy_monopoly_kanto.png",
     count: 3,
     isFeatured: false,
     bannerColor: "linear-gradient(135deg, #fc4a1a 0%, #f7b731 100%)"
@@ -95,7 +95,7 @@ export const CATEGORIES_DATA = [
     shortName: "Pins & Pins",
     description: "Enamel gym badge pin sets, solid brass challenge coins, and metal key relics.",
     icon: "📌",
-    image: "",
+    image: "/assets/pin_kanto_badges.png",
     count: 3,
     isFeatured: true,
     bannerColor: "linear-gradient(135deg, #ee0979 0%, #ff6a00 100%)"
@@ -107,7 +107,7 @@ export const CATEGORIES_DATA = [
     shortName: "Home Decor",
     description: "Pikachu neon LED sign lamps, Gengar area rugs, and Snorlax bean bag floor cushions.",
     icon: "🏠",
-    image: "",
+    image: "/assets/decor_pikachu_neon.png",
     count: 3,
     isFeatured: true,
     bannerColor: "linear-gradient(135deg, #4776E6 0%, #8E54E9 100%)"
@@ -119,7 +119,7 @@ export const CATEGORIES_DATA = [
     shortName: "Mugs & Drinkware",
     description: "Heat-changing ceramic mugs, stainless steel water bottles, and glass tumblers.",
     icon: "☕",
-    image: "",
+    image: "/assets/mug_charizard_heat.jpg",
     count: 3,
     isFeatured: false,
     bannerColor: "linear-gradient(135deg, #00B4DB 0%, #0083B0 100%)"
@@ -131,7 +131,7 @@ export const CATEGORIES_DATA = [
     shortName: "Stationery",
     description: "Leather Pokédex journals, gel pen sets, desk mat pads, and sticky notes.",
     icon: "📝",
-    image: "",
+    image: "/assets/journal_pokedex_red.jpg",
     count: 3,
     isFeatured: false,
     bannerColor: "linear-gradient(135deg, #56CCF2 0%, #2F80ED 100%)"
@@ -143,7 +143,7 @@ export const CATEGORIES_DATA = [
     shortName: "Posters & Art",
     description: "Vintage Japanese pulp comic art canvas prints, metallic foil posters, and acrylic panels.",
     icon: "🖼️",
-    image: "/assets/charizard_comic.png",
+    image: "/assets/canvas_charizard_art.jpg",
     count: 3,
     isFeatured: true,
     bannerColor: "linear-gradient(135deg, #F2994A 0%, #F2C94C 100%)"
@@ -155,7 +155,7 @@ export const CATEGORIES_DATA = [
     shortName: "Keychains",
     description: "3D metal Poké Ball keychains, rubber mascot pendants, and neck lanyards.",
     icon: "🔑",
-    image: "",
+    image: "/assets/keychain_pokeball_spin.jpg",
     count: 3,
     isFeatured: false,
     bannerColor: "linear-gradient(135deg, #D4145A 0%, #FBB03B 100%)"
@@ -167,7 +167,7 @@ export const CATEGORIES_DATA = [
     shortName: "Phone Accessories",
     description: "MagSafe iPhone cases, Poké Ball PopSockets, and wireless charging pads.",
     icon: "📱",
-    image: "",
+    image: "/assets/phone_gengar_case.jpg",
     count: 3,
     isFeatured: false,
     bannerColor: "linear-gradient(135deg, #654ea3 0%, #eaafc8 100%)"
@@ -179,7 +179,7 @@ export const CATEGORIES_DATA = [
     shortName: "Gaming Gear",
     description: "Nintendo Switch OLED carrying cases, TCG playmats, and Pro Controller grips.",
     icon: "🎮",
-    image: "",
+    image: "/assets/playmat_rayquaza_tcg.jpg",
     count: 3,
     isFeatured: true,
     bannerColor: "linear-gradient(135deg, #000000 0%, #434343 100%)"
@@ -191,7 +191,7 @@ export const CATEGORIES_DATA = [
     shortName: "Books & Guides",
     description: "Hardcover Pokédex master guides, vintage manga box sets, and official artbooks.",
     icon: "📚",
-    image: "/assets/pikachu_comic.png",
+    image: "/assets/book_art_of_pokemon.jpg",
     count: 3,
     isFeatured: false,
     bannerColor: "linear-gradient(135deg, #EB5757 0%, #000000 100%)"
@@ -203,7 +203,7 @@ export const CATEGORIES_DATA = [
     shortName: "Jewelry",
     description: "Sterling silver pendant necklaces, Poké Ball signet rings, and collector watches.",
     icon: "💍",
-    image: "",
+    image: "/assets/jewel_pikachu_pendant.png",
     count: 3,
     isFeatured: false,
     bannerColor: "linear-gradient(135deg, #B2FEFA 0%, #0ED2F7 100%)"
@@ -215,7 +215,7 @@ export const CATEGORIES_DATA = [
     shortName: "Gift Boxes",
     description: "Master Vault mystery gift boxes, birthday collector bundles, and surprise chests.",
     icon: "🎁",
-    image: "",
+    image: "/assets/gift_kanto_box.jpg",
     count: 3,
     isFeatured: true,
     bannerColor: "linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%)"
