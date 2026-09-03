@@ -59,10 +59,42 @@ export function renderNavbar(activePage = 'home') {
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link ${activePage === 'home' ? 'active' : ''}">Home</a></li>
           <li><a href="shop.html" class="nav-link ${activePage === 'shop' ? 'active' : ''}">Shop</a></li>
-          <li><a href="verify.html" class="nav-link ${activePage === 'verify' ? 'active' : ''}">Verify 🔍</a></li>
-          <li><a href="rewards.html" class="nav-link ${activePage === 'rewards' ? 'active' : ''}">Rewards 🪙</a></li>
-          <li><a href="mystery-vault.html" class="nav-link ${activePage === 'mystery' ? 'active' : ''}">Mystery 🎁</a></li>
-          <li><a href="blog.html" class="nav-link ${activePage === 'blog' ? 'active' : ''}">Journal 📰</a></li>
+          <li><a href="categories.html" class="nav-link ${activePage === 'categories' ? 'active' : ''}">All Categories</a></li>
+          <li class="nav-item-dropdown" id="navFeaturesDropdown">
+            <button type="button" class="nav-dropdown-trigger ${['verify', 'rewards', 'mystery', 'blog'].includes(activePage) ? 'active' : ''}" id="featuresDropdownBtn" aria-haspopup="true" aria-expanded="false">
+              Vault Features <span class="nav-dropdown-chevron">▼</span>
+            </button>
+            <div class="nav-dropdown-menu" id="featuresDropdownMenu" role="menu">
+              <a href="verify.html" class="nav-dropdown-item ${activePage === 'verify' ? 'active' : ''}" role="menuitem">
+                <span class="nav-dropdown-icon">🔍</span>
+                <div class="nav-dropdown-text">
+                  <span class="nav-dropdown-title">Verify Certs</span>
+                  <span class="nav-dropdown-desc">PSA &amp; BGS Forensic Audit</span>
+                </div>
+              </a>
+              <a href="mystery-vault.html" class="nav-dropdown-item ${activePage === 'mystery' ? 'active' : ''}" role="menuitem">
+                <span class="nav-dropdown-icon">🎁</span>
+                <div class="nav-dropdown-text">
+                  <span class="nav-dropdown-title">Mystery Vault</span>
+                  <span class="nav-dropdown-desc">Live Box Simulator &amp; Drops</span>
+                </div>
+              </a>
+              <a href="blog.html" class="nav-dropdown-item ${activePage === 'blog' ? 'active' : ''}" role="menuitem">
+                <span class="nav-dropdown-icon">📰</span>
+                <div class="nav-dropdown-text">
+                  <span class="nav-dropdown-title">The Journal</span>
+                  <span class="nav-dropdown-desc">Market News &amp; Master Guides</span>
+                </div>
+              </a>
+              <a href="rewards.html" class="nav-dropdown-item ${activePage === 'rewards' ? 'active' : ''}" role="menuitem">
+                <span class="nav-dropdown-icon">🪙</span>
+                <div class="nav-dropdown-text">
+                  <span class="nav-dropdown-title">VIP Rewards</span>
+                  <span class="nav-dropdown-desc">PokéCoins &amp; Collector Perks</span>
+                </div>
+              </a>
+            </div>
+          </li>
           <li><a href="about.html" class="nav-link ${activePage === 'about' ? 'active' : ''}">About</a></li>
         </ul>
 
@@ -83,16 +115,18 @@ export function renderNavbar(activePage = 'home') {
           <div class="logo-stamp">
             <div class="logo-badge">POKÉVAULT</div>
           </div>
-          <button class="mobile-nav-close" id="closeMobileNavBtn">&times;</button>
+          <button class="mobile-nav-close" id="closeMobileNavBtn" aria-label="Close Mobile Menu">&times;</button>
         </div>
         <ul class="mobile-nav-links">
           <li><a href="index.html" class="mobile-nav-link ${activePage === 'home' ? 'active' : ''}">⚡ Home</a></li>
           <li><a href="shop.html" class="mobile-nav-link ${activePage === 'shop' ? 'active' : ''}">🛒 Shop All Merchandise</a></li>
-          <li><a href="categories.html" class="mobile-nav-link ${activePage === 'categories' ? 'active' : ''}">🏷️ Categories Directory</a></li>
+          <li><a href="categories.html" class="mobile-nav-link ${activePage === 'categories' ? 'active' : ''}">🏷️ All Categories</a></li>
+          <li class="mobile-nav-divider"><span>VAULT FEATURES</span></li>
           <li><a href="verify.html" class="mobile-nav-link ${activePage === 'verify' ? 'active' : ''}">🔍 Verify PSA Slabs</a></li>
-          <li><a href="rewards.html" class="mobile-nav-link ${activePage === 'rewards' ? 'active' : ''}">🪙 PokéCoins VIP Rewards</a></li>
           <li><a href="mystery-vault.html" class="mobile-nav-link ${activePage === 'mystery' ? 'active' : ''}">🎁 Mystery Vault Simulator</a></li>
           <li><a href="blog.html" class="mobile-nav-link ${activePage === 'blog' ? 'active' : ''}">📰 The PokéVault Journal</a></li>
+          <li><a href="rewards.html" class="mobile-nav-link ${activePage === 'rewards' ? 'active' : ''}">🪙 PokéCoins VIP Rewards</a></li>
+          <li class="mobile-nav-divider"><span>MORE</span></li>
           <li><a href="track.html" class="mobile-nav-link ${activePage === 'track' ? 'active' : ''}">📦 Track My Package</a></li>
           <li><a href="about.html" class="mobile-nav-link ${activePage === 'about' ? 'active' : ''}">📜 About PokéVault</a></li>
           <li><a href="wishlist.html" class="mobile-nav-link ${activePage === 'wishlist' ? 'active' : ''}">❤️ My Saved Wishlist</a></li>
@@ -180,6 +214,32 @@ export function initNavbarEvents() {
     document.addEventListener('click', (e) => {
       if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
         searchDropdown.style.display = 'none';
+      }
+    });
+  }
+
+  // Vault Features Dropdown Click & Accessibility Handlers
+  const featuresDropdownBtn = document.getElementById('featuresDropdownBtn');
+  const navFeaturesDropdown = document.getElementById('navFeaturesDropdown');
+
+  if (featuresDropdownBtn && navFeaturesDropdown) {
+    featuresDropdownBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = navFeaturesDropdown.classList.toggle('open');
+      featuresDropdownBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!navFeaturesDropdown.contains(e.target)) {
+        navFeaturesDropdown.classList.remove('open');
+        featuresDropdownBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        navFeaturesDropdown.classList.remove('open');
+        featuresDropdownBtn.setAttribute('aria-expanded', 'false');
       }
     });
   }
