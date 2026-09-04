@@ -1,4 +1,4 @@
-# ⚡ POKÉVAULT LEGENDS — 3D Pokémon Collectibles Marketplace
+# POKÉVAULT LEGENDS — 3D Pokémon Collectibles Marketplace
 
 [![AWS Cloud](https://img.shields.io/badge/AWS-ALB%20%7C%20EC2%20%7C%20VPC-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
 [![Express.js](https://img.shields.io/badge/Express.js-Backend%20API-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
@@ -14,7 +14,7 @@ Engineered with a **Retro-Neubrutalist design system**, real-time **WebGL 3D hol
 
 ---
 
-## ☁️ Primary Cloud Architecture (AWS)
+## Primary Cloud Architecture (AWS)
 
 The production deployment of **POKÉVAULT LEGENDS** is engineered on **Amazon Web Services (AWS)** in the `ap-south-1` (Asia Pacific - Mumbai) region. The system utilizes a decoupled monolithic deployment model where a container/systemd-managed Node.js Express service serves both the high-performance Vite SPA static build and the secure REST API behind an **AWS Application Load Balancer (ALB)**.
 
@@ -49,7 +49,7 @@ The production deployment of **POKÉVAULT LEGENDS** is engineered on **Amazon We
 
 ---
 
-## 🏗️ System Architecture & Data Flow
+## System Architecture & Data Flow
 
 <p align="center">
   <img src="./assets/aws-architecture.svg" alt="POKÉVAULT LEGENDS AWS Cloud Production Architecture" width="100%" />
@@ -57,7 +57,7 @@ The production deployment of **POKÉVAULT LEGENDS** is engineered on **Amazon We
 
 ---
 
-## 🛠️ AWS Services & Infrastructure Components
+## AWS Services & Infrastructure Components
 
 ### 1. AWS Application Load Balancer (ALB)
 - **ALB Endpoint**: `http://pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com`
@@ -101,7 +101,7 @@ The production deployment of **POKÉVAULT LEGENDS** is engineered on **Amazon We
 
 ---
 
-## 🚀 AWS Deployment Workflow
+## AWS Deployment Workflow
 
 The production deployment pipeline on AWS follows this lifecycle:
 
@@ -180,7 +180,7 @@ curl -i http://pokemon-app-alb-820885629.ap-south-1.elb.amazonaws.com/api/health
 
 This repository supports both **AWS** and **Netlify** to balance **enterprise cloud demonstration** with **cost-efficient ongoing hosting**:
 
-| Attribute | ☁️ AWS Cloud Deployment (Primary Architecture) | ⚡ Netlify Deployment (Active Hosting Mirror) |
+| Attribute | AWS Cloud Deployment (Primary Architecture) | ⚡ Netlify Deployment (Active Hosting Mirror) |
 | :--- | :--- | :--- |
 | **Role** | **Primary Architecture**: Showcases full-stack cloud engineering, load balancing, process management, and connection draining. | **Active Preview Mirror**: Provides continuous zero-cost web availability for ongoing portfolio viewing. |
 | **Compute Model** | Dedicated Node.js Express service on Amazon EC2 managed by `systemd`. | Serverless Function Handlers (`netlify/functions/api.js`) via `serverless-http`. |
@@ -193,13 +193,13 @@ This repository supports both **AWS** and **Netlify** to balance **enterprise cl
 
 ---
 
-## 🌟 Key Application Features
+## Key Application Features
 
-### 🎮 Interactive 3D WebGL Experiences
+### Interactive 3D WebGL Experiences
 - **3D Card Viewer (`Three.js`)**: Interactive 3D rendering of PSA & BGS graded Pokémon slabs with real-time mouse tilt physics, dynamic specular highlights, ambient illumination, and holographic rainbow foil reflections (`src/three-card-viewer.js`).
 - **Hero 3D Stage**: WebGL landing stage featuring interactive floating collectibles and smooth viewport parallax scrolling effects (`src/hero-3d-stage.js`).
 
-### 🛒 Full E-Commerce Marketplace & Catalog
+### Full E-Commerce Marketplace & Catalog
 - **Multi-Faceted Marketplace Filtering**:
   - Filter across **18+ Categories** (Graded Slabs, Plush Toys, Figures, Clothing, Accessories, Room Decor, etc.).
   - Filter by **Pokémon Character** (Pikachu, Charizard, Gengar, Eevee, Mewtwo, Rayquaza, Snorlax, Starters).
@@ -209,17 +209,17 @@ This repository supports both **AWS** and **Netlify** to balance **enterprise cl
 - **Instant Search with Autocomplete**: Real-time matching against product titles, categories, tags, and character attributes with instant image dropdown previews.
 - **Responsive Mobile Layout**: Fully optimized 2x2 grid card view on mobile viewports with sticky mobile filter drawer toggles.
 
-### 🛍️ Smart Shopping Cart & Checkout
+### Smart Shopping Cart & Checkout
 - **Gamified Free Shipping Bar**: Live progress indicator calculating remaining amount needed to qualify for free vault shipping ($150 threshold).
 - **In-Cart Smart Upsells**: Dynamically recommended accessories and protective sleeves based on cart contents.
 - **Persistent Wishlist System**: One-tap bookmarking for favorite collectibles across sessions.
 - **Promo Code Engine**: Discount validation (e.g., `POKEVAULT10` for 10% off).
 
-### 🔒 Security & Anti-Tamper Engine
+### Security & Anti-Tamper Engine
 - **Server-Side Price Verification**: The checkout API (`server/routes/orders.js`) ignores client-submitted prices and verifies item amounts directly against the Supabase database and master catalog before accepting orders.
 - **Admin Vault Gatekeeper**: Write routes and curator dashboards require `X-Admin-Key` authorization headers validated via timing-safe middleware (`server/middleware/auth.js`).
 
-### 🔍 Automated SEO & Performance Engine
+### Automated SEO & Performance Engine
 - Structured **Schema.org JSON-LD Microdata** for rich Google search snippets (Product pricing, aggregate rating, in-stock availability).
 - Automated XML Sitemap Generator (`scripts/generate_seo_sitemap.js`).
 - OpenGraph & Twitter Card meta tag integration across all pages.
@@ -237,7 +237,7 @@ The database utilizes PostgreSQL via Supabase with relational schema constraints
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 pokevault-legends/
@@ -270,7 +270,7 @@ pokevault-legends/
 
 ---
 
-## ⚙️ Environment Configuration
+## Environment Configuration
 
 | Variable | Description | Example / Default |
 | :--- | :--- | :--- |
@@ -287,7 +287,7 @@ pokevault-legends/
 
 ---
 
-## 💻 Local Development Setup
+## Local Development Setup
 
 ### Prerequisites
 - **Node.js**: `v18.0.0` or higher
@@ -312,18 +312,6 @@ npm run dev
 npm run build
 npm run server
 ```
-
----
-
-## 💼 Resume & Portfolio Highlights
-
-For technical interviews and portfolio presentations:
-
-- **Cloud Infrastructure & Architecture**: Designed and deployed a resilient e-commerce architecture on **AWS (ap-south-1)** utilizing an **Application Load Balancer (ALB)**, custom **Target Group Health Probes** (`/api/health`), and **systemd** service management.
-- **High-Availability Engineering**: Implemented zero-downtime **SIGTERM graceful connection draining** in Express to support seamless Auto Scaling Group (ASG) scale-in and target de-registration.
-- **Full-Stack Performance**: Built a dual-engine web application combining **Vite 5**, **React 18**, and **Three.js WebGL** 3D shaders on the frontend with **Node.js/Express** and **Supabase PostgreSQL** on the backend.
-- **FinOps & Cost Optimization**: Devised a dual-deployment strategy using AWS as the high-availability enterprise cloud blueprint and Netlify Serverless as an active zero-idle-cost preview mirror.
-- **Security & Integrity**: Built server-side price recalculation pipelines preventing client-side cart tampering, strict CORS origin controls, and timing-safe admin authentication.
 
 ---
 
