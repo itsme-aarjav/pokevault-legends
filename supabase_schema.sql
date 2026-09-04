@@ -98,11 +98,9 @@ ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.order_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.store_settings ENABLE ROW LEVEL SECURITY;
 
--- Read policies for public access
+-- Read policies for public catalog access (Cards, Inventory, Store Settings)
 CREATE POLICY "Public Cards Select Policy" ON public.cards FOR SELECT USING (true);
 CREATE POLICY "Public Inventory Select Policy" ON public.inventory FOR SELECT USING (true);
-CREATE POLICY "Public Orders Select Policy" ON public.orders FOR SELECT USING (true);
-CREATE POLICY "Public Order Items Select Policy" ON public.order_items FOR SELECT USING (true);
 CREATE POLICY "Public Store Settings Select Policy" ON public.store_settings FOR SELECT USING (true);
 
 -- Public Insert Policies (Allow customers to place orders at checkout)
