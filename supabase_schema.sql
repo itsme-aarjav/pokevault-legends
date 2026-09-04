@@ -104,8 +104,12 @@ CREATE POLICY "Public Inventory Select Policy" ON public.inventory FOR SELECT US
 CREATE POLICY "Public Store Settings Select Policy" ON public.store_settings FOR SELECT USING (true);
 
 -- Public Insert Policies (Allow customers to place orders at checkout)
-CREATE POLICY "Public Orders Insert Policy" ON public.orders FOR INSERT WITH CHECK (true);
-CREATE POLICY "Public Order Items Insert Policy" ON public.order_items FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Orders Insert Policy" ON public.orders FOR INSERT WITH CHECK (
+  auth.role() IN ('anon', 'authenticated', 'service_role')
+);
+CREATE POLICY "Public Order Items Insert Policy" ON public.order_items FOR INSERT WITH CHECK (
+  auth.role() IN ('anon', 'authenticated', 'service_role')
+);
 
 -- Secure Admin Policies (Uses app_metadata and service_role — user_metadata is avoided for security)
 CREATE POLICY "Admin Cards All Policy" ON public.cards FOR ALL USING (
