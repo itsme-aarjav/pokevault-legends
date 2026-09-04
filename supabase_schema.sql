@@ -105,15 +105,27 @@ CREATE POLICY "Public Orders Select Policy" ON public.orders FOR SELECT USING (t
 CREATE POLICY "Public Order Items Select Policy" ON public.order_items FOR SELECT USING (true);
 CREATE POLICY "Public Store Settings Select Policy" ON public.store_settings FOR SELECT USING (true);
 
--- Admin Write Policies (Allow write actions for admin role or authenticated service users)
+-- Public Insert Policies (Allow customers to place orders at checkout)
+CREATE POLICY "Public Orders Insert Policy" ON public.orders FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public Order Items Insert Policy" ON public.order_items FOR INSERT WITH CHECK (true);
+
+-- Secure Admin Policies (Uses app_metadata and service_role — user_metadata is avoided for security)
 CREATE POLICY "Admin Cards All Policy" ON public.cards FOR ALL USING (
-  (auth.jwt() ->> 'role' = 'admin') OR (auth.jwt() -> 'user_metadata' ->> 'role' = 'admin') OR (auth.role() = 'authenticated')
+  (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin') OR (auth.role() = 'service_role')
+);
+
+CREATE POLICY "Admin Inventory All Policy" ON public.inventory FOR ALL USING (
+  (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin') OR (auth.role() = 'service_role')
 );
 
 CREATE POLICY "Admin Orders All Policy" ON public.orders FOR ALL USING (
-  (auth.jwt() ->> 'role' = 'admin') OR (auth.jwt() -> 'user_metadata' ->> 'role' = 'admin') OR (auth.role() = 'authenticated')
+  (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin') OR (auth.role() = 'service_role')
+);
+
+CREATE POLICY "Admin Order Items All Policy" ON public.order_items FOR ALL USING (
+  (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin') OR (auth.role() = 'service_role')
 );
 
 CREATE POLICY "Admin Settings All Policy" ON public.store_settings FOR ALL USING (
-  (auth.jwt() ->> 'role' = 'admin') OR (auth.jwt() -> 'user_metadata' ->> 'role' = 'admin') OR (auth.role() = 'authenticated')
+  (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin') OR (auth.role() = 'service_role')
 );
